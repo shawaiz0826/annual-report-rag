@@ -139,6 +139,9 @@ class IngestionPipeline:
         self.cleaning = CleaningOptions(
             dedupe_lines=ing.dedupe_lines,
             header_footer_min_page_ratio=ing.header_footer_min_page_ratio,
+            header_footer_long_line_ratio=ing.header_footer_long_line_ratio,
+            header_footer_long_line_chars=ing.header_footer_long_line_chars,
+            header_footer_zone_lines=ing.header_footer_zone_lines,
             min_pages_for_header_detection=ing.min_pages_for_header_detection,
             min_chunk_chars=ing.min_chunk_chars,
         )
@@ -226,6 +229,25 @@ class IngestionPipeline:
         finally:
             result.seconds = round(time.perf_counter() - started, 1)
         return result
+
+    def reprocess_document(self, profile: DocumentProfile) -> int:
+        """Re-run load → clean → chunk → store → index for one catalogued document (no LLM)."""
+        path = Path(profile.source_path)
+        raw_pages = self.loaders.get(path.suffix).load(path)
+        pages = clean_pages(raw_pages, self.cleaning)
+        chunks = self.chunker.chunk(pages, profile)
+        self.store.save(profile.document_id, pages, chunks)
+        if self.indexer is not None:
+            self.indexer.index_document(profile, chunks)
+        self.catalog.set_stats(
+            profile.document_id,
+            pages=len(raw_pages),
+            pages_kept=len(pages),
+            chunks=len(chunks),
+            table_chunks=sum(1 for c in chunks if c.chunk_type == "table"),
+            chars=sum(len(p.text) for p in pages),
+        )
+        return len(chunks)
 
     # ------------------------------------------------------------------ internals
 

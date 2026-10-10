@@ -82,13 +82,19 @@ def _best_break(text: str, start: int, end: int) -> int:
 
 
 def table_to_markdown(rows: list[list[str]]) -> str:
-    """Render a cell grid as a Markdown table (first row is the header)."""
+    """Render a cell grid as a Markdown table (first row is the header).
+
+    Columns that are empty in every row (common in pdfplumber output) are dropped.
+    """
     width = max(len(r) for r in rows)
     norm = [
         [(c or "").replace("\n", " ").replace("|", "/").strip() for c in r]
         + [""] * (width - len(r))
         for r in rows
     ]
+    keep = [i for i in range(width) if any(r[i] for r in norm)] or [0]
+    norm = [[r[i] for i in keep] for r in norm]
+    width = len(keep)
     header, body = norm[0], norm[1:]
     lines = ["| " + " | ".join(header) + " |", "|" + "---|" * width]
     lines += ["| " + " | ".join(r) + " |" for r in body]

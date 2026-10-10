@@ -11,6 +11,9 @@ from functools import cached_property
 from pathlib import Path
 from typing import Any
 
+from core.agent.agent import Agent
+from core.agent.memory import SessionStore, build_session_store, slots_from_answer
+from core.agent.tools import ToolBox
 from core.config import Settings, get_settings
 from core.facts.extractor import FactExtractor
 from core.facts.registry import Registry, load_registry
@@ -24,8 +27,10 @@ from core.index.vector_store import ChromaVectorStore, VectorStore
 from core.ingestion.pipeline import IngestionPipeline, IngestReport
 from core.ingestion.store import DocumentStore
 from core.llm.client import LLMProvider, build_provider
-from core.models import RetrievedChunk
+from core.models import AgentAnswer, RetrievedChunk, Session, Trace, Turn
 from core.observability.logging import configure_logging
+from core.observability.replay import ReplayCache
+from core.observability.tracing import TraceStore, render_trace
 
 log = logging.getLogger(__name__)
 
@@ -33,10 +38,18 @@ log = logging.getLogger(__name__)
 class ChatService:
     """Facade over ingestion, retrieval, facts and the agent."""
 
-    def __init__(self, settings: Settings | None = None, provider: LLMProvider | None = None):
+    def __init__(
+        self,
+        settings: Settings | None = None,
+        provider: LLMProvider | None = None,
+        session_store: SessionStore | None = None,
+    ):
         self.settings = settings or get_settings()
         configure_logging(self.settings.log_level)
         self._provider = provider
+        self._session_store = session_store
+        self.replay_enabled = False
+        self.record_enabled = False
 
     # ------------------------------------------------------------------ components
 
@@ -107,6 +120,88 @@ class ChatService:
             self.embedding, self.vector_store, self.lexical, self.store, self.settings.retrieval
         )
 
+    @cached_property
+    def sessions(self) -> SessionStore:
+        """Session store (SQLite by default, in-memory for tests/eval)."""
+        return self._session_store or build_session_store(
+            self.settings.sessions.backend, self.settings.sessions.path
+        )
+
+    @cached_property
+    def traces(self) -> TraceStore:
+        """Trace store."""
+        return TraceStore(self.settings.paths.traces_dir)
+
+    @cached_property
+    def replay(self) -> ReplayCache:
+        """Replay cache for deterministic demos."""
+        return ReplayCache(self.settings.paths.replay_cache)
+
+    @cached_property
+    def agent(self) -> Agent:
+        """The tool-calling agent."""
+        return Agent(
+            self.provider,
+            lambda: ToolBox(self.catalog, self.retriever, self.fact_store, self.registry),
+            self.catalog,
+            self.settings.agent,
+            self.traces,
+        )
+
+    # ------------------------------------------------------------------ chat
+
+    def new_session(self) -> Session:
+        """Start a conversation."""
+        return self.sessions.create()
+
+    def chat(
+        self,
+        session_id: str | None,
+        message: str,
+        *,
+        model: str | None = None,
+        show_model_knowledge: bool | None = None,
+    ) -> tuple[AgentAnswer, Trace]:
+        """Answer one message; persists the turn, slot memory and trace."""
+        session = (self.sessions.get(session_id) if session_id else None) or self.sessions.create()
+        model_id = model or self.settings.llm_model
+        show = (
+            self.settings.agent.show_model_knowledge
+            if show_model_knowledge is None
+            else show_model_knowledge
+        )
+        key = self.replay.key(model_id, session, message, show)
+        cached = self.replay.get(key) if self.replay_enabled else None
+        if cached is not None:
+            answer, trace = cached
+            trace = trace.model_copy(update={"replayed": True, "session_id": session.session_id})
+            self.traces.write(trace)
+        else:
+            answer, trace = self.agent.run(
+                session, message, model=model_id, show_model_knowledge=show
+            )
+            if self.record_enabled and trace.error is None:
+                self.replay.put(key, answer, trace)
+        self.sessions.append(session.session_id, Turn(role="user", content=message))
+        self.sessions.append(
+            session.session_id,
+            Turn(
+                role="assistant",
+                content=answer.answer_markdown,
+                answer=answer,
+                trace_id=trace.trace_id,
+            ),
+        )
+        self.sessions.update_slots(session.session_id, slots_from_answer(answer, session.slots))
+        return answer, trace
+
+    def explain(self, trace_id: str | None = None) -> str:
+        """Human-readable rendering of a trace (default: the latest)."""
+        trace = self.traces.get(trace_id) if trace_id else self.traces.latest
+        if trace is None:
+            return "no trace found"
+        return render_trace(trace)
+
     # ------------------------------------------------------------------ operations
 
     def ingest(self, path: Path | None = None, force: bool = False) -> IngestReport:
@@ -134,6 +229,20 @@ class ChatService:
             self.catalog.set_stats(profile.document_id, facts=n)
             counts[profile.file_name] = n
         self.fact_extractor.finalise()
+        self.catalog.save()
+        return counts
+
+    def reprocess(self) -> dict[str, int]:
+        """Re-load, re-clean, re-chunk and re-index every catalogued file, keeping its profile.
+
+        Use after changing cleaning/chunking settings; no LLM calls are made.
+        """
+        pipeline = IngestionPipeline(
+            self.settings, self.provider, self.catalog, self.store, indexer=self.indexer
+        )
+        counts: dict[str, int] = {}
+        for profile in self.catalog.documents():
+            counts[profile.file_name] = pipeline.reprocess_document(profile)
         self.catalog.save()
         return counts
 

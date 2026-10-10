@@ -47,6 +47,9 @@ class IngestionConfig(BaseModel):
     profile_max_chars_per_page: int = 6000
     dedupe_lines: bool = True
     header_footer_min_page_ratio: float = 0.5
+    header_footer_long_line_ratio: float = 0.15
+    header_footer_long_line_chars: int = 25
+    header_footer_zone_lines: int = 3
     min_chunk_chars: int = 200
     min_pages_for_header_detection: int = 4
 

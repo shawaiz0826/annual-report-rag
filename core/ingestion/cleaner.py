@@ -41,6 +41,8 @@ class CleaningOptions:
     dedupe_lines: bool = True
     dedupe_window: int = 3
     header_footer_min_page_ratio: float = 0.5
+    header_footer_long_line_ratio: float = 0.15
+    header_footer_long_line_chars: int = 25
     min_pages_for_header_detection: int = 4
     header_footer_zone_lines: int = 3
     min_chunk_chars: int = 200
@@ -146,11 +148,17 @@ def find_running_lines(
     min_page_ratio: float = 0.5,
     min_pages: int = 4,
     zone_lines: int = 3,
+    long_line_ratio: float = 0.15,
+    long_line_chars: int = 25,
 ) -> set[str]:
-    """Return masked lines that recur in the header/footer zone of ≥ ``min_page_ratio`` of pages.
+    """Return masked lines that recur in the header/footer zone of many pages.
 
     Only the first and last ``zone_lines`` lines of each page are considered, so a
-    frequent body line such as ``"Total"`` is never mistaken for a running header.
+    frequent body line such as ``"Total"`` is never mistaken for a running header. Two
+    thresholds apply: any line on ≥ ``min_page_ratio`` of pages, and long lines
+    (≥ ``long_line_chars``) on ≥ ``long_line_ratio`` of pages — section navigation
+    headers in designed reports change wording per section and only recur on a share
+    of pages, but a long line repeating in the zone is never body content.
     """
     if len(pages_lines) < min_pages:
         return set()
@@ -161,7 +169,12 @@ def find_running_lines(
         for masked in {_mask(ln) for ln in zone if len(ln.strip()) >= 3}:
             counter[masked] += 1
     needed = max(2, int(round(min_page_ratio * len(pages_lines))))
-    return {masked for masked, n in counter.items() if n >= needed}
+    needed_long = max(3, int(round(long_line_ratio * len(pages_lines))))
+    return {
+        masked
+        for masked, n in counter.items()
+        if n >= needed or (len(masked) >= long_line_chars and n >= needed_long)
+    }
 
 
 def strip_running_lines(lines: list[str], running: set[str]) -> list[str]:
@@ -197,6 +210,8 @@ def clean_pages(pages: list[PageText], options: CleaningOptions | None = None) -
         min_page_ratio=opts.header_footer_min_page_ratio,
         min_pages=opts.min_pages_for_header_detection,
         zone_lines=opts.header_footer_zone_lines,
+        long_line_ratio=opts.header_footer_long_line_ratio,
+        long_line_chars=opts.header_footer_long_line_chars,
     )
 
     cleaned: list[PageText] = []

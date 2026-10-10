@@ -92,3 +92,9 @@ def test_long_tables_split_by_rows_with_header_repeated():
 def test_table_to_markdown_pads_ragged_rows():
     md = table_to_markdown([["a", "b", "c"], ["1"]])
     assert md.splitlines()[2] == "| 1 |  |  |"
+
+
+def test_table_to_markdown_drops_empty_columns():
+    md = table_to_markdown([["Revenue", "", "2023", "", "2022"], ["Total", "", "1,000", "", "900"]])
+    assert md.splitlines()[0] == "| Revenue | 2023 | 2022 |"
+    assert md.splitlines()[2] == "| Total | 1,000 | 900 |"

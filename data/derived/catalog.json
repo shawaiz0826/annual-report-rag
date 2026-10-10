@@ -245,50 +245,50 @@
     "a22e48d2fa107385": {
       "pages": 50,
       "pages_kept": 50,
-      "chunks": 271,
+      "chunks": 269,
       "table_chunks": 0,
       "facts": 0,
-      "chars": 155471
+      "chars": 153491
     },
     "b126af61b7f13344": {
       "pages": 55,
       "pages_kept": 50,
-      "chunks": 335,
+      "chunks": 331,
       "table_chunks": 42,
       "facts": 0,
-      "chars": 171917
+      "chars": 171077
     },
     "db760deb91039466": {
       "pages": 76,
       "pages_kept": 76,
-      "chunks": 541,
-      "table_chunks": 74,
+      "chunks": 537,
+      "table_chunks": 73,
       "facts": 0,
-      "chars": 266697
+      "chars": 265917
     },
     "f585bb475b011102": {
       "pages": 62,
       "pages_kept": 61,
-      "chunks": 488,
-      "table_chunks": 76,
+      "chunks": 482,
+      "table_chunks": 70,
       "facts": 0,
       "chars": 240222
     },
     "f7db8b241a984dab": {
       "pages": 75,
       "pages_kept": 75,
-      "chunks": 571,
+      "chunks": 561,
       "table_chunks": 65,
       "facts": 0,
-      "chars": 290019
+      "chars": 285432
     },
     "f87c2cdad276d476": {
       "pages": 75,
       "pages_kept": 75,
-      "chunks": 514,
+      "chunks": 513,
       "table_chunks": 78,
       "facts": 0,
-      "chars": 253101
+      "chars": 252666
     }
   }
 }

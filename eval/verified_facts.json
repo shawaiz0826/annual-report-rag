@@ -1,0 +1,58 @@
+{
+  "_notes": [
+    "Ground truth read by hand from the extracted page text (page numbers are PDF pages of the file named).",
+    "Units are as printed: BMW Group and Ford/Tesla in millions, BMW Finance N.V. in thousands.",
+    "Used by eval/verify_facts.py to score extraction accuracy (M3 acceptance: >= 90%)."
+  ],
+  "facts": [
+    {"legal_entity": "Tesla, Inc.", "metric": "revenue", "fiscal_year": 2023, "value": 96773, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "revenue", "fiscal_year": 2022, "value": 81462, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20; Tesla_Annual_Report_2022.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "revenue", "fiscal_year": 2021, "value": 53823, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20; Tesla_Annual_Report_2022.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "revenue", "fiscal_year": 2020, "value": 31536, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2022.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "net_income", "fiscal_year": 2023, "value": 14974, "unit": "millions", "currency": "USD", "alternatives": [14997], "source": "Tesla_Annual_Report_2023.pdf p.20 (14,997 attributable to common stockholders)"},
+    {"legal_entity": "Tesla, Inc.", "metric": "net_income", "fiscal_year": 2022, "value": 12587, "unit": "millions", "currency": "USD", "alternatives": [12556], "source": "Tesla_Annual_Report_2023.pdf p.20; Tesla_Annual_Report_2022.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "net_income", "fiscal_year": 2021, "value": 5644, "unit": "millions", "currency": "USD", "alternatives": [5519], "source": "Tesla_Annual_Report_2023.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "operating_income", "fiscal_year": 2023, "value": 8891, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "operating_income", "fiscal_year": 2022, "value": 13656, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "operating_income", "fiscal_year": 2021, "value": 6523, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "profit_before_tax", "fiscal_year": 2023, "value": 9973, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "profit_before_tax", "fiscal_year": 2022, "value": 13719, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20"},
+    {"legal_entity": "Tesla, Inc.", "metric": "profit_before_tax", "fiscal_year": 2021, "value": 6343, "unit": "millions", "currency": "USD", "source": "Tesla_Annual_Report_2023.pdf p.20"},
+
+    {"legal_entity": "Ford Motor Company", "metric": "revenue", "fiscal_year": 2023, "value": 176191, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2023.pdf p.44 (Company key metrics)"},
+    {"legal_entity": "Ford Motor Company", "metric": "revenue", "fiscal_year": 2022, "value": 158057, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2023.pdf p.44; Ford_Annual_Report_2022.pdf p.39"},
+    {"legal_entity": "Ford Motor Company", "metric": "revenue", "fiscal_year": 2021, "value": 136341, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2022.pdf p.39; Ford_Annual_Report_2021.pdf p.39"},
+    {"legal_entity": "Ford Motor Company", "metric": "revenue", "fiscal_year": 2020, "value": 127144, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2021.pdf p.39"},
+    {"legal_entity": "Ford Motor Company", "metric": "revenue", "fiscal_year": 2019, "value": 155900, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2021.pdf p.52"},
+    {"legal_entity": "Ford Motor Company", "metric": "net_income", "fiscal_year": 2023, "value": 4347, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2023.pdf p.44"},
+    {"legal_entity": "Ford Motor Company", "metric": "net_income", "fiscal_year": 2022, "value": -1981, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2023.pdf p.44; Ford_Annual_Report_2022.pdf p.39"},
+    {"legal_entity": "Ford Motor Company", "metric": "net_income", "fiscal_year": 2021, "value": 17937, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2022.pdf p.39; Ford_Annual_Report_2021.pdf p.39"},
+    {"legal_entity": "Ford Motor Company", "metric": "net_income", "fiscal_year": 2020, "value": -1279, "unit": "millions", "currency": "USD", "source": "Ford_Annual_Report_2021.pdf p.39"},
+
+    {"legal_entity": "BMW Group", "metric": "revenue", "fiscal_year": 2021, "value": 111239, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10 (five-year table)"},
+    {"legal_entity": "BMW Group", "metric": "revenue", "fiscal_year": 2020, "value": 98990, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "revenue", "fiscal_year": 2019, "value": 104210, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "revenue", "fiscal_year": 2018, "value": 96855, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "revenue", "fiscal_year": 2017, "value": 98282, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "net_income", "fiscal_year": 2021, "value": 12463, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "net_income", "fiscal_year": 2020, "value": 3857, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "net_income", "fiscal_year": 2019, "value": 5022, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "net_income", "fiscal_year": 2018, "value": 7064, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "net_income", "fiscal_year": 2017, "value": 8675, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10"},
+    {"legal_entity": "BMW Group", "metric": "operating_income", "fiscal_year": 2021, "value": 13400, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10 (EBIT)"},
+    {"legal_entity": "BMW Group", "metric": "operating_income", "fiscal_year": 2020, "value": 4830, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10 (EBIT)"},
+    {"legal_entity": "BMW Group", "metric": "profit_before_tax", "fiscal_year": 2021, "value": 16060, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10 (EBT)"},
+    {"legal_entity": "BMW Group", "metric": "profit_before_tax", "fiscal_year": 2020, "value": 5222, "unit": "millions", "currency": "EUR", "source": "BMW_Annual_Report_2021.pdf p.10 (EBT)"},
+
+    {"legal_entity": "BMW Finance N.V.", "metric": "net_income", "fiscal_year": 2023, "value": -394288, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2023.pdf p.10"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "net_income", "fiscal_year": 2022, "value": 403943, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2023.pdf p.10; BMW_Annual_Report_2022.pdf p.10"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "net_income", "fiscal_year": 2021, "value": 118889, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2022.pdf p.10"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "profit_before_tax", "fiscal_year": 2023, "value": -506962, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2023.pdf p.10"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "profit_before_tax", "fiscal_year": 2022, "value": 550600, "unit": "thousands", "currency": "EUR", "alternatives": [550660], "source": "BMW_Annual_Report_2022.pdf p.10 (the FY2023 report prints 550,660 as the comparative)"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "profit_before_tax", "fiscal_year": 2021, "value": 155682, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2022.pdf p.10"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "interest_income", "fiscal_year": 2023, "value": 1965292, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2023.pdf p.10 (interest and interest related income)"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "interest_income", "fiscal_year": 2022, "value": 988331, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2023.pdf p.10; BMW_Annual_Report_2022.pdf p.12"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "total_assets", "fiscal_year": 2023, "value": 42279770, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2023.pdf p.11"},
+    {"legal_entity": "BMW Finance N.V.", "metric": "total_assets", "fiscal_year": 2022, "value": 43220688, "unit": "thousands", "currency": "EUR", "source": "BMW_Annual_Report_2023.pdf p.11"}
+  ]
+}

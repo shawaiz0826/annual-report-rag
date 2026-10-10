@@ -1,0 +1,190 @@
+{
+  "_notes": [
+    "Values verified against the extracted PDF text on 2026-10-10 (see eval/verification.md).",
+    "value_base is in base currency units (millions * 1e6); kind=ratio values are fractions (0.154 = 15.4%).",
+    "Only the last turn of multi-turn cases is scored."
+  ],
+  "cases": [
+    {
+      "id": "q01", "category": "lookup",
+      "turns": ["What was Tesla's revenue in 2023?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2023, "value_base": 96773000000, "tolerance_pct": 0.5}],
+        "must_cite": [{"file_name_contains": "Tesla_Annual_Report_2023"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q02", "category": "lookup",
+      "turns": ["How much revenue did Tesla generate in 2022?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2022, "value_base": 81462000000, "tolerance_pct": 0.5}],
+        "must_cite": [{"file_name_contains": "Tesla_Annual_Report_202"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q03", "category": "lookup",
+      "turns": ["What was Ford's revenue in 2023?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Ford", "metric": "revenue", "fiscal_year": 2023, "value_base": 176191000000, "tolerance_pct": 0.5}],
+        "must_cite": [{"file_name_contains": "Ford_Annual_Report_2023"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q04", "category": "lookup",
+      "turns": ["What was Ford's revenue for the year 2020?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Ford", "metric": "revenue", "fiscal_year": 2020, "value_base": 127144000000, "tolerance_pct": 0.5}],
+        "must_cite": [{"file_name_contains": "Ford_Annual_Report_202"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q05", "category": "lookup",
+      "turns": ["Can you provide the revenue figures for BMW in 2017?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "BMW", "metric": "revenue", "fiscal_year": 2017, "value_base": 98282000000, "tolerance_pct": 0.5}],
+        "must_cite": [{"file_name_contains": "BMW_Annual_Report_2021"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q06", "category": "entity_trap",
+      "turns": ["What was BMW's total revenue in 2023?"],
+      "expect": {"behaviour": "caveat",
+        "values": [{"legal_entity_contains": "BMW", "metric": "revenue", "fiscal_year": 2021, "value_base": 111239000000, "tolerance_pct": 0.5}],
+        "must_mention_all": ["Finance N.V."], "must_mention_any": ["2021"], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q07", "category": "entity_trap",
+      "turns": ["What were BMW's profit figures for 2020 and 2023?"],
+      "expect": {"behaviour": "caveat",
+        "values": [
+          {"legal_entity_contains": "BMW", "metric": "net_income", "fiscal_year": 2020, "value_base": 3857000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "BMW Finance", "metric": "net_income", "fiscal_year": 2023, "value_base": -394288000, "tolerance_pct": 0.5}
+        ],
+        "must_mention_all": ["Finance N.V."], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q08", "category": "comparison",
+      "turns": ["Between Tesla and Ford, which company achieved higher profits in 2022?"],
+      "expect": {"behaviour": "answer",
+        "values": [
+          {"legal_entity_contains": "Tesla", "metric": "net_income", "fiscal_year": 2022, "value_base": 12587000000, "tolerance_pct": 0.5, "alternatives": [12556000000]},
+          {"legal_entity_contains": "Ford", "metric": "net_income", "fiscal_year": 2022, "value_base": -1981000000, "tolerance_pct": 0.5}
+        ],
+        "must_mention_all": ["Tesla"], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q09", "category": "lookup",
+      "turns": ["What were Tesla's profit numbers for 2022 and 2023?"],
+      "expect": {"behaviour": "answer",
+        "values": [
+          {"legal_entity_contains": "Tesla", "metric": "net_income", "fiscal_year": 2022, "value_base": 12587000000, "tolerance_pct": 0.5, "alternatives": [12556000000]},
+          {"legal_entity_contains": "Tesla", "metric": "net_income", "fiscal_year": 2023, "value_base": 14974000000, "tolerance_pct": 0.5, "alternatives": [14997000000]}
+        ],
+        "must_cite": [{"file_name_contains": "Tesla_Annual_Report_2023"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q10", "category": "comparison",
+      "turns": ["Which company recorded better profitability in 2022 overall?"],
+      "expect": {"behaviour": "caveat",
+        "values": [
+          {"legal_entity_contains": "Tesla", "metric": "net_margin", "fiscal_year": 2022, "value_base": 0.1545, "kind": "ratio", "tolerance_pct": 2.0},
+          {"legal_entity_contains": "Ford", "metric": "net_margin", "fiscal_year": 2022, "value_base": -0.0125, "kind": "ratio", "tolerance_pct": 5.0}
+        ],
+        "must_mention_all": ["margin"], "must_mention_any": ["Finance N.V.", "2021", "not available", "not in the provided documents"],
+        "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q11", "category": "trend",
+      "turns": ["Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years."],
+      "expect": {"behaviour": "caveat",
+        "values": [
+          {"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2021, "value_base": 53823000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2022, "value_base": 81462000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2023, "value_base": 96773000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "Ford", "metric": "revenue", "fiscal_year": 2021, "value_base": 136341000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "Ford", "metric": "revenue", "fiscal_year": 2022, "value_base": 158057000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "Ford", "metric": "revenue", "fiscal_year": 2023, "value_base": 176191000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "BMW", "metric": "revenue", "fiscal_year": 2021, "value_base": 111239000000, "tolerance_pct": 0.5}
+        ],
+        "must_mention_any": ["Finance N.V.", "2021"], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q12", "category": "trend",
+      "turns": ["What were the growth trends for BMW's financial performance from 2020 to 2023?"],
+      "expect": {"behaviour": "caveat",
+        "values": [
+          {"legal_entity_contains": "BMW", "metric": "revenue", "fiscal_year": 2020, "value_base": 98990000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "BMW", "metric": "revenue", "fiscal_year": 2021, "value_base": 111239000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "BMW", "metric": "net_income", "fiscal_year": 2021, "value_base": 12463000000, "tolerance_pct": 0.5}
+        ],
+        "must_mention_any": ["not in the provided documents", "not available", "Finance N.V.", "no group"], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q13", "category": "narrative",
+      "turns": ["What key economic factors influenced Ford's performance in 2021?"],
+      "expect": {"behaviour": "answer",
+        "must_mention_any": ["semiconductor", "chip", "commodity", "COVID", "pandemic", "supply chain", "inflation"],
+        "must_cite": [{"file_name_contains": "Ford_Annual_Report_202"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q14", "category": "narrative",
+      "turns": ["Which Tesla product is currently in the development stage?"],
+      "expect": {"behaviour": "answer",
+        "must_mention_any": ["Roadster", "Next Generation Platform", "next-generation"],
+        "must_cite": [{"file_name_contains": "Tesla_Annual_Report_2023"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q15", "category": "out_of_scope",
+      "turns": ["What was Toyota's revenue in 2023?"],
+      "expect": {"behaviour": "refuse",
+        "must_mention_any": ["not in the provided documents", "no documents", "not covered", "not available", "only"],
+        "must_mention_all": ["Tesla"], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q16", "category": "noise",
+      "turns": ["What did the central bank do about interest rates?"],
+      "expect": {"behaviour": "answer",
+        "must_cite": [{"file_name_contains": "news"}],
+        "must_mention_any": ["news", "not an annual report", "article", "not a company report"]}
+    },
+    {
+      "id": "q17", "category": "followup",
+      "turns": ["What was Tesla's revenue in 2023?", "And 2022?", "And Ford?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Ford", "metric": "revenue", "fiscal_year": 2022, "value_base": 158057000000, "tolerance_pct": 0.5}],
+        "must_cite": [{"file_name_contains": "Ford_Annual_Report_202"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q18", "category": "followup",
+      "turns": ["What was Ford's revenue in 2023?", "And their net income?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Ford", "metric": "net_income", "fiscal_year": 2023, "value_base": 4347000000, "tolerance_pct": 0.5}],
+        "must_cite": [{"file_name_contains": "Ford_Annual_Report_2023"}], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q19", "category": "units",
+      "turns": ["What was Tesla's 2023 revenue in billions?"],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2023, "value_base": 96773000000, "tolerance_pct": 0.5}],
+        "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q20", "category": "restatement",
+      "turns": ["Compare Tesla's 2022 revenue as reported in the 2022 report versus the 2023 report."],
+      "expect": {"behaviour": "answer",
+        "values": [{"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2022, "value_base": 81462000000, "tolerance_pct": 0.5}],
+        "must_mention_any": ["agree", "same", "consistent", "identical", "unchanged", "match"], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q21", "category": "entity_trap",
+      "turns": ["What was BMW Group's revenue in 2023?"],
+      "expect": {"behaviour": "caveat",
+        "must_mention_all": ["Finance N.V."], "must_mention_any": ["2021"], "must_not_cite_doc_types": ["news"]}
+    },
+    {
+      "id": "q22", "category": "comparison",
+      "turns": ["Compare Tesla's and BMW's revenue in 2021."],
+      "expect": {"behaviour": "caveat",
+        "values": [
+          {"legal_entity_contains": "Tesla", "metric": "revenue", "fiscal_year": 2021, "value_base": 53823000000, "tolerance_pct": 0.5},
+          {"legal_entity_contains": "BMW", "metric": "revenue", "fiscal_year": 2021, "value_base": 111239000000, "tolerance_pct": 0.5}
+        ],
+        "must_mention_any": ["currenc", "EUR", "€", "USD"], "must_not_cite_doc_types": ["news"]}
+    }
+  ]
+}

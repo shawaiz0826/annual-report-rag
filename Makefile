@@ -38,6 +38,9 @@ ingest: ## Ingest data/raw (idempotent; skips documents already in the catalog)
 reingest: ## Force re-ingestion of every document
 	$(PYTHON) scripts/ingest.py --force
 
+reprocess: ## Re-clean/re-chunk/re-index from source files, keeping profiles (no LLM calls)
+	$(PYTHON) -m apps.cli reprocess
+
 reindex: ## Rebuild vector + BM25 indexes from stored chunks (no LLM calls)
 	$(PYTHON) -m apps.cli reindex
 

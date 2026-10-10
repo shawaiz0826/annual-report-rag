@@ -77,3 +77,15 @@ def test_clean_pages_end_to_end_drops_short_pages_unless_tables():
     assert [p.page for p in out] == [1, 2, 3, 4, 5, 7]
     assert "Acme" not in out[0].text and "footer" not in out[0].text
     assert out[-1].tables
+
+
+def test_long_section_headers_removed_at_lower_ratio():
+    nav = "Acme Group Report 2023 To Our Stakeholders Combined Management Report Group Financial Statements"
+    pages = []
+    for i in range(1, 21):
+        first = f"{i} {nav}" if i <= 4 else f"Section title {chr(65 + i % 9)}"
+        pages.append([first, f"Body paragraph {chr(96 + i)} " * 5, "Total 1,000"])
+    running = find_running_lines(pages, min_page_ratio=0.5, zone_lines=1)
+    assert any("acme group report" in r for r in running)
+    assert not any("section title" in r for r in running)  # short and rare: kept
+    assert not any("body paragraph" in r for r in running)
