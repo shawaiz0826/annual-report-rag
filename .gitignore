@@ -1,0 +1,27 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Local indexes, caches, traces (rebuilt by `make ingest`)
+data/index/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+.python-version.local
+
+# Embedding model cache (downloaded at runtime / Docker build)
+.cache/
+models/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

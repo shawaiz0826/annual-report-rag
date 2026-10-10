@@ -1,0 +1,37 @@
+[project]
+name = "annual-report-rag"
+version = "0.1.0"
+description = "Grounded RAG analyst assistant over automotive annual reports"
+requires-python = ">=3.11,<3.13"
+readme = "README.md"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["data", ".venv", "eval/reports"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "N", "D"]
+ignore = [
+  "D100", "D104", "D105", "D107",  # module/package/magic/__init__ docstrings not required
+  "D203", "D213",                  # incompatible pairs; keep D211/D212
+  "E501",                          # line length handled by formatter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]
+"scripts/*" = ["D"]
+"apps/*" = ["D"]
+"api/*" = ["D"]
+"eval/*" = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+  "integration: needs network / a live LLM (deselected by default via `make test`)",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
