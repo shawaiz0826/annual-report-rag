@@ -107,6 +107,7 @@ class FactsConfig(BaseModel):
 
     pages_per_document: int = 6
     max_table_pages: int = 4
+    extraction_concurrency: int = 4
     agreement_tolerance_pct: float = 1.0
     min_confidence_to_use: float = 0.5
 

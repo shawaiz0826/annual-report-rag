@@ -133,8 +133,17 @@ def extract_facts(
     force: bool = typer.Option(False, help="re-extract even if raw facts exist"),
 ) -> None:
     """(Re)run fact extraction + reconciliation for catalogued documents (no re-profiling)."""
+    from core.llm.client import QuotaExhaustedError
+
     service = ChatService()
-    counts = service.extract_facts(force=force)
+    try:
+        counts = service.extract_facts(force=force)
+    except QuotaExhaustedError as exc:
+        console.print(f"[red]Stopped: {exc}[/red]")
+        console.print(
+            "Partial results were reconciled; re-run `make extract-facts` later to finish."
+        )
+        raise typer.Exit(2) from None
     for name, n in counts.items():
         console.print(f"  {name}: {n} raw facts")
     console.print(service.index_stats())

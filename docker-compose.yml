@@ -1,0 +1,32 @@
+services:
+  api:
+    build: .
+    image: annual-report-rag:latest
+    env_file: .env
+    environment:
+      - LOG_LEVEL=INFO
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data        # indexes, facts, traces persist on the host
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health', timeout=4).status == 200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 40s
+      retries: 3
+
+  ui:
+    image: annual-report-rag:latest
+    env_file: .env
+    command: ["streamlit", "run", "apps/streamlit_app.py", "--server.port", "8501", "--server.address", "0.0.0.0", "--server.headless", "true"]
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      api:
+        condition: service_started
+
+# One-off ingestion inside the container (indexes land in ./data via the volume):
+#   docker compose run --rm api python scripts/ingest.py

@@ -30,6 +30,23 @@ class LLMError(RuntimeError):
     """Raised when the provider fails after retries or returns an unusable response."""
 
 
+class QuotaExhaustedError(LLMError):
+    """A rate limit that will not clear by retrying now (daily quota, insufficient credits)."""
+
+
+def _is_quota_error(exc: APIStatusError) -> bool:
+    body = exc.body if isinstance(exc.body, dict) else {}
+    error = body.get("error") if isinstance(body.get("error"), dict) else {}
+    meta = error.get("metadata") if isinstance(error.get("metadata"), dict) else {}
+    message = str(error.get("message") or exc.message or "").lower()
+    source = str(meta.get("limit_source") or "").lower()
+    if exc.status_code == 402:
+        return True
+    return exc.status_code == 429 and (
+        "per-day" in message or "daily" in source or "credits" in message
+    )
+
+
 class LLMProvider(Protocol):
     """Chat-completion provider with optional tools and structured output."""
 
@@ -55,16 +72,73 @@ def strip_code_fences(text: str) -> str:
     return _FENCE.sub("", text.strip()).strip()
 
 
+def repair_json(text: str) -> str:
+    """Fix the most common model JSON slips outside of string literals.
+
+    * thousands separators in bare numbers (``"value": 96,773`` → ``96773``)
+    * trailing commas before ``}`` / ``]``
+    String contents are never touched.
+    """
+    out: list[str] = []
+    in_string = False
+    escape = False
+    i = 0
+    n = len(text)
+    while i < n:
+        ch = text[i]
+        if in_string:
+            out.append(ch)
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_string = False
+            i += 1
+            continue
+        if ch == '"':
+            in_string = True
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "," and out and out[-1].isdigit():
+            j = i + 1
+            digits = 0
+            while j < n and text[j].isdigit():
+                digits += 1
+                j += 1
+            if digits == 3 and (j >= n or not text[j].isdigit()):
+                i += 1  # drop the separator
+                continue
+        if ch == ",":
+            j = i + 1
+            while j < n and text[j] in " \t\r\n":
+                j += 1
+            if j < n and text[j] in "}]":
+                i += 1  # trailing comma
+                continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
 def parse_json_object(text: str) -> dict[str, Any]:
-    """Parse a JSON object from model text, tolerating fences and leading prose."""
+    """Parse a JSON object from model text, tolerating fences, leading prose and number slips."""
     cleaned = strip_code_fences(text)
-    try:
-        value = json.loads(cleaned)
-    except json.JSONDecodeError:
-        start, end = cleaned.find("{"), cleaned.rfind("}")
-        if start < 0 or end <= start:
-            raise
-        value = json.loads(cleaned[start : end + 1])
+    start, end = cleaned.find("{"), cleaned.rfind("}")
+    candidates = [cleaned]
+    if start >= 0 and end > start:
+        candidates.append(cleaned[start : end + 1])
+    candidates += [repair_json(c) for c in list(candidates)]
+    last: Exception | None = None
+    for candidate in candidates:
+        try:
+            value = json.loads(candidate)
+            break
+        except json.JSONDecodeError as exc:
+            last = exc
+    else:
+        raise last  # type: ignore[misc]
     if not isinstance(value, dict):
         raise ValueError("expected a JSON object")
     return value
@@ -108,7 +182,12 @@ def structured(
             return model_cls.model_validate(data), usage, answered_by
         except (ValueError, ValidationError) as exc:
             last_error = exc
-            log.warning("structured output invalid (attempt %d): %s", attempt + 1, str(exc)[:300])
+            log.warning(
+                "structured output invalid (attempt %d): %s | content: %r",
+                attempt + 1,
+                str(exc)[:200],
+                (response.content or "")[:300],
+            )
             attempt_messages = [
                 *messages,
                 {"role": "assistant", "content": response.content or ""},
@@ -184,6 +263,8 @@ class OpenAICompatibleProvider:
                 last = exc
             except APIStatusError as exc:
                 last = exc
+                if _is_quota_error(exc):
+                    raise QuotaExhaustedError(self._describe(exc)) from exc
                 if exc.status_code not in _RETRYABLE_STATUS:
                     raise LLMError(self._describe(exc)) from exc
             except LLMError as exc:

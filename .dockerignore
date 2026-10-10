@@ -1,0 +1,13 @@
+.venv
+.git
+.env
+.env.*
+!.env.example
+data/index
+**/__pycache__
+.pytest_cache
+.ruff_cache
+docs
+tests
+*.md
+!README.md

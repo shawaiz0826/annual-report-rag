@@ -139,10 +139,11 @@ class ChatService:
 
     @cached_property
     def agent(self) -> Agent:
-        """The tool-calling agent."""
+        """The tool-calling agent (the retriever — and its embedding model — load on first search)."""
+        lazy_retriever = _Lazy(lambda: self.retriever)
         return Agent(
             self.provider,
-            lambda: ToolBox(self.catalog, self.retriever, self.fact_store, self.registry),
+            lambda: ToolBox(self.catalog, lazy_retriever, self.fact_store, self.registry),
             self.catalog,
             self.settings.agent,
             self.traces,
@@ -217,19 +218,25 @@ class ChatService:
         return pipeline.run(path or self.settings.paths.raw_dir, force=force)
 
     def extract_facts(self, force: bool = False) -> dict[str, int]:
-        """(Re)run fact extraction for catalogued financial documents without re-profiling."""
+        """(Re)run fact extraction for catalogued financial documents without re-profiling.
+
+        Documents whose raw facts are complete are skipped unless ``force``; documents with
+        failed pages are re-extracted. A quota error stops the run (partial results are kept
+        and reconciled) and is re-raised so the caller can report it.
+        """
         counts: dict[str, int] = {}
-        for profile in self.catalog.financial_documents():
-            raw_path = self.settings.paths.index_dir / "facts_raw" / f"{profile.document_id}.json"
-            if raw_path.exists() and not force:
-                continue
-            pages = self.store.load_pages(profile.document_id)
-            chunks = self.store.load_chunks(profile.document_id)
-            n, _usage = self.fact_extractor.extract_document(profile, pages, chunks)
-            self.catalog.set_stats(profile.document_id, facts=n)
-            counts[profile.file_name] = n
-        self.fact_extractor.finalise()
-        self.catalog.save()
+        try:
+            for profile in self.catalog.financial_documents():
+                if self.fact_extractor.is_complete(profile.document_id) and not force:
+                    continue
+                pages = self.store.load_pages(profile.document_id)
+                chunks = self.store.load_chunks(profile.document_id)
+                n, _usage = self.fact_extractor.extract_document(profile, pages, chunks)
+                self.catalog.set_stats(profile.document_id, facts=n)
+                counts[profile.file_name] = n
+        finally:
+            self.fact_extractor.finalise()
+            self.catalog.save()
         return counts
 
     def reprocess(self) -> dict[str, int]:
@@ -280,3 +287,16 @@ class ChatService:
             "vectors": self.vector_store.count(),
             "facts": self.fact_store.count(),
         }
+
+
+class _Lazy:
+    """Defer construction of a heavy component until an attribute is first used."""
+
+    def __init__(self, factory: Any) -> None:
+        self._factory = factory
+        self._target: Any = None
+
+    def __getattr__(self, name: str) -> Any:
+        if self._target is None:
+            self._target = self._factory()
+        return getattr(self._target, name)

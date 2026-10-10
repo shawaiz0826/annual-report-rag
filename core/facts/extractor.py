@@ -6,6 +6,7 @@ import hashlib
 import json
 import logging
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -17,7 +18,7 @@ from core.facts.reconcile import reconcile
 from core.facts.registry import Registry, normalise_alias
 from core.facts.store import FactStore
 from core.index.hybrid import HybridRetriever
-from core.llm.client import LLMProvider, structured
+from core.llm.client import LLMProvider, QuotaExhaustedError, structured
 from core.models import (
     UNIT_MULTIPLIER,
     Chunk,
@@ -34,14 +35,16 @@ log = logging.getLogger(__name__)
 class ExtractedItem(BaseModel):
     """One figure as returned by the model."""
 
-    metric_alias_seen: str = ""
+    metric_alias_seen: str = Field(description="The label exactly as printed on the page")
     canonical_metric: str
     fiscal_year: int
     value: float
     unit: ReportingUnit | None = None
     currency: str | None = None
     is_comparative: bool = False
-    evidence_snippet: str = ""
+    evidence_snippet: str = Field(
+        default="", description="The line the number came from (≤ 120 chars)"
+    )
 
 
 class ExtractionOutput(BaseModel):
@@ -212,10 +215,11 @@ class FactExtractor:
         usage = Usage()
         records: list[FactRecord] = []
         warnings: list[str] = []
-        for page_no in selected:
+
+        def work(page_no: int) -> tuple[int, list[FactRecord], list[str], Usage]:
             page = by_page.get(page_no)
             if page is None:
-                continue
+                return page_no, [], [], Usage()
             messages = build_extraction_messages(profile, page, self.registry)
             try:
                 output, call_usage, model = structured(
@@ -226,16 +230,26 @@ class FactExtractor:
                     model=self.model,
                     max_tokens=6000,
                 )
+            except QuotaExhaustedError:
+                raise  # stop the whole run: retrying other pages cannot succeed
             except Exception as exc:  # one bad page must not sink the document
                 log.warning("%s p.%d: extraction failed: %s", profile.file_name, page_no, exc)
-                warnings.append(f"p.{page_no}: extraction failed")
-                continue
-            usage = usage + call_usage
+                return page_no, [], [f"p.{page_no}: extraction failed"], Usage()
             page_records, page_warnings = to_fact_records(
                 output.items, profile, page_no, self.registry, model=model, prompt_version=version
             )
-            records.extend(page_records)
-            warnings.extend(page_warnings)
+            return page_no, page_records, page_warnings, call_usage
+
+        workers = max(1, self.config.extraction_concurrency)
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            try:
+                for _page_no, page_records, page_warnings, call_usage in pool.map(work, selected):
+                    records.extend(page_records)
+                    warnings.extend(page_warnings)
+                    usage = usage + call_usage
+            except QuotaExhaustedError:
+                pool.shutdown(wait=False, cancel_futures=True)
+                raise
         self._save_raw(profile.document_id, records, selected, warnings)
         log.info(
             "%s: %d raw facts from pages %s (%d warnings)",
@@ -292,3 +306,10 @@ class FactExtractor:
         if not path.exists():
             return []
         return list(json.loads(path.read_text(encoding="utf-8")).get("warnings", []))
+
+    def is_complete(self, document_id: str) -> bool:
+        """True when raw facts exist and no page failed."""
+        path = self.raw_dir / f"{document_id}.json"
+        return path.exists() and not any(
+            "extraction failed" in w for w in self.raw_warnings(document_id)
+        )

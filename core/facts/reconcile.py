@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from core.models import FactRecord
+from core.models import UNIT_MULTIPLIER, FactRecord
 
 
 def _agree(a: float, b: float, tolerance_pct: float) -> bool:
@@ -31,23 +31,32 @@ def reconcile(
     groups: dict[tuple[str, str, int], list[FactRecord]] = defaultdict(list)
     for record in records:
         groups[(record.legal_entity, record.metric, record.fiscal_year)].append(record)
+    # how many facts each page yielded: statement pages yield many, narrative pages few
+    page_richness: dict[tuple[str, int], int] = defaultdict(int)
+    for record in records:
+        page_richness[(record.document_id, record.page)] += 1
 
     out: list[FactRecord] = []
     for group in groups.values():
-        out.extend(_reconcile_group(group, tolerance_pct, min_confidence))
+        out.extend(_reconcile_group(group, tolerance_pct, min_confidence, page_richness))
     return out
 
 
 def _reconcile_group(
-    group: list[FactRecord], tolerance_pct: float, min_confidence: float
+    group: list[FactRecord],
+    tolerance_pct: float,
+    min_confidence: float,
+    page_richness: dict[tuple[str, int], int],
 ) -> list[FactRecord]:
-    # 1. merge agreeing duplicates within the same document
+    # 1. within each document: merge agreeing duplicates; on disagreement keep the record
+    #    from the richest page (the statements page) and demote the others
     by_doc: dict[str, list[FactRecord]] = defaultdict(list)
     for r in group:
         by_doc[r.document_id].append(r)
     per_doc: list[FactRecord] = []
+    demoted: list[FactRecord] = []
     for doc_records in by_doc.values():
-        doc_records.sort(key=lambda r: r.page)
+        doc_records.sort(key=lambda r: (-page_richness[(r.document_id, r.page)], r.page))
         kept: list[FactRecord] = []
         for r in doc_records:
             twin = next(
@@ -55,9 +64,27 @@ def _reconcile_group(
             )
             if twin is None:
                 kept.append(r.model_copy())
+            elif UNIT_MULTIPLIER[r.unit_reported] < UNIT_MULTIPLIER[twin.unit_reported]:
+                # same figure printed more precisely elsewhere (17,937 million beats "$18 billion")
+                finer = r.model_copy()
+                finer.reconciliation_note = _append(
+                    twin.reconciliation_note, f"also on p.{twin.page} (rounded)"
+                )
+                kept[kept.index(twin)] = finer
             elif r.page != twin.page:
                 twin.reconciliation_note = _append(twin.reconciliation_note, f"also on p.{r.page}")
-        per_doc.extend(kept)
+        primary, *others = kept
+        per_doc.append(primary)
+        for o in others:
+            o.canonical = False
+            o.confidence = 0.4
+            o.usable = o.confidence >= min_confidence
+            o.reconciliation_note = _append(
+                o.reconciliation_note,
+                f"differs from p.{primary.page} of the same report "
+                f"({primary.value_reported:,.0f} {primary.unit_reported}); possibly a different line item",
+            )
+            demoted.append(o)
 
     # 2. cross-document reconciliation
     def is_original(r: FactRecord) -> bool:
@@ -69,7 +96,7 @@ def _reconcile_group(
         only.confidence = 0.8 if is_original(only) else 0.6
         only.canonical = True
         only.usable = only.confidence >= min_confidence
-        return [only]
+        return [only, *demoted]
 
     canonical = per_doc[0]
     others = per_doc[1:]
@@ -108,7 +135,7 @@ def _reconcile_group(
     canonical.canonical = True
     for r in per_doc:
         r.usable = r.confidence >= min_confidence
-    return per_doc
+    return [*per_doc, *demoted]
 
 
 def _append(existing: str | None, note: str) -> str:

@@ -57,6 +57,7 @@ retrieval:
 facts:
   pages_per_document: 6         # statement pages selected via retrieval per metric hints
   max_table_pages: 4            # extra pages whose extracted tables mention a registry metric
+  extraction_concurrency: 4     # parallel LLM calls per document during extraction
   agreement_tolerance_pct: 1.0
   min_confidence_to_use: 0.5
 

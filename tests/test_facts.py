@@ -236,3 +236,30 @@ def test_store_roundtrip_lookup_coverage_export(tmp_path: Path):
     store.delete_document("doc23")
     assert store.count() == 1
     store.close()
+
+
+def test_same_document_disagreement_prefers_richest_page():
+    statement_a = fact(fact_id="s1", metric="profit_before_tax", page=10, value_reported=16_060)
+    statement_b = fact(fact_id="s2", metric="revenue", page=10, value_reported=111_239)
+    statement_c = fact(fact_id="s3", metric="net_income", page=10, value_reported=12_463)
+    narrative = fact(fact_id="n1", metric="profit_before_tax", page=47, value_reported=16_289)
+    out = {r.fact_id: r for r in reconcile([narrative, statement_a, statement_b, statement_c])}
+    assert out["s1"].canonical and out["s1"].confidence == 0.8
+    assert not out["n1"].canonical and out["n1"].confidence == 0.4 and not out["n1"].usable
+    assert "differs from p.10" in out["n1"].reconciliation_note
+
+
+def test_rounded_duplicate_yields_to_precise_figure():
+    rounded = fact(
+        fact_id="r", metric="net_income", page=71, value_reported=18, unit_reported="billions"
+    )
+    precise = fact(
+        fact_id="p", metric="net_income", page=39, value_reported=17_937, unit_reported="millions"
+    )
+    filler = [
+        fact(fact_id=f"x{i}", metric=m, page=71, value_reported=1)
+        for i, m in enumerate(["total_equity", "revenue"])
+    ]
+    out = {r.fact_id: r for r in reconcile([rounded, precise, *filler])}
+    assert "p" in out and out["p"].canonical and out["p"].value_reported == 17_937
+    assert "r" not in out and "also on p.71 (rounded)" in out["p"].reconciliation_note
