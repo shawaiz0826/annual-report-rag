@@ -44,10 +44,10 @@ class DocumentProfile(BaseModel):
     file_name: str
     doc_type: DocType
     issuer: str | None = Field(
-        default=None, description="Canonical brand / group name, e.g. 'BMW'; None for news"
+        default=None, description="Canonical brand / group name, e.g. 'Acme'; None for news"
     )
     legal_entity: str | None = Field(
-        default=None, description="e.g. 'BMW Finance N.V.', 'Tesla, Inc.'"
+        default=None, description="e.g. 'Acme Finance B.V.', 'Acme, Inc.'"
     )
     entity_type: EntityType | None = None
     parent_organisation: str | None = None
@@ -194,7 +194,7 @@ class Citation(BaseModel):
     ref: str = Field(description="chunk_id or fact_id")
 
     def label(self) -> str:
-        """Inline citation label, e.g. '[BMW Finance N.V. FY2023 p.12]'."""
+        """Inline citation label, e.g. '[Acme Finance B.V. FY2023 p.12]'."""
         bits = [
             b
             for b in (self.legal_entity, f"FY{self.fiscal_year}" if self.fiscal_year else None)

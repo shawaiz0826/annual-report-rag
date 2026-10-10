@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+import threading
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
@@ -84,10 +85,12 @@ class SQLiteSessionStore:
 
     def __init__(self, path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
-        self._conn = sqlite3.connect(str(path))
-        self._conn.execute(
-            "CREATE TABLE IF NOT EXISTS sessions (session_id TEXT PRIMARY KEY, created_at TEXT, json TEXT)"
-        )
+        self._conn = sqlite3.connect(str(path), check_same_thread=False)
+        self._lock = threading.RLock()
+        with self._lock:
+            self._conn.execute(
+                "CREATE TABLE IF NOT EXISTS sessions (session_id TEXT PRIMARY KEY, created_at TEXT, json TEXT)"
+            )
 
     def create(self) -> Session:
         """Start a new session."""
@@ -97,9 +100,10 @@ class SQLiteSessionStore:
 
     def get(self, session_id: str) -> Session | None:
         """Load a session or None."""
-        row = self._conn.execute(
-            "SELECT json FROM sessions WHERE session_id = ?", (session_id,)
-        ).fetchone()
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT json FROM sessions WHERE session_id = ?", (session_id,)
+            ).fetchone()
         return Session.model_validate_json(row[0]) if row else None
 
     def append(self, session_id: str, turn: Turn) -> None:
@@ -115,7 +119,7 @@ class SQLiteSessionStore:
         self._save(session)
 
     def _save(self, session: Session) -> None:
-        with self._conn:
+        with self._lock, self._conn:
             self._conn.execute(
                 "INSERT OR REPLACE INTO sessions (session_id, created_at, json) VALUES (?, ?, ?)",
                 (

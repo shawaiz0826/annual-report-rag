@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import sqlite3
+import threading
 from collections import defaultdict
 from pathlib import Path
 
@@ -32,27 +33,31 @@ class FactStore:
     def __init__(self, path: Path) -> None:
         self.path = path
         path.parent.mkdir(parents=True, exist_ok=True)
-        self._conn = sqlite3.connect(str(path))
+        # one connection shared across threads (FastAPI runs sync endpoints in a pool);
+        # a lock serialises access, which is plenty at this scale
+        self._conn = sqlite3.connect(str(path), check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
-        self._conn.executescript(_SCHEMA)
+        self._lock = threading.RLock()
+        with self._lock:
+            self._conn.executescript(_SCHEMA)
 
     # ------------------------------------------------------------------ mutation
 
     def replace_document(self, document_id: str, records: list[FactRecord]) -> None:
         """Replace all facts of a document (raw, pre-reconciliation)."""
-        with self._conn:
+        with self._lock, self._conn:
             self._conn.execute("DELETE FROM facts WHERE document_id = ?", (document_id,))
             self._insert(records)
 
     def replace_all(self, records: list[FactRecord]) -> None:
         """Replace the whole table (after reconciliation)."""
-        with self._conn:
+        with self._lock, self._conn:
             self._conn.execute("DELETE FROM facts")
             self._insert(records)
 
     def delete_document(self, document_id: str) -> None:
         """Drop a document's facts."""
-        with self._conn:
+        with self._lock, self._conn:
             self._conn.execute("DELETE FROM facts WHERE document_id = ?", (document_id,))
 
     def _insert(self, records: list[FactRecord]) -> None:
@@ -66,12 +71,11 @@ class FactStore:
 
     def all(self) -> list[FactRecord]:
         """Every row."""
-        return [
-            _from_row(r)
-            for r in self._conn.execute(
+        with self._lock:
+            rows = self._conn.execute(
                 "SELECT * FROM facts ORDER BY issuer, legal_entity, metric, fiscal_year, page"
-            )
-        ]
+            ).fetchall()
+        return [_from_row(r) for r in rows]
 
     def lookup(
         self,
@@ -102,10 +106,11 @@ class FactStore:
         if usable_only:
             clauses.append("usable = '1'")
         where = f"WHERE {' AND '.join(clauses)}" if clauses else ""
-        rows = self._conn.execute(
-            f"SELECT * FROM facts {where} ORDER BY legal_entity, metric, fiscal_year, canonical DESC, page",
-            args,
-        )
+        with self._lock:
+            rows = self._conn.execute(
+                f"SELECT * FROM facts {where} ORDER BY legal_entity, metric, fiscal_year, canonical DESC, page",
+                args,
+            ).fetchall()
         return [_from_row(r) for r in rows]
 
     def coverage(
@@ -119,7 +124,8 @@ class FactStore:
 
     def count(self) -> int:
         """Number of rows."""
-        return int(self._conn.execute("SELECT COUNT(*) FROM facts").fetchone()[0])
+        with self._lock:
+            return int(self._conn.execute("SELECT COUNT(*) FROM facts").fetchone()[0])
 
     def export_csv(self, path: Path) -> int:
         """Write every row to CSV; returns the row count."""
@@ -134,7 +140,8 @@ class FactStore:
 
     def close(self) -> None:
         """Close the connection."""
-        self._conn.close()
+        with self._lock:
+            self._conn.close()
 
 
 def _to_sql(value: object) -> object:
