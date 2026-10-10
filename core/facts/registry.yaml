@@ -1,0 +1,164 @@
+# Metric registry — data, not code. Add a metric here and the extractor, the facts
+# tool and the compute tool pick it up. Aliases are matched case- and
+# punctuation-insensitively. `search_hints` drive page selection before extraction.
+version: 2
+
+metrics:
+  revenue:
+    label: Revenue
+    kind: flow
+    aliases:
+      - total revenues
+      - revenues
+      - revenue
+      - group revenues
+      - net sales
+      - sales revenue
+      - sales
+      - turnover
+      - total net sales
+      - "revenue ($m)"
+    search_hints: ["total revenues", "group revenues", "revenues", "revenue"]
+
+  net_income:
+    label: Net income
+    kind: flow
+    aliases:
+      - net income
+      - net profit
+      - net earnings
+      - profit for the year
+      - net income attributable to common stockholders
+      - net income attributable to the company
+      - group net profit
+      - group net profit / loss
+      - result for the year
+      - net result
+      - net income/(loss) for the year
+      - net income (loss)
+      - profit / loss from continuing operations
+    search_hints: ["net income", "net profit", "profit for the year", "result for the year", "net income attributable"]
+
+  profit_before_tax:
+    label: Profit before tax
+    kind: flow
+    aliases:
+      - income before income taxes
+      - earnings before tax
+      - ebt
+      - group profit before tax
+      - group profit / loss before tax
+      - profit before taxation
+      - profit before tax
+      - result before taxation
+      - income (loss) before income taxes
+    search_hints: ["profit before tax", "income before income taxes", "result before taxation"]
+
+  operating_income:
+    label: Operating income (EBIT)
+    kind: flow
+    aliases:
+      - income from operations
+      - operating income
+      - operating profit
+      - operating profit / loss
+      - ebit
+      - earnings before interest and taxes
+      - group profit / loss before financial result
+      - profit before financial result
+      - operating income (loss)
+    search_hints: ["income from operations", "operating income", "operating profit", "EBIT", "before financial result"]
+
+  ebitda:
+    label: EBITDA
+    kind: flow
+    aliases:
+      - ebitda
+      - earnings before interest, taxes, depreciation and amortization
+      - earnings before interest, taxes, depreciation and amortisation
+      - adjusted ebitda
+    search_hints: ["EBITDA", "earnings before interest, taxes, depreciation"]
+
+  gross_profit:
+    label: Gross profit
+    kind: flow
+    aliases:
+      - gross profit
+      - gross margin
+      - total gross profit
+    search_hints: ["gross profit"]
+
+  interest_income:
+    label: Interest income
+    kind: flow
+    aliases:
+      - interest income
+      - interest and similar income
+      - total interest income
+    search_hints: ["interest income"]
+
+  total_assets:
+    label: Total assets
+    kind: stock
+    aliases:
+      - total assets
+    search_hints: ["total assets"]
+
+  total_equity:
+    label: Total equity
+    kind: stock
+    aliases:
+      - total equity
+      - total stockholders' equity
+      - total shareholders' equity
+      - equity
+      - total equity attributable to shareholders
+    search_hints: ["total equity", "stockholders' equity"]
+
+  free_cash_flow:
+    label: Free cash flow
+    kind: flow
+    aliases:
+      - free cash flow
+      - free cash flow automotive segment
+    search_hints: ["free cash flow"]
+
+derived:
+  net_margin:
+    label: Net margin
+    formula: "net_income / revenue"
+    inputs: [net_income, revenue]
+    output: ratio
+    same_entity_year: true
+
+  operating_margin:
+    label: Operating margin
+    formula: "operating_income / revenue"
+    inputs: [operating_income, revenue]
+    output: ratio
+    same_entity_year: true
+
+  yoy_growth:
+    label: Year-on-year growth
+    formula: "(current - previous) / abs(previous)"
+    inputs: [current, previous]
+    output: ratio
+
+  cagr:
+    label: Compound annual growth rate
+    formula: "(end / start) ** (1 / years) - 1"
+    inputs: [end, start]
+    params: [years]
+    output: ratio
+
+  difference:
+    label: Difference (a − b)
+    formula: "a - b"
+    inputs: [a, b]
+    output: amount
+
+  ratio:
+    label: Ratio (a ÷ b)
+    formula: "a / b"
+    inputs: [a, b]
+    output: ratio

@@ -21,7 +21,7 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D"]
 "scripts/*" = ["D"]
-"apps/*" = ["D"]
+"apps/*" = ["D", "B008"]
 "api/*" = ["D"]
 "eval/*" = ["D"]
 

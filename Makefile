@@ -38,6 +38,9 @@ ingest: ## Ingest data/raw (idempotent; skips documents already in the catalog)
 reingest: ## Force re-ingestion of every document
 	$(PYTHON) scripts/ingest.py --force
 
+reindex: ## Rebuild vector + BM25 indexes from stored chunks (no LLM calls)
+	$(PYTHON) -m apps.cli reindex
+
 chat: ## Terminal chat (the demo)
 	$(PYTHON) -m apps.cli chat
 
@@ -46,6 +49,9 @@ catalog: ## Print the discovered document catalog
 
 facts: ## Print facts: make facts ARGS="Tesla revenue"
 	$(PYTHON) -m apps.cli facts $(ARGS)
+
+extract-facts: ## (Re)run fact extraction + reconciliation without re-profiling
+	$(PYTHON) -m apps.cli extract-facts
 
 search: ## Hybrid search: make search Q="BMW group revenues 2017" ARGS="--issuer BMW"
 	$(PYTHON) scripts/search.py "$(Q)" $(ARGS)
