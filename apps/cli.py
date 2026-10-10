@@ -182,10 +182,6 @@ def ingest(
     raise typer.Exit(ingest_main())
 
 
-if __name__ == "__main__":
-    app()
-
-
 HELP = """Commands:
   /why              explain the last answer (tool calls, chunks with scores, facts, cost)
   /catalog          documents discovered at ingest
@@ -305,7 +301,7 @@ def chat(
         if text in ("/quit", "/exit", "/q"):
             break
         if text == "/help":
-            console.print(HELP)
+            console.print(HELP, markup=False)
             continue
         if text == "/why":
             console.print(Panel(service.explain(last_trace_id), title="Why", border_style="blue"))
@@ -350,3 +346,7 @@ def chat(
                 continue
         last_trace_id = trace.trace_id
         render_answer(console, answer, trace)
+
+
+if __name__ == "__main__":
+    app()
