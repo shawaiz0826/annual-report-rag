@@ -312,3 +312,18 @@ def test_currency_mismatch_surfaces_as_tool_error(tmp_path: Path):
         "no documents for issuer" in bad_issuer.payload["error"] and bad_issuer.payload["coverage"]
     )
     assert json.dumps(bad_issuer.payload)  # serialisable
+
+
+def test_lookup_returns_nearest_available_when_year_missing(tmp_path: Path):
+    provider = ScriptedProvider([])
+    agent, _r, _t = _build(tmp_path, provider)
+    toolbox = agent.toolbox_factory()
+    result = toolbox.run(
+        "lookup_facts", {"issuer": "Acme", "metric": "revenue", "fiscal_years": [2025]}
+    )
+    assert result.payload["facts"] == []
+    nearest = result.payload["nearest_available"]
+    assert [f["fiscal_year"] for f in nearest] == [2023, 2022]
+    assert "nearest" in result.payload["note"]
+    # nearest facts are citable
+    assert toolbox._citation("fact", nearest[0]["fact_id"]) is not None

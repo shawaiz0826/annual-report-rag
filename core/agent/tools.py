@@ -364,14 +364,36 @@ class ToolBox:
             "coverage": self.fact_store.coverage(issuer=issuer, metric=metric),
             "document_coverage": self.catalog.coverage(issuer),
         }
-        if not rows:
+        if not rows and args.fiscal_years:
+            nearest = self.fact_store.lookup(
+                issuer=issuer, legal_entity=legal_entity, metric=metric
+            )
+            nearest.sort(
+                key=lambda f: (
+                    min(abs(f.fiscal_year - y) for y in args.fiscal_years),
+                    -f.fiscal_year,
+                )
+            )
+            for f in nearest[:6]:
+                self.seen_facts[f.fact_id] = f
+            payload["nearest_available"] = [self._fact_row(f) for f in nearest[:6]]
+            payload["note"] = (
+                "no facts for the requested fiscal years; nearest_available lists the closest years "
+                "that exist (cite them when offering the nearest figure)"
+            )
+        elif not rows:
             payload["note"] = "no facts match; see coverage for what exists"
         years = sorted({f.fiscal_year for f in facts})
         return ToolResult(
             payload=payload,
-            summary=f"{len(rows)} facts for {metric} years={years}",
+            summary=f"{len(rows)} facts for {metric} years={years}"
+            + (
+                f" (nearest available: {len(payload['nearest_available'])})"
+                if "nearest_available" in payload
+                else ""
+            ),
             latency_ms=0,
-            facts=rows,
+            facts=rows + payload.get("nearest_available", []),
         )
 
     def _compute_metric(self, args: ComputeMetricInput) -> ToolResult:
