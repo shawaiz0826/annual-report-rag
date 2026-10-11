@@ -18,8 +18,10 @@ flowchart LR
 ```bash
 make setup                      # Python 3.11 venv, CPU torch, pinned deps, .env from .env.example
 # put OPENROUTER_API_KEY in .env
-make ingest                     # profile + index + extract facts for data/raw (≈15 min, idempotent)
+make rebuild                    # indexes + facts from the committed artefacts, ZERO model calls (≈6 min)
+#  (or `make ingest` to re-profile and re-extract with the model: ≈70 calls, ≈15 min)
 make chat                       # terminal demo; try /catalog, /facts Tesla revenue, /why, /model
+python -m apps.cli chat --replay   # recorded demo answers ([replay] in the footer), no model calls
 make api                        # FastAPI on :8000  (curl localhost:8000/health)
 make ui                         # Streamlit on :8501
 make eval                       # golden set on both configured models → eval/reports/latest.md
@@ -140,7 +142,7 @@ What the files really are and how each anomaly is handled generically: [docs/DAT
 
 - Figures are only as good as the extraction layer of the PDFs; the Ford files are 10-K *extracts* without income statements, so revenue/net income come from MD&A key-metric tables.
 - EBITDA is in the registry but none of the 10-Ks report it — the assistant says so rather than deriving it.
-- Free OpenRouter endpoints are rate-limited (50 requests/day without credits; upstream 429s happen); `--replay` exists for exactly this.
+- Free OpenRouter endpoints are rate-limited (50 requests/day without credits; upstream 429s happen); `--replay` and `make rebuild` exist for exactly this — the committed `catalog.json`, `facts_export.csv` and `replay.json` make the whole local state reproducible without a model.
 - No reranker, section-aware chunking, currency conversion or authentication (see roadmap).
 
 ## Roadmap (explicitly out of scope)
