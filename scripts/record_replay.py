@@ -25,13 +25,20 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Record demo answers into the replay cache")
     parser.add_argument("--model", default=None, help="model id (default: configured primary)")
     parser.add_argument("--show-model-knowledge", action="store_true")
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="serve already-recorded turns from the cache (no model call) and record the rest",
+    )
     args = parser.parse_args()
 
     console = Console()
     service = ChatService()
     service.record_enabled = True
+    service.replay_enabled = args.resume
     sessions = json.loads(TURNS.read_text(encoding="utf-8"))["sessions"]
     failures = 0
+    stop = False
     for turns in sessions:
         session = service.new_session()
         for turn in turns:
@@ -42,11 +49,17 @@ def main() -> int:
                 show_model_knowledge=args.show_model_knowledge,
             )
             status = (
-                "[green]ok[/green]"
+                ("[cyan]cached[/cyan]" if trace.replayed else "[green]ok[/green]")
                 if trace.error is None
                 else f"[red]error: {trace.error[:80]}[/red]"
             )
             failures += int(trace.error is not None)
+            if trace.error and ("per-day" in trace.error or "credits" in trace.error.lower()):
+                console.print("[red]quota exhausted — stopping; re-run with --resume later[/red]")
+                stop = True
+                break
+        if stop:
+            break
             console.print(
                 f"{status}  {turn}  → answered={answer.answered}, {len(answer.citations)} citations, {trace.latency_ms / 1000:.0f}s"
             )
