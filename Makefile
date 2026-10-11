@@ -41,6 +41,13 @@ reingest: ## Force re-ingestion of every document
 reprocess: ## Re-clean/re-chunk/re-index from source files, keeping profiles (no LLM calls)
 	$(PYTHON) -m apps.cli reprocess
 
+rebuild: ## Rebuild ALL local state from committed artefacts with ZERO model calls (≈6 min)
+	$(PYTHON) -m apps.cli reprocess
+	$(PYTHON) -m apps.cli import-facts
+
+import-facts: ## Load facts from data/derived/facts_export.csv (no LLM calls)
+	$(PYTHON) -m apps.cli import-facts
+
 reindex: ## Rebuild vector + BM25 indexes from stored chunks (no LLM calls)
 	$(PYTHON) -m apps.cli reindex
 

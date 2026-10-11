@@ -256,6 +256,10 @@ class ChatService:
         self.catalog.save()
         return counts
 
+    def import_facts(self) -> int:
+        """Load facts from the committed CSV export (no LLM calls)."""
+        return self.fact_store.import_csv(self.settings.paths.derived_dir / "facts_export.csv")
+
     def reindex(self) -> dict[str, int]:
         """Rebuild the vector and BM25 indexes from stored chunks (no LLM calls)."""
         counts: dict[str, int] = {}

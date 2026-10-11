@@ -7,7 +7,7 @@ paths:
   derived_dir: data/derived
   index_dir: data/index
   traces_dir: data/index/traces
-  replay_cache: data/index/replay.json
+  replay_cache: data/derived/replay.json   # committed: recorded demo answers
 
 ingestion:
   profile_pages: 3              # first N pages sent to the profiler

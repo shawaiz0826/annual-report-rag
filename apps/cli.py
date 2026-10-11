@@ -158,6 +158,14 @@ def reprocess() -> None:
     console.print(service.index_stats())
 
 
+@app.command("import-facts")
+def import_facts() -> None:
+    """Load facts from the committed data/derived/facts_export.csv (no LLM calls)."""
+    service = ChatService()
+    console.print(f"imported {service.import_facts()} facts")
+    console.print(service.index_stats())
+
+
 @app.command()
 def reindex() -> None:
     """Rebuild vector + BM25 indexes from stored chunks (no LLM calls)."""

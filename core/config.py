@@ -31,7 +31,7 @@ class PathsConfig(BaseModel):
     derived_dir: Path = Path("data/derived")
     index_dir: Path = Path("data/index")
     traces_dir: Path = Path("data/index/traces")
-    replay_cache: Path = Path("data/index/replay.json")
+    replay_cache: Path = Path("data/derived/replay.json")
 
     @field_validator("*", mode="after")
     @classmethod

@@ -138,6 +138,25 @@ class FactStore:
                 writer.writerow({c: getattr(r, c) for c in _COLUMNS})
         return len(rows)
 
+    def import_csv(self, path: Path) -> int:
+        """Replace the table with the rows of a CSV written by :meth:`export_csv`."""
+        with path.open(newline="", encoding="utf-8") as fh:
+            rows = list(csv.DictReader(fh))
+        records = []
+        for row in rows:
+            data: dict[str, object] = dict(row)
+            for key in ("is_comparative", "canonical", "usable", "verified"):
+                data[key] = str(data[key]) in ("True", "true", "1")
+            for key in ("fiscal_year", "page", "source_fiscal_year"):
+                data[key] = int(float(str(data[key])))
+            for key in ("value_reported", "value_base", "confidence"):
+                data[key] = float(str(data[key]))
+            if not data.get("reconciliation_note"):
+                data["reconciliation_note"] = None
+            records.append(FactRecord.model_validate(data))
+        self.replace_all(records)
+        return len(records)
+
     def close(self) -> None:
         """Close the connection."""
         with self._lock:

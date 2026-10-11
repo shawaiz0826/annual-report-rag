@@ -314,3 +314,25 @@ def test_genuinely_different_figures_still_disagree():
     )
     out = {x.fact_id: x for x in reconcile([a, b])}
     assert out["a"].canonical and "restated" in out["a"].reconciliation_note
+
+
+def test_csv_roundtrip_import(tmp_path: Path):
+    store = FactStore(tmp_path / "a.db")
+    store.replace_all(
+        reconcile(
+            [
+                fact(fact_id="r23"),
+                fact(
+                    fact_id="n23",
+                    metric="net_income",
+                    reconciliation_note="agrees with FY2024 report",
+                ),
+            ]
+        )
+    )
+    store.export_csv(tmp_path / "facts.csv")
+    other = FactStore(tmp_path / "b.db")
+    assert other.import_csv(tmp_path / "facts.csv") == 2
+    a = {f.fact_id: f for f in store.all()}
+    b = {f.fact_id: f for f in other.all()}
+    assert a == b
