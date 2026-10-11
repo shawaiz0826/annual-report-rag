@@ -182,7 +182,8 @@ class ChatService:
                 session, message, model=model_id, show_model_knowledge=show
             )
             if self.record_enabled and trace.error is None:
-                self.replay.put(key, answer, trace)
+                history = [t.content for t in session.turns if t.role == "user"]
+                self.replay.put(key, answer, trace, messages=[*history, message])
         self.sessions.append(session.session_id, Turn(role="user", content=message))
         self.sessions.append(
             session.session_id,

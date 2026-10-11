@@ -34,11 +34,20 @@ class QuotaExhaustedError(LLMError):
     """A rate limit that will not clear by retrying now (daily quota, insufficient credits)."""
 
 
-def _is_quota_error(exc: APIStatusError) -> bool:
+def _error_parts(exc: APIStatusError) -> tuple[str, dict]:
+    """(message, metadata) from an OpenRouter error body, whether or not it is wrapped in 'error'."""
     body = exc.body if isinstance(exc.body, dict) else {}
-    error = body.get("error") if isinstance(body.get("error"), dict) else {}
+    error = body.get("error") if isinstance(body.get("error"), dict) else body
     meta = error.get("metadata") if isinstance(error.get("metadata"), dict) else {}
-    message = str(error.get("message") or exc.message or "").lower()
+    message = str(error.get("message") or "").strip()
+    if not message:
+        message = re.sub(r"^Error code: \d+ - ", "", str(exc.message or ""))
+    return message, meta
+
+
+def _is_quota_error(exc: APIStatusError) -> bool:
+    message, meta = _error_parts(exc)
+    message = message.lower()
     source = str(meta.get("limit_source") or "").lower()
     if exc.status_code == 402:
         return True
@@ -345,13 +354,16 @@ class OpenAICompatibleProvider:
     @staticmethod
     def _describe(exc: Exception | None) -> str:
         if isinstance(exc, APIStatusError):
-            body = exc.body if isinstance(exc.body, dict) else {}
-            msg = (
-                (body.get("error") or {}).get("message")
-                if isinstance(body.get("error"), dict)
-                else None
-            )
-            return f"HTTP {exc.status_code}: {msg or exc.message}"[:500]
+            message, meta = _error_parts(exc)
+            headers = meta.get("headers") if isinstance(meta.get("headers"), dict) else {}
+            reset = headers.get("X-RateLimit-Reset")
+            if reset:
+                try:
+                    when = time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime(int(reset) / 1000))
+                    message += f" (resets {when})"
+                except (TypeError, ValueError):
+                    pass
+            return f"HTTP {exc.status_code}: {message}"[:500]
         return f"{type(exc).__name__}: {exc}"[:500]
 
 

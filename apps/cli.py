@@ -201,6 +201,19 @@ HELP = """Commands:
   /help, /quit"""
 
 
+def _print_recorded(service: ChatService) -> None:
+    """List the conversations the replay cache can serve for the current prompt versions."""
+    convs = service.replay.conversations()
+    if not convs:
+        console.print("[yellow]Replay cache is empty — run `make record-demo`.[/yellow]")
+        return
+    console.print(
+        f"[bold]Recorded conversations[/bold] ({len(convs)} turns; anything else goes live):"
+    )
+    for messages in convs:
+        console.print("  " + "  →  ".join(messages), markup=False)
+
+
 def render_answer(console: Console, answer: AgentAnswer, trace: Trace) -> None:
     """Pretty-print an answer: Markdown panel, citations, caveats, footer."""
     title = "Answer" if answer.answered else "Not answerable from the documents"
@@ -297,6 +310,8 @@ def chat(
             border_style="blue",
         )
     )
+    if replay and not api_url:
+        _print_recorded(service)
     last_trace_id: str | None = None
     while True:
         try:
@@ -339,6 +354,8 @@ def chat(
             if not api_url:
                 service.replay_enabled = flag
             console.print(f"replay {'on' if flag else 'off'}")
+            if flag and not api_url:
+                _print_recorded(service)
             continue
         if text.startswith("/knowledge"):
             knowledge = text.split()[-1].lower() == "on"
@@ -353,6 +370,8 @@ def chat(
                 console.print(f"[red]error: {exc}[/red]")
                 continue
         last_trace_id = trace.trace_id
+        if not api_url and service.replay_enabled and not trace.replayed:
+            console.print("[dim]not in the replay cache → answered live[/dim]")
         render_answer(console, answer, trace)
 
 

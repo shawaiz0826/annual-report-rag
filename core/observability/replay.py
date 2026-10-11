@@ -41,14 +41,30 @@ class ReplayCache:
             return None
         return AgentAnswer.model_validate(entry["answer"]), Trace.model_validate(entry["trace"])
 
-    def put(self, key: str, answer: AgentAnswer, trace: Trace) -> None:
-        """Store and persist."""
+    def put(
+        self,
+        key: str,
+        answer: AgentAnswer,
+        trace: Trace,
+        messages: list[str] | None = None,
+    ) -> None:
+        """Store and persist; ``messages`` is the ordered user side of the conversation."""
         self._data[key] = {
+            "messages": list(messages) if messages else [trace.user_message],
             "answer": answer.model_dump(mode="json"),
             "trace": trace.model_dump(mode="json"),
         }
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.path.write_text(json.dumps(self._data, ensure_ascii=False), encoding="utf-8")
+
+    def conversations(self) -> list[list[str]]:
+        """Recorded conversations as ordered user messages; prefixes of a longer one are folded in."""
+        convs = [
+            entry.get("messages") or [entry["trace"]["user_message"]]
+            for entry in self._data.values()
+        ]
+        full = [c for c in convs if not any(len(o) > len(c) and o[: len(c)] == c for o in convs)]
+        return sorted(full, key=lambda m: m[0].lower())
 
     def __len__(self) -> int:
         return len(self._data)

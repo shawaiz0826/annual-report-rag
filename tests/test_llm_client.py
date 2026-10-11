@@ -23,3 +23,29 @@ def test_parse_json_object_with_fences_prose_and_slips():
         parse_json_object("[1, 2]")
     with pytest.raises(json.JSONDecodeError):
         parse_json_object("no json here")
+
+
+def test_quota_error_description_handles_unwrapped_body():
+    """OpenRouter 429 bodies arrive as the inner error dict; describe them cleanly."""
+    import httpx
+    from openai import APIStatusError
+
+    from core.llm.client import OpenAICompatibleProvider, _is_quota_error
+
+    body = {
+        "message": "Rate limit exceeded: free-models-per-day. Add 10 credits",
+        "code": 429,
+        "metadata": {
+            "headers": {"X-RateLimit-Reset": "1791763200000"},
+            "limit_source": "openrouter_free_tier_daily",
+        },
+    }
+    response = httpx.Response(429, request=httpx.Request("POST", "https://x"))
+    exc = APIStatusError("Error code: 429 - {...}", response=response, body=body)
+    assert _is_quota_error(exc)
+    text = OpenAICompatibleProvider._describe(exc)
+    assert text.startswith("HTTP 429: Rate limit exceeded: free-models-per-day")
+    assert "resets 2026-10-12 00:00 UTC" in text
+    wrapped = APIStatusError("x", response=response, body={"error": body})
+    assert _is_quota_error(wrapped)
+    assert OpenAICompatibleProvider._describe(wrapped) == text

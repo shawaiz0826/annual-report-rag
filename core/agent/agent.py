@@ -12,7 +12,7 @@ from core.agent.prompts import load_prompt, prompt_versions
 from core.agent.tools import FinalAnswerInput, ToolBox, tool_schemas, truncate_for_model
 from core.config import AgentConfig
 from core.index.catalog import Catalog
-from core.llm.client import LLMError, LLMProvider
+from core.llm.client import LLMError, LLMProvider, QuotaExhaustedError
 from core.models import AgentAnswer, Session, ToolCallRecord, Trace, Usage
 from core.observability.tracing import TraceStore, new_trace_id
 
@@ -242,6 +242,23 @@ class Agent:
                         )
                     )
                     break
+        except QuotaExhaustedError as exc:
+            trace.error = str(exc)
+            log.error("agent stopped: model quota exhausted: %s", exc)
+            answer = AgentAnswer(
+                resolved_question=message,
+                answered=False,
+                answer_markdown=(
+                    "No answer was generated: the model quota is exhausted "
+                    f"({exc}). The documents were not consulted, so this is not a "
+                    "statement about their contents."
+                ),
+                confidence="low",
+                caveats=[
+                    "model quota exhausted — wait for the reset, add credits, or switch model "
+                    "(/model in the CLI); recorded answers remain available with /replay on"
+                ],
+            )
         except LLMError as exc:
             trace.error = str(exc)
             log.error("agent failed: %s", exc)
