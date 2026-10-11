@@ -11,7 +11,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 from core.agent.prompts import load_prompt
-from core.config import IngestionConfig
+from core.config import ROOT_DIR, IngestionConfig
 from core.llm.client import LLMProvider, structured
 from core.models import DocType, DocumentProfile, EntityType, PageText, ReportingUnit, Usage
 
@@ -36,6 +36,35 @@ class ProfilerOutput(BaseModel):
     language: str = "en"
     summary: str = ""
     confidence: float = Field(default=0.5, ge=0.0, le=1.0)
+
+
+def portable_path(path: Path) -> str:
+    """Catalog form of a source path: repo-relative when inside the repo, else absolute.
+
+    Relative paths make the committed catalog usable on any machine.
+    """
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(ROOT_DIR).as_posix()
+    except ValueError:
+        return str(resolved)
+
+
+def resolve_source_path(source_path: str, file_name: str, raw_dir: Path) -> Path:
+    """Locate a catalogued source file.
+
+    Tries the stored path (relative paths resolve against the repo root), then a file with
+    the same name under ``raw_dir`` (catalog built on another machine).
+    """
+    candidate = Path(source_path)
+    if not candidate.is_absolute():
+        candidate = ROOT_DIR / candidate
+    if candidate.exists():
+        return candidate
+    matches = sorted(p for p in raw_dir.rglob(file_name) if p.is_file())
+    if matches:
+        return matches[0]
+    raise FileNotFoundError(f"{file_name}: not at {source_path} nor under {raw_dir}")
 
 
 def document_id_for(path: Path) -> str:
@@ -147,7 +176,7 @@ class DocumentProfiler:
         )
         profile = DocumentProfile(
             document_id=document_id,
-            source_path=str(path),
+            source_path=portable_path(path),
             file_name=path.name,
             page_count=page_count,
             profiler_confidence=output.confidence,

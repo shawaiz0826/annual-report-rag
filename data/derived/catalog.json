@@ -2,7 +2,7 @@
   "documents": [
     {
       "document_id": "a22e48d2fa107385",
-      "source_path": "/home/claude/annual-report-rag/data/raw/BMW/BMW_Annual_Report_2021.pdf",
+      "source_path": "data/raw/BMW/BMW_Annual_Report_2021.pdf",
       "file_name": "BMW_Annual_Report_2021.pdf",
       "doc_type": "annual_report",
       "issuer": "BMW",
@@ -26,7 +26,7 @@
     },
     {
       "document_id": "1b11e3c787f98fd7",
-      "source_path": "/home/claude/annual-report-rag/data/raw/BMW/BMW_Annual_Report_2022.pdf",
+      "source_path": "data/raw/BMW/BMW_Annual_Report_2022.pdf",
       "file_name": "BMW_Annual_Report_2022.pdf",
       "doc_type": "annual_report",
       "issuer": "BMW",
@@ -50,7 +50,7 @@
     },
     {
       "document_id": "b126af61b7f13344",
-      "source_path": "/home/claude/annual-report-rag/data/raw/BMW/BMW_Annual_Report_2023.pdf",
+      "source_path": "data/raw/BMW/BMW_Annual_Report_2023.pdf",
       "file_name": "BMW_Annual_Report_2023.pdf",
       "doc_type": "annual_report",
       "issuer": "BMW",
@@ -74,7 +74,7 @@
     },
     {
       "document_id": "f87c2cdad276d476",
-      "source_path": "/home/claude/annual-report-rag/data/raw/Ford/Ford_Annual_Report_2021.pdf",
+      "source_path": "data/raw/Ford/Ford_Annual_Report_2021.pdf",
       "file_name": "Ford_Annual_Report_2021.pdf",
       "doc_type": "annual_report",
       "issuer": "Ford",
@@ -98,7 +98,7 @@
     },
     {
       "document_id": "db760deb91039466",
-      "source_path": "/home/claude/annual-report-rag/data/raw/Ford/Ford_Annual_Report_2022.pdf",
+      "source_path": "data/raw/Ford/Ford_Annual_Report_2022.pdf",
       "file_name": "Ford_Annual_Report_2022.pdf",
       "doc_type": "annual_report",
       "issuer": "Ford",
@@ -122,7 +122,7 @@
     },
     {
       "document_id": "f7db8b241a984dab",
-      "source_path": "/home/claude/annual-report-rag/data/raw/Ford/Ford_Annual_Report_2023.pdf",
+      "source_path": "data/raw/Ford/Ford_Annual_Report_2023.pdf",
       "file_name": "Ford_Annual_Report_2023.pdf",
       "doc_type": "annual_report",
       "issuer": "Ford",
@@ -146,7 +146,7 @@
     },
     {
       "document_id": "f585bb475b011102",
-      "source_path": "/home/claude/annual-report-rag/data/raw/Tesla/Tesla_Annual_Report_2022.pdf",
+      "source_path": "data/raw/Tesla/Tesla_Annual_Report_2022.pdf",
       "file_name": "Tesla_Annual_Report_2022.pdf",
       "doc_type": "annual_report",
       "issuer": "Tesla",
@@ -170,7 +170,7 @@
     },
     {
       "document_id": "589ec657c0b381f6",
-      "source_path": "/home/claude/annual-report-rag/data/raw/Tesla/Tesla_Annual_Report_2023.pdf",
+      "source_path": "data/raw/Tesla/Tesla_Annual_Report_2023.pdf",
       "file_name": "Tesla_Annual_Report_2023.pdf",
       "doc_type": "annual_report",
       "issuer": "Tesla",
@@ -194,7 +194,7 @@
     },
     {
       "document_id": "5219bd6c8f9882d3",
-      "source_path": "/home/claude/annual-report-rag/data/raw/news.pdf",
+      "source_path": "data/raw/news.pdf",
       "file_name": "news.pdf",
       "doc_type": "news",
       "issuer": null,

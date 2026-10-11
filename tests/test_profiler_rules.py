@@ -1,5 +1,7 @@
 """Profiler helpers: unit-declaration detection, page selection, validation rules (no LLM)."""
 
+import pytest
+
 from core.config import IngestionConfig
 from core.ingestion.profiler import DocumentProfiler, detect_unit_declarations, select_profile_pages
 from core.models import DocumentProfile, PageText
@@ -68,3 +70,24 @@ def test_validate_clears_entity_fields_for_news():
     )
     out = DocumentProfiler._validate(profile, [PageText(page=1, text="news")])
     assert out.issuer is None and out.legal_entity is None and out.warnings
+
+
+def test_source_paths_are_portable(tmp_path, monkeypatch):
+    """The committed catalog must work on any machine: relative paths, name fallback."""
+    from core.config import ROOT_DIR
+    from core.ingestion.profiler import portable_path, resolve_source_path
+
+    inside = ROOT_DIR / "data" / "raw" / "x.pdf"
+    assert portable_path(inside) == "data/raw/x.pdf"
+    outside = tmp_path / "y.pdf"
+    assert portable_path(outside) == str(outside.resolve())
+
+    raw = tmp_path / "raw" / "Acme"
+    raw.mkdir(parents=True)
+    (raw / "report.pdf").write_bytes(b"%PDF")
+    found = resolve_source_path(
+        "/elsewhere/build/data/raw/Acme/report.pdf", "report.pdf", tmp_path / "raw"
+    )
+    assert found == raw / "report.pdf"
+    with pytest.raises(FileNotFoundError):
+        resolve_source_path("/elsewhere/missing.pdf", "missing.pdf", tmp_path / "raw")

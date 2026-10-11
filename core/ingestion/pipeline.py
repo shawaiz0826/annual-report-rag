@@ -19,7 +19,7 @@ from core.ingestion.chunker import ChunkingOptions, ChunkingStrategy, FixedWindo
 from core.ingestion.cleaner import CleaningOptions, clean_pages
 from core.ingestion.loaders.base import LoaderRegistry
 from core.ingestion.loaders.registry import default_registry
-from core.ingestion.profiler import DocumentProfiler, document_id_for
+from core.ingestion.profiler import DocumentProfiler, document_id_for, resolve_source_path
 from core.ingestion.store import DocumentStore
 from core.llm.client import LLMProvider
 from core.models import Chunk, DocumentProfile, PageText, Usage
@@ -232,7 +232,9 @@ class IngestionPipeline:
 
     def reprocess_document(self, profile: DocumentProfile) -> int:
         """Re-run load → clean → chunk → store → index for one catalogued document (no LLM)."""
-        path = Path(profile.source_path)
+        path = resolve_source_path(
+            profile.source_path, profile.file_name, self.settings.paths.raw_dir
+        )
         raw_pages = self.loaders.get(path.suffix).load(path)
         pages = clean_pages(raw_pages, self.cleaning)
         chunks = self.chunker.chunk(pages, profile)
