@@ -127,6 +127,15 @@ class FactStore:
         with self._lock:
             return int(self._conn.execute("SELECT COUNT(*) FROM facts").fetchone()[0])
 
+    def count_by_document(self) -> dict[str, int]:
+        """``{document_id: canonical usable facts}`` — what a catalog should show per file."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT document_id, COUNT(*) FROM facts WHERE canonical = '1' AND usable = '1' "
+                "GROUP BY document_id"
+            ).fetchall()
+        return {str(r[0]): int(r[1]) for r in rows}
+
     def export_csv(self, path: Path) -> int:
         """Write every row to CSV; returns the row count."""
         path.parent.mkdir(parents=True, exist_ok=True)

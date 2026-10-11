@@ -3,9 +3,11 @@
 Not a script: every answer is generated live by retrieval → facts → model, and the system answers whatever is asked. The questions below are the ones that show the judgment moments; ask them in any order, in your own words.
 
 ```
-make chat                      # terminal chat (/help inside)
-make ui                        # same service in the browser, with a model selector
+make ui                        # web chat at http://localhost:8501 — Chat, Catalog, Facts, Search
+make chat                      # the same in the terminal (/help inside)
 ```
+
+In the web chat, "How this was answered" under each answer is the `/why` view; the sidebar switches model (`/model`), toggles the labelled model-knowledge note and starts a new conversation (`/reset`); the Catalog, Facts and Search pages are `/catalog`, `/facts` and `scripts/search.py`.
 
 | # | Type | Ask | What to point at |
 |---|---|---|---|

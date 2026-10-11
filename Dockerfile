@@ -20,6 +20,7 @@ COPY config.yaml .
 RUN python -c "import yaml; from sentence_transformers import SentenceTransformer; \
     m = yaml.safe_load(open('config.yaml'))['embeddings']['model']; SentenceTransformer(m, device='cpu'); print('cached', m)"
 
+COPY .streamlit ./.streamlit
 COPY core ./core
 COPY api ./api
 COPY apps ./apps

@@ -259,8 +259,7 @@ class Agent:
                 ),
                 confidence="low",
                 caveats=[
-                    "model quota exhausted — wait for the reset, add credits, or switch model "
-                    "(/model in the CLI)"
+                    "model quota exhausted — wait for the reset, add credits, or switch model"
                 ],
             )
         except LLMError as exc:

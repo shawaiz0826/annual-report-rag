@@ -223,7 +223,7 @@
       "pages_kept": 51,
       "chunks": 257,
       "table_chunks": 1,
-      "facts": 0,
+      "facts": 8,
       "chars": 146793
     },
     "5219bd6c8f9882d3": {
@@ -239,7 +239,7 @@
       "pages_kept": 64,
       "chunks": 443,
       "table_chunks": 61,
-      "facts": 33,
+      "facts": 12,
       "chars": 221160
     },
     "a22e48d2fa107385": {
@@ -247,7 +247,7 @@
       "pages_kept": 50,
       "chunks": 269,
       "table_chunks": 0,
-      "facts": 0,
+      "facts": 20,
       "chars": 153491
     },
     "b126af61b7f13344": {
@@ -255,7 +255,7 @@
       "pages_kept": 50,
       "chunks": 331,
       "table_chunks": 42,
-      "facts": 0,
+      "facts": 6,
       "chars": 171077
     },
     "db760deb91039466": {
@@ -263,7 +263,7 @@
       "pages_kept": 76,
       "chunks": 537,
       "table_chunks": 73,
-      "facts": 16,
+      "facts": 7,
       "chars": 265917
     },
     "f585bb475b011102": {
@@ -271,7 +271,7 @@
       "pages_kept": 61,
       "chunks": 482,
       "table_chunks": 70,
-      "facts": 37,
+      "facts": 16,
       "chars": 240222
     },
     "f7db8b241a984dab": {
@@ -279,7 +279,7 @@
       "pages_kept": 75,
       "chunks": 561,
       "table_chunks": 65,
-      "facts": 22,
+      "facts": 8,
       "chars": 285432
     },
     "f87c2cdad276d476": {
@@ -287,7 +287,7 @@
       "pages_kept": 75,
       "chunks": 513,
       "table_chunks": 78,
-      "facts": 16,
+      "facts": 8,
       "chars": 252666
     }
   }

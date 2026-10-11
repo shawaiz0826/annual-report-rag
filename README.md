@@ -20,12 +20,14 @@ make setup                      # Python 3.11 venv, CPU torch, pinned deps, .env
 # put OPENROUTER_API_KEY in .env
 make rebuild                    # indexes + facts from the committed artefacts, ZERO model calls (≈5–15 min on CPU)
 #  (or `make ingest` to re-profile and re-extract with the model: ≈70 calls, ≈15 min)
-make chat                       # terminal chat; try /catalog, /facts Tesla revenue, /why, /model
+make ui                         # web chat at http://localhost:8501 (opens the browser): Chat · Catalog · Facts · Search
+make chat                       # the same in the terminal; /catalog, /facts Tesla revenue, /why, /model
 make api                        # FastAPI on :8000  (curl localhost:8000/health)
-make ui                         # Streamlit on :8501
 make eval                       # golden set on both configured models → eval/reports/latest.md
-make test lint                  # 83 unit tests, ruff
+make test lint                  # 86 unit tests, ruff
 ```
+
+The web chat shows, under every answer, the same explanation the CLI's `/why` prints: tool calls with their full results, retrieved chunks with both ranks and the fused score, the facts used, and the raw trace. Suggested questions sit above the chat; the sidebar switches model, toggles the labelled model-knowledge note and starts a new conversation.
 
 Docker (web app packaged as an image): `make docker-build && make docker-up`, then `docker compose run --rm api python scripts/ingest.py` once; API on :8000, UI on :8501.
 

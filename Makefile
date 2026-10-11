@@ -69,8 +69,8 @@ search: ## Hybrid search: make search Q="BMW group revenues 2017" ARGS="--issuer
 api: ## Run the FastAPI service on :8000
 	$(BIN)/uvicorn api.main:app --host 0.0.0.0 --port 8000
 
-ui: ## Run the Streamlit UI on :8501
-	$(BIN)/streamlit run apps/streamlit_app.py --server.port 8501 --server.headless true
+ui: ## Web chat: Streamlit on http://localhost:8501 (opens the browser; settings in .streamlit/config.toml)
+	$(BIN)/streamlit run apps/streamlit_app.py --server.port 8501
 
 eval: ## Run the golden-set eval on both configured models and write eval/reports/latest.md
 	$(PYTHON) -m eval.run_eval --both

@@ -336,3 +336,17 @@ def test_csv_roundtrip_import(tmp_path: Path):
     a = {f.fact_id: f for f in store.all()}
     b = {f.fact_id: f for f in other.all()}
     assert a == b
+
+
+def test_count_by_document_counts_usable_canonical_rows_only(tmp_path: Path):
+    store = FactStore(tmp_path / "c.db")
+    store.replace_all(
+        [
+            fact(fact_id="a", document_id="d1"),
+            fact(fact_id="b", document_id="d1", metric="net_income"),
+            fact(fact_id="c", document_id="d1", metric="total_assets", canonical=False),
+            fact(fact_id="d", document_id="d2", usable=False),
+            fact(fact_id="e", document_id="d2", metric="net_income"),
+        ]
+    )
+    assert store.count_by_document() == {"d1": 2, "d2": 1}

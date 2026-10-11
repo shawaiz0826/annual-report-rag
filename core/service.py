@@ -216,11 +216,10 @@ class ChatService:
                 n, _usage = self.fact_extractor.extract_document(
                     profile, pages, chunks, only_pages=retry or None
                 )
-                self.catalog.set_stats(profile.document_id, facts=n)
                 counts[profile.file_name] = n
         finally:
             self.fact_extractor.finalise()
-            self.catalog.save()
+            self.refresh_fact_stats()
         return counts
 
     def reprocess(self) -> dict[str, int]:
@@ -239,7 +238,17 @@ class ChatService:
 
     def import_facts(self) -> int:
         """Load facts from the committed CSV export (no LLM calls)."""
-        return self.fact_store.import_csv(self.settings.paths.derived_dir / "facts_export.csv")
+        n = self.fact_store.import_csv(self.settings.paths.derived_dir / "facts_export.csv")
+        self.refresh_fact_stats()
+        return n
+
+    def refresh_fact_stats(self) -> dict[str, int]:
+        """Store the per-document count of usable facts in the catalog (what `catalog` shows)."""
+        counts = self.fact_store.count_by_document()
+        for profile in self.catalog.documents():
+            self.catalog.set_stats(profile.document_id, facts=counts.get(profile.document_id, 0))
+        self.catalog.save()
+        return counts
 
     def reindex(self) -> dict[str, int]:
         """Rebuild the vector and BM25 indexes from stored chunks (no LLM calls)."""

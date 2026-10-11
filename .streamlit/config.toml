@@ -1,0 +1,19 @@
+# Streamlit settings for `make ui`. Docker overrides headless on the command line.
+[server]
+headless = false          # open the browser on start
+showEmailPrompt = false
+runOnSave = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+[theme]
+base = "light"
+primaryColor = "#0F766E"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F4F6F5"
+textColor = "#1F2933"
+font = "sans serif"
