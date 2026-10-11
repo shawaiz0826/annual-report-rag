@@ -21,7 +21,6 @@ def client(tmp_path: Path, monkeypatch):
             derived_dir=tmp_path / "derived",
             index_dir=tmp_path / "index",
             traces_dir=tmp_path / "index" / "traces",
-            replay_cache=tmp_path / "index" / "replay.json",
         ),
         sessions=SessionsConfig(backend="memory"),
     )

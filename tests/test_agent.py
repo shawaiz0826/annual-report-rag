@@ -327,3 +327,31 @@ def test_lookup_returns_nearest_available_when_year_missing(tmp_path: Path):
     assert "nearest" in result.payload["note"]
     # nearest facts are citable
     assert toolbox._citation("fact", nearest[0]["fact_id"]) is not None
+
+
+def test_fallback_model_is_recorded_in_trace_and_caveats(tmp_path: Path):
+    final = _resp(
+        _call(
+            "c1",
+            "final_answer",
+            resolved_question="Acme revenue 2023?",
+            answered=True,
+            answer_markdown="Revenue was EUR 1,000 million [Acme plc FY2023 p.7].",
+            citations=[{"kind": "fact", "ref": "f_rev23"}],
+            confidence="high",
+            entities_used=["Acme plc"],
+            years_used=[2023],
+            metrics_used=["revenue"],
+        )
+    )
+    final.model = "fallback/model"
+    final.fallback_from = "scripted/model"
+    final.fallback_reason = "HTTP 429: Rate limit exceeded: free-models-per-day"
+    agent, _retriever, traces = _build(tmp_path, ScriptedProvider([final]))
+    session = InMemorySessionStore().create()
+    answer, trace = agent.run(session, "What was Acme's revenue in 2023?")
+
+    assert answer.answered
+    assert trace.model == "fallback/model" and trace.fallback_from == "scripted/model"
+    assert any("fallback model fallback/model" in c for c in answer.caveats)
+    assert "fallback from scripted/model" in render_trace(trace)

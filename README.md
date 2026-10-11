@@ -20,20 +20,18 @@ make setup                      # Python 3.11 venv, CPU torch, pinned deps, .env
 # put OPENROUTER_API_KEY in .env
 make rebuild                    # indexes + facts from the committed artefacts, ZERO model calls (≈5–15 min on CPU)
 #  (or `make ingest` to re-profile and re-extract with the model: ≈70 calls, ≈15 min)
-make chat                       # terminal demo; try /catalog, /facts Tesla revenue, /why, /model
-python -m apps.cli chat --replay   # recorded demo answers ([replay] in the footer), no model calls
+make chat                       # terminal chat; try /catalog, /facts Tesla revenue, /why, /model
 make api                        # FastAPI on :8000  (curl localhost:8000/health)
 make ui                         # Streamlit on :8501
 make eval                       # golden set on both configured models → eval/reports/latest.md
-make test lint                  # 70 unit tests, ruff
+make test lint                  # 83 unit tests, ruff
 ```
 
 Docker (web app packaged as an image): `make docker-build && make docker-up`, then `docker compose run --rm api python scripts/ingest.py` once; API on :8000, UI on :8501.
 
 ## A short transcript
 
-<!-- transcript:start -->
-Recorded with `nvidia/nemotron-3-ultra-550b-a55b:free` (prompt versions {'extractor': '1', 'profiler': '1', 'system': '2'}), served verbatim by `python -m apps.cli chat --replay`.
+Captured from a live session with `nvidia/nemotron-3-ultra-550b-a55b:free` (system prompt v2) on 2026-10-10. Every answer is produced live by retrieval → facts → model; wording varies between runs, figures and citations should not.
 
 **you ›** What was Tesla's revenue in 2023?
 
@@ -90,7 +88,6 @@ Recorded with `nvidia/nemotron-3-ultra-550b-a55b:free` (prompt versions {'extrac
 > ⚠️ No currency conversion needed; both in USD millions.
 
 `10820/877 tokens · 16s · confidence high · tools: lookup_facts, lookup_facts, final_answer`
-<!-- transcript:end -->
 
 ## How it works
 
@@ -104,7 +101,7 @@ Recorded with `nvidia/nemotron-3-ultra-550b-a55b:free` (prompt versions {'extrac
 | Facts | retrieval picks statement pages → LLM extracts every (metric, year) with unit/currency → reconciliation across reports → SQLite + CSV | `core/facts/` |
 | Agent | tools `list_catalog`, `search_documents`, `lookup_facts`, `compute_metric`, `final_answer`; citations verified in code; model knowledge off by default | `core/agent/` |
 | Memory | SQLite sessions with slot memory (entities/years/metrics) for follow-ups | `core/agent/memory.py` |
-| Observability | one trace per request (tool calls, ranks, facts, cost); `/why`; eval reads traces; replay cache for demos | `core/observability/` |
+| Observability | one trace per request (tool calls, ranks, facts, cost, answering model); `/why`; eval reads traces | `core/observability/` |
 
 ## Decisions (short form)
 
@@ -116,33 +113,27 @@ Recorded with `nvidia/nemotron-3-ultra-550b-a55b:free` (prompt versions {'extrac
 | Hybrid retrieval with RRF; year never a hard filter | prior-year figures live inside later reports |
 | LLM profiler + code validation | only a reader can tell a subsidiary's report from the group's |
 | Protocols with one implementation | the seams are the scaling story (Qdrant, OpenSearch, Redis, Postgres) |
-| Free OpenRouter models by default | owner's choice; `/model anthropic/claude-sonnet-5` works unchanged |
+| Free OpenRouter models by default, automatic fallback model | owner's choice; a failed call (quota, outage, missing endpoint) is retried on `LLM_MODEL_FALLBACK` and the answer says which model replied; `/model anthropic/claude-sonnet-5` works unchanged |
 
 Full log with alternatives: [docs/DECISIONS.md](docs/DECISIONS.md).
 
 ## Evaluation
 
 <!-- evaluation:start -->
-Replayed answers (served from the replay cache): 2.
-
-| cases | passed | numeric accuracy | behaviour accuracy | noise leaks | mean latency | mean tokens | total cost |
-|---|---|---|---|---|---|---|---|
-| 2 | 2 (100%) | 100% (2 cases) | 100% | 0 | 0.0s | 9492 | $0.0000 |
-
-Full report: [eval/reports/report_nvidia-nemotron-3-ultra-550b-a55b-free_2026-10-11.md](eval/reports/report_nvidia-nemotron-3-ultra-550b-a55b-free_2026-10-11.md).
+_No eval report yet — run `make eval`._
 <!-- evaluation:end -->
 
 Extraction accuracy against 46 hand-verified figures: see [eval/verification.md](eval/verification.md).
 
 ## Data audit
 
-What the files really are and how each anomaly is handled generically: [docs/DATA_AUDIT.md](docs/DATA_AUDIT.md). Architecture, sequence diagrams and the scaling plan: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Demo script: [docs/DEMO.md](docs/DEMO.md).
+What the files really are and how each anomaly is handled generically: [docs/DATA_AUDIT.md](docs/DATA_AUDIT.md). Architecture, sequence diagrams and the scaling plan: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Walkthrough with example questions: [docs/DEMO.md](docs/DEMO.md).
 
 ## Limitations
 
 - Figures are only as good as the extraction layer of the PDFs; the Ford files are 10-K *extracts* without income statements, so revenue/net income come from MD&A key-metric tables.
 - EBITDA is in the registry but none of the 10-Ks report it — the assistant says so rather than deriving it.
-- Free OpenRouter endpoints are rate-limited (50 requests/day without credits; upstream 429s happen); `--replay` and `make rebuild` exist for exactly this — the committed `catalog.json`, `facts_export.csv` and `replay.json` make the whole local state reproducible without a model.
+- Every answer is generated live; there are no canned responses. Free OpenRouter endpoints are rate-limited (50 requests/day without credits; upstream 429s happen), so the client falls back to `LLM_MODEL_FALLBACK` automatically and reports quota exhaustion in plain language. Ingestion state does not need the model: the committed `catalog.json` and `facts_export.csv` rebuild indexes and facts with `make rebuild`.
 - No reranker, section-aware chunking, currency conversion or authentication (see roadmap).
 
 ## Roadmap (explicitly out of scope)

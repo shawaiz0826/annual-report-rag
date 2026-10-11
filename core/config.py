@@ -31,7 +31,6 @@ class PathsConfig(BaseModel):
     derived_dir: Path = Path("data/derived")
     index_dir: Path = Path("data/index")
     traces_dir: Path = Path("data/index/traces")
-    replay_cache: Path = Path("data/derived/replay.json")
 
     @field_validator("*", mode="after")
     @classmethod
@@ -137,6 +136,7 @@ class LLMConfig(BaseModel):
     timeout_s: float = 90.0
     max_retries: int = 3
     backoff_base_s: float = 1.5
+    model_fallback: bool = True
     exclude_reasoning: bool = True
     usage_accounting: Literal["openrouter", "price_table"] = "openrouter"
     price_table: dict[str, ModelPrice] = Field(default_factory=dict)

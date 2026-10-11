@@ -8,6 +8,8 @@
 > 2. Start with: *"Read docs/EXECUTION_PLAN.md fully. Implement milestone M0, run its acceptance checks, commit, then stop and report."*
 > 3. Proceed milestone by milestone (M0 → M7). Do not skip acceptance checks. Do not start a milestone before the previous one's checks pass.
 > 4. Anything marked **DECISION** is settled — implement as written. Anything marked **VERIFY** must be confirmed against the source PDFs before use.
+>
+> **Amendment (2026-10-11):** §23 (replay cache), `scripts/record_replay.py`, `make record-demo` and the `--replay` flags were implemented and then removed at the owner's request — every answer is generated live, and an automatic model fallback (`llm.model_fallback`, `LLM_MODEL_FALLBACK`) replaced the cache as the resilience mechanism. See `docs/DECISIONS.md` #15. The text below is kept as the original plan.
 
 ---
 

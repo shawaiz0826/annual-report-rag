@@ -186,6 +186,10 @@ class Agent:
                     max_tokens=self.config.max_output_tokens,
                 )
                 usage = usage + response.usage
+                if response.fallback_from and trace.fallback_from is None:
+                    trace.fallback_from = response.fallback_from
+                    trace.fallback_reason = response.fallback_reason
+                    trace.model = response.model
                 if not response.tool_calls:
                     # Plain text is not an answer; nudge once per iteration.
                     messages.append({"role": "assistant", "content": response.content or ""})
@@ -256,7 +260,7 @@ class Agent:
                 confidence="low",
                 caveats=[
                     "model quota exhausted — wait for the reset, add credits, or switch model "
-                    "(/model in the CLI); recorded answers remain available with /replay on"
+                    "(/model in the CLI)"
                 ],
             )
         except LLMError as exc:
@@ -276,6 +280,11 @@ class Agent:
             )
         if not show_model_knowledge:
             answer.model_knowledge_note = None
+        if trace.fallback_from:
+            answer.caveats.append(
+                f"answered by fallback model {trace.model}: {trace.fallback_from} failed "
+                f"({trace.fallback_reason})"
+            )
 
         trace.final = answer
         trace.usage = usage

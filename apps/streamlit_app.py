@@ -24,7 +24,6 @@ with st.sidebar:
     )
     model = st.selectbox("Model", models, index=0)
     show_knowledge = st.toggle("Show labelled model knowledge", value=False)
-    replay = st.toggle("Replay cache", value=False)
     if st.button("New session"):
         st.session_state.pop("session_id", None)
         st.session_state.pop("history", None)
@@ -37,7 +36,6 @@ with st.sidebar:
                     f"{d['legal_entity']} · {d['entity_type']} · FY{d['fiscal_year']} · {d['currency']} {d['unit']}"
                 )
 
-service.replay_enabled = replay
 if "session_id" not in st.session_state:
     st.session_state.session_id = service.new_session().session_id
     st.session_state.history = []
@@ -69,7 +67,6 @@ if prompt := st.chat_input("Ask about the annual reports…"):
         cost = f"${u.cost_usd:.4f}" if u.cost_usd is not None else "n/a"
         st.caption(
             f"{trace.model} · {u.prompt_tokens}/{u.completion_tokens} tokens · {cost} · {trace.latency_ms / 1000:.1f}s · confidence {answer.confidence}"
-            + (" · replay" if trace.replayed else "")
         )
         with st.expander("Sources, caveats and trace"):
             for c in answer.citations:

@@ -65,8 +65,10 @@ def render_trace(trace: Trace) -> str:
     """Human-readable explanation of a trace (the `/why` view)."""
     lines = [
         f"trace {trace.trace_id} · session {trace.session_id} · model {trace.model}"
-        + (" · [replay]" if trace.replayed else "")
+        + (f" (fallback from {trace.fallback_from})" if trace.fallback_from else "")
     ]
+    if trace.fallback_from:
+        lines.append(f"fallback reason: {trace.fallback_reason}")
     lines.append(f"prompts: {trace.prompt_versions}")
     lines.append(f"question: {trace.user_message}")
     final: AgentAnswer | None = trace.final

@@ -259,6 +259,8 @@ class Trace(BaseModel):
     session_id: str
     timestamp: str
     model: str
+    fallback_from: str | None = None
+    fallback_reason: str | None = None
     prompt_versions: dict[str, str] = Field(default_factory=dict)
     user_message: str
     history_turns: int = 0
@@ -269,7 +271,6 @@ class Trace(BaseModel):
     usage: Usage = Field(default_factory=Usage)
     latency_ms: int = 0
     error: str | None = None
-    replayed: bool = False
 
 
 # --------------------------------------------------------------------------- sessions
@@ -314,4 +315,8 @@ class LLMResponse(BaseModel):
     usage: Usage = Field(default_factory=Usage)
     model: str
     finish_reason: str | None = None
+    fallback_from: str | None = Field(
+        default=None, description="Requested model that failed before `model` answered"
+    )
+    fallback_reason: str | None = None
     raw: dict[str, Any] = Field(default_factory=dict, exclude=True)

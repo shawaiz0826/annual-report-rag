@@ -28,7 +28,6 @@ flowchart LR
     AG -->|tools| T5[final_answer<br/>citations verified in code]
     AG --> TR[(traces/*.jsonl)]
     SVC --> SS[(sessions.db<br/>turns + slots)]
-    SVC --> RP[(replay.json)]
   end
 ```
 
@@ -66,7 +65,7 @@ sequenceDiagram
   participant LLM as LLM
   participant T as ToolBox
   U->>S: chat(session_id, "And 2022?")
-  S->>S: load session (turns, slots); replay-cache lookup
+  S->>S: load session (turns, slots)
   S->>A: run(session, message)
   A->>LLM: system (generated catalog summary) + condensed history + context slots + question, tools
   LLM-->>A: tool_calls: lookup_facts(issuer, metric, years)
@@ -106,4 +105,4 @@ sequenceDiagram
 
 ## Repository layout
 
-See `docs/EXECUTION_PLAN.md` §5 — the layout was implemented as specified, with two additions: `core/index/indexer.py` (the pipeline's index stage) and `core/observability/replay.py` (the replay cache), plus `eval/verified_facts.json` / `eval/verify_facts.py` for extraction verification.
+See `docs/EXECUTION_PLAN.md` §5 — the layout was implemented as specified, with one addition: `core/index/indexer.py` (the pipeline's index stage), plus `eval/verified_facts.json` / `eval/verify_facts.py` for extraction verification. The plan's replay cache (§23) was implemented and later removed — see DECISIONS #15.

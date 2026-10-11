@@ -5,7 +5,7 @@ BIN := $(VENV)/bin
 PYTHON := $(BIN)/python
 TORCH_INDEX := https://download.pytorch.org/whl/cpu
 
-.PHONY: help setup lint format test test-all ingest reingest chat catalog facts search api ui eval record-demo docker-build docker-up docker-down clean-index
+.PHONY: help setup lint format test test-all ingest reingest reprocess rebuild import-facts reindex chat catalog facts search extract-facts api ui eval readme docker-build docker-up docker-down clean-index
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -51,7 +51,7 @@ import-facts: ## Load facts from data/derived/facts_export.csv (no LLM calls)
 reindex: ## Rebuild vector + BM25 indexes from stored chunks (no LLM calls)
 	$(PYTHON) -m apps.cli reindex
 
-chat: ## Terminal chat (the demo)
+chat: ## Terminal chat
 	$(PYTHON) -m apps.cli chat
 
 catalog: ## Print the discovered document catalog
@@ -75,10 +75,7 @@ ui: ## Run the Streamlit UI on :8501
 eval: ## Run the golden-set eval on both configured models and write eval/reports/latest.md
 	$(PYTHON) -m eval.run_eval --both
 
-record-demo: ## Run the demo script in record mode to fill the replay cache (resumable)
-	$(PYTHON) scripts/record_replay.py --resume
-
-readme: ## Fill README transcript + eval sections from recorded artefacts
+readme: ## Fill the README evaluation section from the latest eval report
 	$(PYTHON) scripts/render_readme.py
 
 docker-build: ## Build the Docker image

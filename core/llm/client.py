@@ -218,6 +218,11 @@ class OpenAICompatibleProvider:
     def __init__(self, settings: Settings) -> None:
         self._settings = settings
         self.default_model = settings.llm_model
+        self.fallback_models: list[str] = (
+            [settings.llm_model_fallback]
+            if settings.llm.model_fallback and settings.llm_model_fallback
+            else []
+        )
         api_key = settings.openrouter_api_key.get_secret_value()
         if not api_key:
             log.warning("OPENROUTER_API_KEY is empty — LLM calls will fail")
@@ -245,10 +250,14 @@ class OpenAICompatibleProvider:
         model: str | None = None,
         max_tokens: int | None = None,
     ) -> LLMResponse:
-        """One chat completion with exponential-backoff retries on transient failures."""
+        """One chat completion; retries transient failures, then tries the fallback model.
+
+        The chain is ``[requested model, *fallback_models]`` (deduplicated). Every model in
+        the chain gets the full retry budget. If all fail, a quota error anywhere in the
+        chain is raised in preference to other errors so batch jobs stop cleanly.
+        """
         model_id = model or self.default_model
         kwargs: dict[str, Any] = {
-            "model": model_id,
             "messages": messages,
             "temperature": temperature,
             "extra_body": self._extra_body(),
@@ -262,6 +271,28 @@ class OpenAICompatibleProvider:
         if max_tokens is not None:
             kwargs["max_tokens"] = max_tokens
 
+        chain = list(dict.fromkeys([model_id, *self.fallback_models]))
+        errors: list[LLMError] = []
+        for candidate in chain:
+            try:
+                response = self._chat_once(candidate, kwargs)
+            except LLMError as exc:
+                errors.append(exc)
+                if candidate != chain[-1]:
+                    log.warning(
+                        "model %s failed (%s); falling back to %s", candidate, exc, chain[-1]
+                    )
+                continue
+            if errors:
+                response.fallback_from = model_id
+                response.fallback_reason = str(errors[0])
+            return response
+        quota = next((e for e in errors if isinstance(e, QuotaExhaustedError)), None)
+        raise quota or errors[-1]
+
+    def _chat_once(self, model_id: str, kwargs: dict[str, Any]) -> LLMResponse:
+        """One model, with exponential-backoff retries on transient failures."""
+        kwargs = {**kwargs, "model": model_id}
         cfg = self._settings.llm
         last: Exception | None = None
         for attempt in range(cfg.max_retries + 1):

@@ -196,22 +196,8 @@ HELP = """Commands:
   /facts <issuer> [metric] [years]   e.g. /facts Tesla revenue 2021,2022,2023
   /model <id>       switch model for the next turns (no argument: show current)
   /reset            start a new session (clears follow-up context)
-  /replay on|off    serve recorded answers when available
   /knowledge on|off toggle the labelled model-knowledge note
   /help, /quit"""
-
-
-def _print_recorded(service: ChatService) -> None:
-    """List the conversations the replay cache can serve for the current prompt versions."""
-    convs = service.replay.conversations()
-    if not convs:
-        console.print("[yellow]Replay cache is empty — run `make record-demo`.[/yellow]")
-        return
-    console.print(
-        f"[bold]Recorded conversations[/bold] ({len(convs)} turns; anything else goes live):"
-    )
-    for messages in convs:
-        console.print("  " + "  →  ".join(messages), markup=False)
 
 
 def render_answer(console: Console, answer: AgentAnswer, trace: Trace) -> None:
@@ -244,10 +230,9 @@ def render_answer(console: Console, answer: AgentAnswer, trace: Trace) -> None:
         )
     u = trace.usage
     cost = f"${u.cost_usd:.4f}" if u.cost_usd is not None else "n/a"
-    replay = " · [replay]" if trace.replayed else ""
     console.print(
         f"[dim]{trace.model} · {u.prompt_tokens}/{u.completion_tokens} tokens · {cost} · "
-        f"{trace.latency_ms / 1000:.1f}s · confidence {answer.confidence} · trace {trace.trace_id}{replay}[/dim]"
+        f"{trace.latency_ms / 1000:.1f}s · confidence {answer.confidence} · trace {trace.trace_id}[/dim]"
     )
 
 
@@ -293,14 +278,9 @@ def chat(
     model: str | None = typer.Option(None, help="model id override"),
     api_url: str | None = typer.Option(None, help="use the HTTP API instead of in-process"),
     show_model_knowledge: bool = typer.Option(False, help="add a labelled model-knowledge note"),
-    replay: bool = typer.Option(False, help="serve recorded answers from the replay cache"),
-    record: bool = typer.Option(False, help="record answers into the replay cache"),
 ) -> None:
-    """Interactive terminal chat (the demo)."""
+    """Interactive terminal chat."""
     service = _HttpClient(api_url) if api_url else ChatService()
-    if not api_url:
-        service.replay_enabled = replay
-        service.record_enabled = record
     session_id = service.new_session().session_id
     current_model = model or (service.settings.llm_model if not api_url else None)
     knowledge = show_model_knowledge
@@ -310,8 +290,6 @@ def chat(
             border_style="blue",
         )
     )
-    if replay and not api_url:
-        _print_recorded(service)
     last_trace_id: str | None = None
     while True:
         try:
@@ -349,14 +327,6 @@ def chat(
             session_id = service.new_session().session_id
             console.print(f"new session {session_id}")
             continue
-        if text.startswith("/replay"):
-            flag = text.split()[-1].lower() == "on"
-            if not api_url:
-                service.replay_enabled = flag
-            console.print(f"replay {'on' if flag else 'off'}")
-            if flag and not api_url:
-                _print_recorded(service)
-            continue
         if text.startswith("/knowledge"):
             knowledge = text.split()[-1].lower() == "on"
             console.print(f"model knowledge {'on' if knowledge else 'off'}")
@@ -370,8 +340,6 @@ def chat(
                 console.print(f"[red]error: {exc}[/red]")
                 continue
         last_trace_id = trace.trace_id
-        if not api_url and service.replay_enabled and not trace.replayed:
-            console.print("[dim]not in the replay cache → answered live[/dim]")
         render_answer(console, answer, trace)
 
 

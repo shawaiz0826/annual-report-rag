@@ -7,7 +7,6 @@ paths:
   derived_dir: data/derived
   index_dir: data/index
   traces_dir: data/index/traces
-  replay_cache: data/derived/replay.json   # committed: recorded demo answers
 
 ingestion:
   profile_pages: 3              # first N pages sent to the profiler
@@ -74,6 +73,8 @@ llm:
   timeout_s: 90
   max_retries: 3
   backoff_base_s: 1.5
+  model_fallback: true         # when the requested model fails (quota, outage, not found), retry the
+                               # call on LLM_MODEL_FALLBACK; the answer records which model replied
   exclude_reasoning: true       # reasoning models: drop thinking tokens from the returned content
   usage_accounting: openrouter  # openrouter | price_table
   price_table:                  # USD per 1M tokens, fallback only; verified on openrouter.ai 2026-10-10

@@ -29,7 +29,6 @@ from core.ingestion.store import DocumentStore
 from core.llm.client import LLMProvider, build_provider
 from core.models import AgentAnswer, RetrievedChunk, Session, Trace, Turn
 from core.observability.logging import configure_logging
-from core.observability.replay import ReplayCache
 from core.observability.tracing import TraceStore, render_trace
 
 log = logging.getLogger(__name__)
@@ -48,8 +47,6 @@ class ChatService:
         configure_logging(self.settings.log_level)
         self._provider = provider
         self._session_store = session_store
-        self.replay_enabled = False
-        self.record_enabled = False
 
     # ------------------------------------------------------------------ components
 
@@ -133,11 +130,6 @@ class ChatService:
         return TraceStore(self.settings.paths.traces_dir)
 
     @cached_property
-    def replay(self) -> ReplayCache:
-        """Replay cache for deterministic demos."""
-        return ReplayCache(self.settings.paths.replay_cache)
-
-    @cached_property
     def agent(self) -> Agent:
         """The tool-calling agent (the retriever — and its embedding model — load on first search)."""
         lazy_retriever = _Lazy(lambda: self.retriever)
@@ -171,19 +163,7 @@ class ChatService:
             if show_model_knowledge is None
             else show_model_knowledge
         )
-        key = self.replay.key(model_id, session, message, show)
-        cached = self.replay.get(key) if self.replay_enabled else None
-        if cached is not None:
-            answer, trace = cached
-            trace = trace.model_copy(update={"replayed": True, "session_id": session.session_id})
-            self.traces.write(trace)
-        else:
-            answer, trace = self.agent.run(
-                session, message, model=model_id, show_model_knowledge=show
-            )
-            if self.record_enabled and trace.error is None:
-                history = [t.content for t in session.turns if t.role == "user"]
-                self.replay.put(key, answer, trace, messages=[*history, message])
+        answer, trace = self.agent.run(session, message, model=model_id, show_model_knowledge=show)
         self.sessions.append(session.session_id, Turn(role="user", content=message))
         self.sessions.append(
             session.session_id,

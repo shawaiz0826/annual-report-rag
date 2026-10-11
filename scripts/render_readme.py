@@ -1,28 +1,16 @@
-"""Fill README sections from recorded artefacts: `python scripts/render_readme.py`.
+"""Fill the README "Evaluation" section from eval reports: `python scripts/render_readme.py`.
 
-* "A short transcript"  ← answers in the replay cache for the demo sessions
-* "Evaluation"          ← eval/reports/latest.md (comparison) or the newest single report
-
-Sections are delimited by HTML comment markers in README.md so re-running is idempotent.
+Reads eval/reports/latest.md (the two-model comparison) or, failing that, the newest single
+report. The section is delimited by HTML comment markers in README.md so re-running is idempotent.
 """
 
 from __future__ import annotations
 
-import json
 import re
-import sys
 from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-
-from core.agent.prompts import prompt_versions  # noqa: E402
-from core.models import AgentAnswer, Session, Trace, Turn  # noqa: E402
-from core.observability.replay import ReplayCache  # noqa: E402
-from core.service import ChatService  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
-TURNS = ROOT / "scripts" / "demo_turns.json"
 REPORTS = ROOT / "eval" / "reports"
 
 
@@ -34,44 +22,6 @@ def _replace_section(text: str, name: str, body: str) -> str:
             re.escape(start) + r".*?" + re.escape(end), lambda _m: block, text, flags=re.S
         )
     raise SystemExit(f"README.md lacks the {name} markers")
-
-
-def transcript(service: ChatService, max_sessions: int = 6) -> str:
-    cache: ReplayCache = service.replay
-    model = service.settings.llm_model
-    sessions = json.loads(TURNS.read_text(encoding="utf-8"))["sessions"]
-    out: list[str] = []
-    shown = 0
-    for turns in sessions:
-        history: list[Turn] = []
-        rendered: list[str] = []
-        for turn in turns:
-            fake = Session(session_id="demo", created_at="", turns=history)
-            hit = cache.get(cache.key(model, fake, turn, False))
-            history.append(Turn(role="user", content=turn))
-            if hit is None:
-                rendered = []
-                break
-            answer, trace = hit
-            rendered.append(_render_turn(turn, answer, trace))
-        if rendered:
-            out.append("\n\n".join(rendered))
-            shown += 1
-        if shown >= max_sessions:
-            break
-    if not out:
-        return "_No recorded answers yet — run `make record-demo`._"
-    header = f"Recorded with `{model}` (prompt versions {prompt_versions()}), served verbatim by `python -m apps.cli chat --replay`."
-    return header + "\n\n" + "\n\n---\n\n".join(out)
-
-
-def _render_turn(question: str, answer: AgentAnswer, trace: Trace) -> str:
-    cites = ", ".join(dict.fromkeys(c.label() for c in answer.citations)) or "—"
-    caveats = ("\n> ⚠️ " + "\n> ⚠️ ".join(answer.caveats)) if answer.caveats else ""
-    u = trace.usage
-    footer = f"`{u.prompt_tokens}/{u.completion_tokens} tokens · {trace.latency_ms / 1000:.0f}s · confidence {answer.confidence} · tools: {', '.join(t.tool for t in trace.tool_calls)}`"
-    body = answer.answer_markdown.strip().replace("\n", "\n> ")
-    return f"**you ›** {question}\n\n> {body}\n>\n> **Sources:** {cites}{caveats}\n\n{footer}"
 
 
 def evaluation() -> str:
@@ -94,11 +44,8 @@ def evaluation() -> str:
 
 
 def main() -> int:
-    service = ChatService()
     text = README.read_text(encoding="utf-8")
-    text = _replace_section(text, "transcript", transcript(service))
-    text = _replace_section(text, "evaluation", evaluation())
-    README.write_text(text, encoding="utf-8")
+    README.write_text(_replace_section(text, "evaluation", evaluation()), encoding="utf-8")
     print("README updated")
     return 0
 

@@ -1,9 +1,9 @@
 """Golden-set evaluation runner.
 
-    python -m eval.run_eval --model <id> [--cases q01,q05] [--replay] [--record]
+    python -m eval.run_eval --model <id> [--cases q01,q05] [--resume]
     python -m eval.run_eval --both            # both configured models + eval/reports/latest.md
 
-Each case runs in a fresh session; multi-turn cases replay their earlier turns first.
+Each case runs in a fresh session; multi-turn cases send their earlier turns first.
 Results are written to ``eval/reports/report_<model-slug>_<date>.md`` and ``.json``.
 """
 
@@ -152,7 +152,6 @@ def run_model(
             "confidence": answer.confidence,
             "citations": [c.label() for c in answer.citations],
             "error": trace.error,
-            "replayed": trace.replayed,
             "answer_obj": answer.model_dump(mode="json"),
             "trace_obj": trace.model_dump(mode="json"),
         }
@@ -162,13 +161,9 @@ def run_model(
         if verbose:
             flag = "PASS" if scores["passed"] else "FAIL"
             detail = "" if scores["passed"] else f"  ← {_why(scores)}"
-            replay = " [replay]" if trace.replayed else ""
-            print(
-                f"  {case['id']} {flag} ({elapsed:.0f}s, {trace.usage.total_tokens} tok){replay}{detail}"
-            )
+            print(f"  {case['id']} {flag} ({elapsed:.0f}s, {trace.usage.total_tokens} tok){detail}")
     summary = summarise(model, rows)
     summary["complete"] = len(rows) == len(cases) and not quota_hit
-    summary["replayed"] = sum(int(r.get("replayed", False)) for r in rows)
     if quota_hit:
         raise QuotaStopError(summary)
     return summary
@@ -238,8 +233,6 @@ def render_report(summary: dict[str, Any]) -> str:
     lines = [
         f"# Eval report — `{s['model']}` — {s['date']}"
         + ("" if s.get("complete", True) else " (PARTIAL — continue with --resume)"),
-        "",
-        f"Replayed answers (served from the replay cache): {s.get('replayed', 0)}.",
         "",
         "| cases | passed | numeric accuracy | behaviour accuracy | noise leaks | mean latency | mean tokens | total cost |",
         "|---|---|---|---|---|---|---|---|",
@@ -334,20 +327,14 @@ def main() -> int:
     )
     parser.add_argument("--cases", help="comma-separated case ids")
     parser.add_argument(
-        "--replay", action="store_true", help="serve from the replay cache when possible"
-    )
-    parser.add_argument(
-        "--record", action="store_true", help="record answers into the replay cache"
-    )
-    parser.add_argument(
         "--resume", action="store_true", help="skip cases already completed for the model"
     )
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()
 
     service = ChatService(session_store=InMemorySessionStore())
-    service.replay_enabled = args.replay
-    service.record_enabled = args.record
+    if hasattr(service.provider, "fallback_models"):
+        service.provider.fallback_models = []  # a per-model report must be answered by that model
     models = (
         service.settings.models_for_eval()
         if args.both
