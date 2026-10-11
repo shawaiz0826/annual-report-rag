@@ -33,6 +33,43 @@ Docker (web app packaged as an image): `make docker-build && make docker-up`, th
 <!-- transcript:start -->
 Recorded with `nvidia/nemotron-3-ultra-550b-a55b:free` (prompt versions {'extractor': '1', 'profiler': '1', 'system': '2'}), served verbatim by `python -m apps.cli chat --replay`.
 
+**you ›** What was Tesla's revenue in 2023?
+
+> Tesla, Inc. (group) reported **revenue of USD 96,773 million** for FY2023 [Tesla, Inc. FY2023 p.20].
+>
+> **Sources:** [Tesla, Inc. FY2023 p.20]
+
+`6803/485 tokens · 11s · confidence high · tools: lookup_facts, final_answer`
+
+**you ›** And 2022?
+
+> Tesla, Inc. (group) reported **revenue of USD 81,462 million** for FY2022 [Tesla, Inc. FY2022 p.20].
+>
+> **Sources:** [Tesla, Inc. FY2022 p.20]
+
+`10839/535 tokens · 10s · confidence high · tools: lookup_facts, final_answer`
+
+**you ›** And Ford?
+
+> Ford Motor Company (group) reported the following revenue:
+> 
+> | Fiscal Year | Revenue (USD millions) |
+> |-------------|------------------------|
+> | 2022 | 158,057 |
+> | 2023 | 176,191 |
+> 
+> - **FY2022**: USD 158,057 million [Ford Motor Company FY2022 p.39]
+> - **FY2023**: USD 176,191 million [Ford Motor Company FY2023 p.44]
+> 
+> Both figures are from Ford Motor Company's group annual reports, reported in USD millions.
+>
+> **Sources:** [Ford Motor Company FY2022 p.39], [Ford Motor Company FY2023 p.44]
+> ⚠️ Figures are in USD millions as reported by Ford Motor Company group; no currency conversion applied.
+
+`12583/895 tokens · 15s · confidence high · tools: lookup_facts, final_answer`
+
+---
+
 **you ›** Between Tesla and Ford, which company achieved higher profits in 2022?
 
 > **Tesla achieved higher profits in 2022.**  
