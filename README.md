@@ -30,7 +30,28 @@ Docker (web app packaged as an image): `make docker-build && make docker-up`, th
 
 ## A short transcript
 
-_(to be pasted from the rehearsed demo — see docs/DEMO.md)_
+<!-- transcript:start -->
+Recorded with `nvidia/nemotron-3-ultra-550b-a55b:free` (prompt versions {'extractor': '1', 'profiler': '1', 'system': '2'}), served verbatim by `python -m apps.cli chat --replay`.
+
+**you ›** Between Tesla and Ford, which company achieved higher profits in 2022?
+
+> **Tesla achieved higher profits in 2022.**  
+> 
+> | Company | Legal entity | FY2022 net income | Currency | Unit |
+> |---------|--------------|-------------------|----------|------|
+> | Tesla | Tesla, Inc. (group) | **12,587** | USD | millions |
+> | Ford | Ford Motor Company (group) | **‑1,981** | USD | millions |
+> 
+> Tesla reported a net income of **USD 12,587 million** (a profit), while Ford reported a net loss of **USD 1,981 million**. Both figures are from the respective companies' group-level annual reports for FY2022 and are directly comparable because they are in the same currency (USD) and unit (millions).
+> 
+> **Conclusion:** Tesla was profitable in 2022; Ford recorded a loss. Therefore, Tesla achieved higher profits.
+>
+> **Sources:** [Tesla, Inc. FY2022 p.20], [Ford Motor Company FY2022 p.39]
+> ⚠️ Both figures are group-level (consolidated) results from the primary issuer reports.
+> ⚠️ No currency conversion needed; both in USD millions.
+
+`10820/877 tokens · 16s · confidence high · tools: lookup_facts, lookup_facts, final_answer`
+<!-- transcript:end -->
 
 ## How it works
 
@@ -62,7 +83,15 @@ Full log with alternatives: [docs/DECISIONS.md](docs/DECISIONS.md).
 
 ## Evaluation
 
-_(table from `eval/reports/latest.md` — to be filled after M5)_
+<!-- evaluation:start -->
+Replayed answers (served from the replay cache): 2.
+
+| cases | passed | numeric accuracy | behaviour accuracy | noise leaks | mean latency | mean tokens | total cost |
+|---|---|---|---|---|---|---|---|
+| 2 | 2 (100%) | 100% (2 cases) | 100% | 0 | 0.0s | 9492 | $0.0000 |
+
+Full report: [eval/reports/report_nvidia-nemotron-3-ultra-550b-a55b-free_2026-10-11.md](eval/reports/report_nvidia-nemotron-3-ultra-550b-a55b-free_2026-10-11.md).
+<!-- evaluation:end -->
 
 Extraction accuracy against 46 hand-verified figures: see [eval/verification.md](eval/verification.md).
 

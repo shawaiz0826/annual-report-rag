@@ -71,3 +71,15 @@ def test_behaviour_and_mentions_and_leak():
     a.citations = [Citation(document_id="d", file_name="news.pdf", page=1, kind="chunk", ref="c")]
     assert noise_leak(a, {"news.pdf": "news"}, ["news"])
     assert not noise_leak(a, {"news.pdf": "news"}, [])
+
+
+def test_dash_variants_and_loss_context():
+    found = parse_numbers(
+        "Ford: **\u20111,981** million; a net loss of USD 1,981 million; EBIT \u2212 390"
+    )
+    values = [v for v, _, _ in found]
+    assert -1_981e6 in values and -390 in values
+    ok, _ = numeric_match(
+        _answer("Ford reported a net loss of USD 1,981 million"), [{"value_base": -1981e6}]
+    )
+    assert ok

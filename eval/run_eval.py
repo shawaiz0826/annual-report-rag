@@ -22,12 +22,38 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from core.agent.memory import InMemorySessionStore  # noqa: E402
+from core.llm.client import QuotaExhaustedError  # noqa: E402
+from core.models import AgentAnswer, Trace  # noqa: E402
 from core.service import ChatService  # noqa: E402
 from eval.scorers import score_case  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent
 GOLDEN = ROOT / "golden.json"
 REPORTS = ROOT / "reports"
+CACHE = REPORTS / "cache"
+
+
+class QuotaStopError(RuntimeError):
+    """Raised by run_model when the provider's quota is exhausted mid-run."""
+
+
+def _cache_path(model: str) -> Path:
+    return CACHE / f"{slug(model)}.json"
+
+
+def load_cached_rows(model: str) -> dict[str, dict[str, Any]]:
+    """Per-case results from an earlier (partial) run of this model."""
+    path = _cache_path(model)
+    if not path.exists():
+        return {}
+    return {r["id"]: r for r in json.loads(path.read_text(encoding="utf-8"))}
+
+
+def save_cached_rows(model: str, rows: dict[str, dict[str, Any]]) -> None:
+    CACHE.mkdir(parents=True, exist_ok=True)
+    _cache_path(model).write_text(
+        json.dumps(list(rows.values()), indent=1, ensure_ascii=False, default=str), encoding="utf-8"
+    )
 
 
 def _money(value: float | None) -> str:
@@ -44,11 +70,36 @@ def load_cases(ids: list[str] | None = None) -> list[dict[str, Any]]:
 
 
 def run_model(
-    service: ChatService, model: str, cases: list[dict[str, Any]], *, verbose: bool = True
+    service: ChatService,
+    model: str,
+    cases: list[dict[str, Any]],
+    *,
+    verbose: bool = True,
+    resume: bool = False,
 ) -> dict[str, Any]:
+    """Run every case; with ``resume`` cases already in the cache are not re-run.
+
+    Results are cached per case as they complete, so a run cut short by a quota error
+    can be continued the next day with ``--resume``. Raises :class:`QuotaStopError` after
+    saving when the quota runs out.
+    """
     doc_types = {d.file_name: d.doc_type for d in service.catalog.documents()}
+    cached = load_cached_rows(model) if resume else {}
     rows: list[dict[str, Any]] = []
+    quota_hit = False
     for case in cases:
+        hit = cached.get(case["id"])
+        if hit and hit.get("answer_obj") and hit.get("trace_obj") and not hit.get("error"):
+            # re-score with the current scorers (they are cheap and may have improved)
+            answer_obj = AgentAnswer.model_validate(hit["answer_obj"])
+            trace_obj = Trace.model_validate(hit["trace_obj"])
+            hit["scores"] = score_case(answer_obj, trace_obj, case["expect"], doc_types)
+            rows.append(hit)
+            if verbose:
+                print(f"  {case['id']} cached ({'PASS' if hit['scores']['passed'] else 'FAIL'})")
+            continue
+        if quota_hit:
+            break
         session = service.new_session()
         started = time.perf_counter()
         answer = trace = None
@@ -56,6 +107,14 @@ def run_model(
         try:
             for turn in case["turns"]:
                 answer, trace = service.chat(session.session_id, turn, model=model)
+                if trace.error and ("per-day" in trace.error or "credits" in trace.error.lower()):
+                    raise QuotaExhaustedError(trace.error)
+        except QuotaExhaustedError as exc:
+            quota_hit = True
+            error = f"quota: {exc}"[:300]
+            if verbose:
+                print(f"  {case['id']} stopped — quota exhausted; re-run with --resume later")
+            continue
         except Exception as exc:  # keep going; the row records the failure
             error = f"{type(exc).__name__}: {exc}"[:300]
         elapsed = time.perf_counter() - started
@@ -79,28 +138,40 @@ def run_model(
                 print(f"  {case['id']} FAIL (error: {error})")
             continue
         scores = score_case(answer, trace, case["expect"], doc_types)
-        rows.append(
-            {
-                "id": case["id"],
-                "category": case["category"],
-                "question": case["turns"][-1],
-                "scores": scores,
-                "usage": trace.usage.model_dump(),
-                "latency_s": round(elapsed, 1),
-                "trace_id": trace.trace_id,
-                "answer": answer.answer_markdown,
-                "caveats": answer.caveats,
-                "answered": answer.answered,
-                "confidence": answer.confidence,
-                "citations": [c.label() for c in answer.citations],
-                "error": trace.error,
-            }
-        )
+        row = {
+            "id": case["id"],
+            "category": case["category"],
+            "question": case["turns"][-1],
+            "scores": scores,
+            "usage": trace.usage.model_dump(),
+            "latency_s": round(elapsed, 1),
+            "trace_id": trace.trace_id,
+            "answer": answer.answer_markdown,
+            "caveats": answer.caveats,
+            "answered": answer.answered,
+            "confidence": answer.confidence,
+            "citations": [c.label() for c in answer.citations],
+            "error": trace.error,
+            "replayed": trace.replayed,
+            "answer_obj": answer.model_dump(mode="json"),
+            "trace_obj": trace.model_dump(mode="json"),
+        }
+        rows.append(row)
+        cached[case["id"]] = row
+        save_cached_rows(model, cached)
         if verbose:
             flag = "PASS" if scores["passed"] else "FAIL"
             detail = "" if scores["passed"] else f"  ← {_why(scores)}"
-            print(f"  {case['id']} {flag} ({elapsed:.0f}s, {trace.usage.total_tokens} tok){detail}")
-    return summarise(model, rows)
+            replay = " [replay]" if trace.replayed else ""
+            print(
+                f"  {case['id']} {flag} ({elapsed:.0f}s, {trace.usage.total_tokens} tok){replay}{detail}"
+            )
+    summary = summarise(model, rows)
+    summary["complete"] = len(rows) == len(cases) and not quota_hit
+    summary["replayed"] = sum(int(r.get("replayed", False)) for r in rows)
+    if quota_hit:
+        raise QuotaStopError(summary)
+    return summary
 
 
 def _why(scores: dict[str, Any]) -> str:
@@ -165,7 +236,10 @@ def render_report(summary: dict[str, Any]) -> str:
     s = summary
     pct = lambda x: "n/a" if x is None else f"{x * 100:.0f}%"  # noqa: E731
     lines = [
-        f"# Eval report — `{s['model']}` — {s['date']}",
+        f"# Eval report — `{s['model']}` — {s['date']}"
+        + ("" if s.get("complete", True) else " (PARTIAL — continue with --resume)"),
+        "",
+        f"Replayed answers (served from the replay cache): {s.get('replayed', 0)}.",
         "",
         "| cases | passed | numeric accuracy | behaviour accuracy | noise leaks | mean latency | mean tokens | total cost |",
         "|---|---|---|---|---|---|---|---|",
@@ -265,6 +339,9 @@ def main() -> int:
     parser.add_argument(
         "--record", action="store_true", help="record answers into the replay cache"
     )
+    parser.add_argument(
+        "--resume", action="store_true", help="skip cases already completed for the model"
+    )
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()
 
@@ -280,22 +357,38 @@ def main() -> int:
     REPORTS.mkdir(exist_ok=True)
 
     summaries = []
+    stopped = False
     for model in models:
         print(f"== {model} ({len(cases)} cases)")
-        summary = run_model(service, model, cases, verbose=not args.quiet)
+        try:
+            summary = run_model(service, model, cases, verbose=not args.quiet, resume=args.resume)
+        except QuotaStopError as stop:
+            summary = stop.args[0]
+            stopped = True
         summaries.append(summary)
         stem = REPORTS / f"report_{slug(model)}_{summary['date']}"
         stem.with_suffix(".md").write_text(render_report(summary), encoding="utf-8")
+        slim = {
+            **summary,
+            "rows": [
+                {k: v for k, v in r.items() if k not in ("answer_obj", "trace_obj")}
+                for r in summary["rows"]
+            ],
+        }
         stem.with_suffix(".json").write_text(
-            json.dumps(summary, indent=1, ensure_ascii=False, default=str), encoding="utf-8"
+            json.dumps(slim, indent=1, ensure_ascii=False, default=str), encoding="utf-8"
         )
+        state = "" if summary.get("complete", True) else " (partial)"
         print(
-            f"   passed {summary['passed']}/{summary['cases']} · numeric {summary['numeric_accuracy']} · leaks {summary['noise_leaks']} → {stem.with_suffix('.md')}"
+            f"   passed {summary['passed']}/{summary['cases']}{state} · numeric {summary['numeric_accuracy']} · leaks {summary['noise_leaks']} → {stem.with_suffix('.md')}"
         )
-    if args.both or len(summaries) > 1:
+        if stopped:
+            print("   quota exhausted — re-run with --resume to continue")
+            break
+    if len(summaries) > 1 and all(x.get("complete", True) for x in summaries):
         (REPORTS / "latest.md").write_text(render_comparison(summaries), encoding="utf-8")
         print(f"   comparison → {REPORTS / 'latest.md'}")
-    return 0
+    return 2 if stopped else 0
 
 
 if __name__ == "__main__":

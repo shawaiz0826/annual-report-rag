@@ -1,19 +1,53 @@
 {
-  "_note": "The live demo (docs/DEMO.md). Sessions group follow-ups; each session starts fresh.",
+  "_note": "The live demo (docs/DEMO.md). Wording matches eval/golden.json so recorded answers are shared via the replay cache.",
   "sessions": [
-    ["What was Tesla's revenue in 2023?", "And 2022?", "And Ford?"],
-    ["What was BMW's total revenue in 2023?"],
-    ["Can you provide the revenue figures for BMW in 2017?"],
-    ["Between Tesla and Ford, which company achieved higher profits in 2022?"],
-    ["Which company recorded better profitability in 2022 overall?"],
-    ["What were the growth trends for BMW's financial performance from 2020 to 2023?"],
-    ["What key economic factors influenced Ford's performance in 2021?"],
-    ["Which Tesla product is currently in the development stage?"],
-    ["What was Toyota's revenue in 2023?"],
-    ["How much revenue did Tesla generate in 2023?"],
-    ["What was Ford's revenue for the year 2020?"],
-    ["What were BMW's profit figures for 2020 and 2023?"],
-    ["What were Tesla's profit numbers for 2022 and 2023?"],
-    ["Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years."]
+    [
+      "What was Tesla's revenue in 2023?",
+      "And 2022?",
+      "And Ford?"
+    ],
+    [
+      "What was BMW's total revenue in 2023?"
+    ],
+    [
+      "Can you provide the revenue figures for BMW in 2017?"
+    ],
+    [
+      "Between Tesla and Ford, which company achieved higher profits in 2022?"
+    ],
+    [
+      "Which company recorded better profitability in 2022 overall?"
+    ],
+    [
+      "What were the growth trends for BMW's financial performance from 2020 to 2023?"
+    ],
+    [
+      "What key economic factors influenced Ford's performance in 2021?"
+    ],
+    [
+      "Which Tesla product is currently in the development stage?"
+    ],
+    [
+      "What was Toyota's revenue in 2023?"
+    ],
+    [
+      "How much revenue did Tesla generate in 2022?"
+    ],
+    [
+      "What was Ford's revenue for the year 2020?"
+    ],
+    [
+      "What were BMW's profit figures for 2020 and 2023?"
+    ],
+    [
+      "What were Tesla's profit numbers for 2022 and 2023?"
+    ],
+    [
+      "Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years."
+    ],
+    [
+      "What was Ford's revenue in 2023?",
+      "And their net income?"
+    ]
   ]
 }

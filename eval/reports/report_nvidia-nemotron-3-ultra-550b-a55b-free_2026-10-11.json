@@ -1,0 +1,101 @@
+{
+ "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+ "date": "2026-10-11",
+ "cases": 2,
+ "passed": 2,
+ "numeric_accuracy": 1.0,
+ "numeric_cases": 2,
+ "noise_leaks": 0,
+ "behaviour_accuracy": 1.0,
+ "mean_latency_s": 0.0,
+ "mean_tokens": 9492,
+ "total_cost_usd": 0.0,
+ "by_category": {
+  "lookup": {
+   "passed": 1,
+   "total": 1
+  },
+  "comparison": {
+   "passed": 1,
+   "total": 1
+  }
+ },
+ "rows": [
+  {
+   "id": "q01",
+   "category": "lookup",
+   "question": "What was Tesla's revenue in 2023?",
+   "scores": {
+    "passed": true,
+    "behaviour": true,
+    "numeric": true,
+    "numeric_missing": [],
+    "numeric_applicable": true,
+    "retrieval": true,
+    "retrieval_missing": [],
+    "citation": true,
+    "noise_leak": false,
+    "mentions": true,
+    "mention_problems": []
+   },
+   "usage": {
+    "prompt_tokens": 6803,
+    "completion_tokens": 485,
+    "total_tokens": 7288,
+    "cost_usd": 0.0
+   },
+   "latency_s": 0.0,
+   "trace_id": "1424c65afe35",
+   "answer": "Tesla, Inc. (group) reported **revenue of USD 96,773 million** for FY2023 [Tesla, Inc. FY2023 p.20].",
+   "caveats": [],
+   "answered": true,
+   "confidence": "high",
+   "citations": [
+    "[Tesla, Inc. FY2023 p.20]"
+   ],
+   "error": null,
+   "replayed": true
+  },
+  {
+   "id": "q08",
+   "category": "comparison",
+   "question": "Between Tesla and Ford, which company achieved higher profits in 2022?",
+   "scores": {
+    "passed": true,
+    "behaviour": true,
+    "numeric": true,
+    "numeric_missing": [],
+    "numeric_applicable": true,
+    "retrieval": true,
+    "retrieval_missing": [],
+    "citation": true,
+    "noise_leak": false,
+    "mentions": true,
+    "mention_problems": []
+   },
+   "usage": {
+    "prompt_tokens": 10820,
+    "completion_tokens": 877,
+    "total_tokens": 11697,
+    "cost_usd": 0.0
+   },
+   "latency_s": 0.0,
+   "trace_id": "edd844f11e7b",
+   "answer": "**Tesla achieved higher profits in 2022.**  \n\n| Company | Legal entity | FY2022 net income | Currency | Unit |\n|---------|--------------|-------------------|----------|------|\n| Tesla | Tesla, Inc. (group) | **12,587** | USD | millions |\n| Ford | Ford Motor Company (group) | **‑1,981** | USD | millions |\n\nTesla reported a net income of **USD 12,587 million** (a profit), while Ford reported a net loss of **USD 1,981 million**. Both figures are from the respective companies' group-level annual reports for FY2022 and are directly comparable because they are in the same currency (USD) and unit (millions).\n\n**Conclusion:** Tesla was profitable in 2022; Ford recorded a loss. Therefore, Tesla achieved higher profits.",
+   "caveats": [
+    "Both figures are group-level (consolidated) results from the primary issuer reports.",
+    "No currency conversion needed; both in USD millions."
+   ],
+   "answered": true,
+   "confidence": "high",
+   "citations": [
+    "[Tesla, Inc. FY2022 p.20]",
+    "[Ford Motor Company FY2022 p.39]"
+   ],
+   "error": null,
+   "replayed": true
+  }
+ ],
+ "complete": true,
+ "replayed": 2
+}

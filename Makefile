@@ -68,8 +68,11 @@ ui: ## Run the Streamlit UI on :8501
 eval: ## Run the golden-set eval on both configured models and write eval/reports/latest.md
 	$(PYTHON) -m eval.run_eval --both
 
-record-demo: ## Run the demo script in record mode to fill the replay cache
-	$(PYTHON) scripts/record_replay.py
+record-demo: ## Run the demo script in record mode to fill the replay cache (resumable)
+	$(PYTHON) scripts/record_replay.py --resume
+
+readme: ## Fill README transcript + eval sections from recorded artefacts
+	$(PYTHON) scripts/render_readme.py
 
 docker-build: ## Build the Docker image
 	docker compose build

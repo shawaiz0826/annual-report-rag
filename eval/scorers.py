@@ -14,7 +14,7 @@ _UNIT = {
 }  # fmt: skip
 
 _NUMBER = re.compile(
-    r"(?P<neg>[-−–(]\s*)?"
+    r"(?P<neg>[-−–‐‑‒—(]\s*)?"
     r"(?P<num>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)"
     r"\s*(?P<close>\))?"
     r"\s*(?P<unit>thousands?|millions?|billions?|bn|mn|mm|[kmb](?![a-z]))?"
@@ -23,11 +23,16 @@ _NUMBER = re.compile(
 )
 
 
+_LOSS_WORDS = re.compile(r"\b(loss|losses|deficit|negative)\b", re.IGNORECASE)
+
+
 def parse_numbers(text: str) -> list[tuple[float, bool, bool]]:
     """Return ``[(value_in_base_units, had_unit_word, is_percent), ...]`` found in ``text``.
 
-    Thousands separators and parentheses/minus signs are handled; ``million``/``bn``-style
-    unit words scale the value; percentages are returned as fractions.
+    Thousands separators and parentheses/minus signs (any dash variant) are handled;
+    ``million``/``bn``-style unit words scale the value; percentages are returned as
+    fractions. A number preceded within 40 characters by "loss"/"deficit" is also
+    emitted as its negative, so "a net loss of USD 1,981 million" matches −1,981.
     """
     out: list[tuple[float, bool, bool]] = []
     for m in _NUMBER.finditer(text):
@@ -39,16 +44,17 @@ def parse_numbers(text: str) -> list[tuple[float, bool, bool]]:
         negative = bool(m.group("neg")) and (
             m.group("close") is not None or not m.group("neg").strip().startswith("(")
         )
+        loss_context = bool(_LOSS_WORDS.search(text[max(0, m.start() - 40) : m.start()]))
         if negative:
             value = -value
         if m.group("pct"):
             out.append((value / 100.0, False, True))
             continue
         unit = (m.group("unit") or "").lower()
-        if unit:
-            out.append((value * _UNIT[unit], True, False))
-        else:
-            out.append((value, False, False))
+        scaled = value * _UNIT[unit] if unit else value
+        out.append((scaled, bool(unit), False))
+        if loss_context and value > 0:
+            out.append((-scaled, bool(unit), False))
     return out
 
 
