@@ -263,3 +263,54 @@ def test_rounded_duplicate_yields_to_precise_figure():
     out = {r.fact_id: r for r in reconcile([rounded, precise, *filler])}
     assert "p" in out and out["p"].canonical and out["p"].value_reported == 17_937
     assert "r" not in out and "also on p.71 (rounded)" in out["p"].reconciliation_note
+
+
+def test_rounded_figure_in_later_report_agrees_and_precise_wins():
+    precise = fact(
+        fact_id="p",
+        metric="net_income",
+        fiscal_year=2020,
+        document_id="d21",
+        source_fiscal_year=2021,
+        is_comparative=True,
+        page=39,
+        value_reported=-1_279,
+        unit_reported="millions",
+    )
+    rounded = fact(
+        fact_id="r",
+        metric="net_income",
+        fiscal_year=2020,
+        document_id="d22",
+        source_fiscal_year=2022,
+        is_comparative=True,
+        page=71,
+        value_reported=-1,
+        unit_reported="billions",
+    )
+    out = {x.fact_id: x for x in reconcile([rounded, precise])}
+    assert out["p"].canonical and out["p"].value_reported == -1_279
+    assert not out["r"].canonical and "agrees" in out["r"].reconciliation_note
+    assert "restated" not in (out["p"].reconciliation_note or "")
+
+
+def test_genuinely_different_figures_still_disagree():
+    a = fact(
+        fact_id="a",
+        fiscal_year=2022,
+        document_id="d22",
+        source_fiscal_year=2022,
+        value_reported=100,
+        unit_reported="millions",
+    )
+    b = fact(
+        fact_id="b",
+        fiscal_year=2022,
+        document_id="d23",
+        source_fiscal_year=2023,
+        is_comparative=True,
+        value_reported=2,
+        unit_reported="billions",
+    )
+    out = {x.fact_id: x for x in reconcile([a, b])}
+    assert out["a"].canonical and "restated" in out["a"].reconciliation_note

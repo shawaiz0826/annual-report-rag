@@ -231,7 +231,10 @@ class ChatService:
                     continue
                 pages = self.store.load_pages(profile.document_id)
                 chunks = self.store.load_chunks(profile.document_id)
-                n, _usage = self.fact_extractor.extract_document(profile, pages, chunks)
+                retry = None if force else self.fact_extractor.failed_pages(profile.document_id)
+                n, _usage = self.fact_extractor.extract_document(
+                    profile, pages, chunks, only_pages=retry or None
+                )
                 self.catalog.set_stats(profile.document_id, facts=n)
                 counts[profile.file_name] = n
         finally:

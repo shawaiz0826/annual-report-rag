@@ -5,12 +5,13 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import re
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from core.agent.prompts import load_prompt
 from core.config import FactsConfig
@@ -51,6 +52,20 @@ class ExtractionOutput(BaseModel):
     """The JSON object the extractor model must return."""
 
     items: list[ExtractedItem] = Field(default_factory=list)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data: Any) -> Any:
+        """Tolerate ``{"items": {"items": [...]}}`` and a bare list — both seen from free models."""
+        if isinstance(data, list):
+            return {"items": data}
+        if isinstance(data, dict):
+            inner = data.get("items")
+            while isinstance(inner, dict) and "items" in inner:
+                inner = inner["items"]
+            if inner is not data.get("items"):
+                return {**data, "items": inner}
+        return data
 
 
 def select_pages(
@@ -206,11 +221,24 @@ class FactExtractor:
     # ------------------------------------------------------------------ stage API
 
     def extract_document(
-        self, profile: DocumentProfile, pages: list[PageText], chunks: list[Chunk]
+        self,
+        profile: DocumentProfile,
+        pages: list[PageText],
+        chunks: list[Chunk],
+        only_pages: list[int] | None = None,
     ) -> tuple[int, Usage]:
-        """Select pages, extract, validate, persist raw records."""
+        """Select pages, extract, validate, persist raw records.
+
+        With ``only_pages`` (used to retry failed pages) the given pages are extracted and
+        merged into the document's existing raw records instead of replacing them.
+        """
         version, _ = load_prompt("extractor")
-        selected = select_pages(profile, chunks, self.registry, self.retriever, self.config)
+        if only_pages:
+            selected = sorted(only_pages)
+            existing = self._load_raw(profile.document_id)
+        else:
+            selected = select_pages(profile, chunks, self.registry, self.retriever, self.config)
+            existing = None
         by_page = {p.page: p for p in pages}
         usage = Usage()
         records: list[FactRecord] = []
@@ -250,6 +278,14 @@ class FactExtractor:
             except QuotaExhaustedError:
                 pool.shutdown(wait=False, cancel_futures=True)
                 raise
+        if existing is not None:
+            retried = set(selected)
+            kept = [r for r in existing["records"] if r.page not in retried]
+            records = kept + records
+            warnings = [
+                w for w in existing["warnings"] if not any(w.startswith(f"p.{p}:") for p in retried)
+            ] + warnings
+            selected = sorted(set(existing["pages_selected"]) | retried)
         self._save_raw(profile.document_id, records, selected, warnings)
         log.info(
             "%s: %d raw facts from pages %s (%d warnings)",
@@ -299,6 +335,26 @@ class FactExtractor:
         (self.raw_dir / f"{document_id}.json").write_text(
             json.dumps(payload, indent=1), encoding="utf-8"
         )
+
+    def _load_raw(self, document_id: str) -> dict[str, Any]:
+        path = self.raw_dir / f"{document_id}.json"
+        if not path.exists():
+            return {"records": [], "warnings": [], "pages_selected": []}
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        return {
+            "records": [FactRecord.model_validate(r) for r in payload.get("records", [])],
+            "warnings": list(payload.get("warnings", [])),
+            "pages_selected": list(payload.get("pages_selected", [])),
+        }
+
+    def failed_pages(self, document_id: str) -> list[int]:
+        """Pages whose extraction failed in the stored raw results."""
+        out: list[int] = []
+        for w in self.raw_warnings(document_id):
+            m = re.match(r"p\.(\d+): extraction failed", w)
+            if m:
+                out.append(int(m.group(1)))
+        return sorted(set(out))
 
     def raw_warnings(self, document_id: str) -> list[str]:
         """Warnings recorded for a document's extraction."""

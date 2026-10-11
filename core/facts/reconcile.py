@@ -14,6 +14,33 @@ def _agree(a: float, b: float, tolerance_pct: float) -> bool:
     return denominator > 0 and abs(a - b) / denominator * 100.0 <= tolerance_pct
 
 
+def _resolution(record: FactRecord) -> float:
+    """Smallest increment the printed figure can express (e.g. "$1 billion" → 1e9)."""
+    step = UNIT_MULTIPLIER[record.unit_reported]
+    text = f"{abs(record.value_reported):.10f}".rstrip("0").rstrip(".")
+    decimals = len(text.split(".")[1]) if "." in text else 0
+    return step / (10**decimals)
+
+
+def _records_agree(a: FactRecord, b: FactRecord, tolerance_pct: float) -> bool:
+    """Agreement that also accepts a coarse rounded figure of a precise one.
+
+    ``-1,279 million`` and ``-1 billion`` agree because the precise value rounds to the
+    coarse one at the coarse figure's resolution.
+    """
+    if _agree(a.value_base, b.value_base, tolerance_pct):
+        return True
+    coarse, fine = (a, b) if _resolution(a) >= _resolution(b) else (b, a)
+    step = _resolution(coarse)
+    if step <= _resolution(fine):
+        return False
+    return round(fine.value_base / step) * step == coarse.value_base
+
+
+def _finer(a: FactRecord, b: FactRecord) -> FactRecord:
+    return a if _resolution(a) <= _resolution(b) else b
+
+
 def reconcile(
     records: list[FactRecord], *, tolerance_pct: float = 1.0, min_confidence: float = 0.5
 ) -> list[FactRecord]:
@@ -59,12 +86,10 @@ def _reconcile_group(
         doc_records.sort(key=lambda r: (-page_richness[(r.document_id, r.page)], r.page))
         kept: list[FactRecord] = []
         for r in doc_records:
-            twin = next(
-                (k for k in kept if _agree(k.value_base, r.value_base, tolerance_pct)), None
-            )
+            twin = next((k for k in kept if _records_agree(k, r, tolerance_pct)), None)
             if twin is None:
                 kept.append(r.model_copy())
-            elif UNIT_MULTIPLIER[r.unit_reported] < UNIT_MULTIPLIER[twin.unit_reported]:
+            elif _finer(r, twin) is r and _resolution(r) < _resolution(twin):
                 # same figure printed more precisely elsewhere (17,937 million beats "$18 billion")
                 finer = r.model_copy()
                 finer.reconciliation_note = _append(
@@ -100,8 +125,17 @@ def _reconcile_group(
 
     canonical = per_doc[0]
     others = per_doc[1:]
-    agreeing = [o for o in others if _agree(canonical.value_base, o.value_base, tolerance_pct)]
+    agreeing = [o for o in others if _records_agree(canonical, o, tolerance_pct)]
     disagreeing = [o for o in others if o not in agreeing]
+    # a precise figure in another report beats a rounded one in the preferred report
+    for o in agreeing:
+        if _resolution(o) < _resolution(canonical) and not _agree(
+            canonical.value_base, o.value_base, tolerance_pct
+        ):
+            others = [x for x in per_doc if x is not o]
+            canonical, agreeing = o, [x for x in others if _records_agree(o, x, tolerance_pct)]
+            disagreeing = [x for x in others if x not in agreeing]
+            break
 
     if not disagreeing:
         canonical.confidence = 0.95

@@ -239,7 +239,7 @@
       "pages_kept": 64,
       "chunks": 443,
       "table_chunks": 61,
-      "facts": 0,
+      "facts": 33,
       "chars": 221160
     },
     "a22e48d2fa107385": {
@@ -263,7 +263,7 @@
       "pages_kept": 76,
       "chunks": 537,
       "table_chunks": 73,
-      "facts": 0,
+      "facts": 16,
       "chars": 265917
     },
     "f585bb475b011102": {
@@ -271,7 +271,7 @@
       "pages_kept": 61,
       "chunks": 482,
       "table_chunks": 70,
-      "facts": 0,
+      "facts": 37,
       "chars": 240222
     },
     "f7db8b241a984dab": {
@@ -279,7 +279,7 @@
       "pages_kept": 75,
       "chunks": 561,
       "table_chunks": 65,
-      "facts": 0,
+      "facts": 22,
       "chars": 285432
     },
     "f87c2cdad276d476": {
@@ -287,7 +287,7 @@
       "pages_kept": 75,
       "chunks": 513,
       "table_chunks": 78,
-      "facts": 0,
+      "facts": 16,
       "chars": 252666
     }
   }

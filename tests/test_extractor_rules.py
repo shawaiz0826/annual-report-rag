@@ -108,3 +108,22 @@ def test_select_pages_votes_then_adds_alias_tables():
     )
     assert 10 in pages and 40 in pages and 41 not in pages
     assert len(pages) <= 4
+
+
+def test_extraction_output_unwraps_nested_items():
+    from core.facts.extractor import ExtractionOutput
+
+    nested = {
+        "items": {
+            "items": [
+                {
+                    "metric_alias_seen": "Revenue",
+                    "canonical_metric": "revenue",
+                    "fiscal_year": 2023,
+                    "value": 1,
+                }
+            ]
+        }
+    }
+    assert len(ExtractionOutput.model_validate(nested).items) == 1
+    assert ExtractionOutput.model_validate([]).items == []
