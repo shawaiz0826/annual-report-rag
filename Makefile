@@ -41,7 +41,7 @@ reingest: ## Force re-ingestion of every document
 reprocess: ## Re-clean/re-chunk/re-index from source files, keeping profiles (no LLM calls)
 	$(PYTHON) -m apps.cli reprocess
 
-rebuild: ## Rebuild ALL local state from committed artefacts with ZERO model calls (≈6 min)
+rebuild: ## Rebuild ALL local state from committed artefacts with ZERO model calls (≈5–15 min on CPU)
 	$(PYTHON) -m apps.cli reprocess
 	$(PYTHON) -m apps.cli import-facts
 

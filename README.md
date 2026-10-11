@@ -18,7 +18,7 @@ flowchart LR
 ```bash
 make setup                      # Python 3.11 venv, CPU torch, pinned deps, .env from .env.example
 # put OPENROUTER_API_KEY in .env
-make rebuild                    # indexes + facts from the committed artefacts, ZERO model calls (≈6 min)
+make rebuild                    # indexes + facts from the committed artefacts, ZERO model calls (≈5–15 min on CPU)
 #  (or `make ingest` to re-profile and re-extract with the model: ≈70 calls, ≈15 min)
 make chat                       # terminal demo; try /catalog, /facts Tesla revenue, /why, /model
 python -m apps.cli chat --replay   # recorded demo answers ([replay] in the footer), no model calls
