@@ -355,3 +355,44 @@ def test_fallback_model_is_recorded_in_trace_and_caveats(tmp_path: Path):
     assert trace.model == "fallback/model" and trace.fallback_from == "scripted/model"
     assert any("fallback model fallback/model" in c for c in answer.caveats)
     assert "fallback from scripted/model" in render_trace(trace)
+
+
+def test_incomplete_answer_detection():
+    from core.agent.agent import incomplete_answer
+
+    assert incomplete_answer("Key factors were:") == "ends with ':'"
+    assert (
+        incomplete_answer("The factors are listed below.") == "announces a list that is not written"
+    )
+    assert incomplete_answer("The factors are listed below.\n- chips\n- commodities") is None
+    assert incomplete_answer("Revenue was EUR 1,000 million [Acme plc FY2023 p.7].") is None
+    assert incomplete_answer("   ") == "empty"
+
+
+def test_truncated_final_answer_is_sent_back_once(tmp_path: Path):
+    def final(text: str) -> LLMResponse:
+        return _resp(
+            _call(
+                "c",
+                "final_answer",
+                resolved_question="Acme revenue 2023?",
+                answered=True,
+                answer_markdown=text,
+                citations=[{"kind": "fact", "ref": "f_rev23"}],
+                confidence="high",
+                entities_used=["Acme plc"],
+                years_used=[2023],
+                metrics_used=["revenue"],
+            )
+        )
+
+    provider = ScriptedProvider(
+        [final("Acme's 2023 figures were as follows:"), final("Revenue was EUR 1,000 million.")]
+    )
+    agent, _retriever, _traces = _build(tmp_path, provider)
+    answer, trace = agent.run(InMemorySessionStore().create(), "What was Acme's revenue in 2023?")
+
+    assert answer.answer_markdown == "Revenue was EUR 1,000 million."
+    rejection = provider.calls[1][-1]  # the tool message the second call was sent
+    assert rejection["role"] == "tool" and "incomplete (ends with ':')" in rejection["content"]
+    assert [t.tool for t in trace.tool_calls] == ["final_answer"]

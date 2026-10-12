@@ -197,9 +197,16 @@ def summarise(model: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
         cat["total"] += 1
         cat["passed"] += int(r["scores"].get("passed", False))
     costs = [r["usage"].get("cost_usd") for r in rows if r["usage"].get("cost_usd") is not None]
+    prompt_versions = sorted(
+        {
+            str((r.get("trace_obj") or {}).get("prompt_versions", {}).get("system", "?"))
+            for r in rows
+        }
+    )
     return {
         "model": model,
         "date": datetime.now(UTC).strftime("%Y-%m-%d"),
+        "system_prompt_versions": prompt_versions,
         "cases": len(rows),
         "passed": sum(int(r["scores"].get("passed", False)) for r in rows),
         "numeric_accuracy": (
@@ -233,6 +240,9 @@ def render_report(summary: dict[str, Any]) -> str:
     lines = [
         f"# Eval report — `{s['model']}` — {s['date']}"
         + ("" if s.get("complete", True) else " (PARTIAL — continue with --resume)"),
+        "",
+        f"System prompt version(s) answered under: {', '.join(s.get('system_prompt_versions') or ['?'])}. "
+        "Model fallback disabled for evals; every answer is live.",
         "",
         "| cases | passed | numeric accuracy | behaviour accuracy | noise leaks | mean latency | mean tokens | total cost |",
         "|---|---|---|---|---|---|---|---|",

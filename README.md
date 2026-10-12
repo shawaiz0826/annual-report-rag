@@ -122,8 +122,16 @@ Full log with alternatives: [docs/DECISIONS.md](docs/DECISIONS.md).
 ## Evaluation
 
 <!-- evaluation:start -->
-_No eval report yet — run `make eval`._
+System prompt version(s) answered under: 2. Model fallback disabled for evals; every answer is live.
+
+| cases | passed | numeric accuracy | behaviour accuracy | noise leaks | mean latency | mean tokens | total cost |
+|---|---|---|---|---|---|---|---|
+| 16 | 13 (81%) | 83% (12 cases) | 100% | 0 | 33.1s | 19872 | $0.0000 |
+
+Full report: [eval/reports/report_nvidia-nemotron-3-ultra-550b-a55b-free_2026-10-12.md](eval/reports/report_nvidia-nemotron-3-ultra-550b-a55b-free_2026-10-12.md).
 <!-- evaluation:end -->
+
+Reading the partial run (2026-10-12, primary model, 50-calls/day free tier): 16 of the 22 golden cases ran before the daily cap stopped it; every behaviour check passed (answer / refuse / caveat) and no answer cited the news file. The three failures share one cause: the model closed `answer_markdown` after a lead-in sentence — "…the following key economic factors…:" — without writing the list or table it announced, while its conclusion, citations and caveats were right (q12, q13); q10 named the more profitable company but never computed and quoted the margins. Both are fixed in system prompt v3 (state every figure the conclusion rests on; profitability comparisons go through `compute_metric`) and an incomplete-answer guard in the agent loop that sends a truncated `final_answer` back once, unit-tested; they have not yet been re-evaluated because the cap was reached. `make eval` runs the full set on both models once calls are available (1,000/day with credits).
 
 Extraction accuracy against 46 hand-verified figures: see [eval/verification.md](eval/verification.md).
 

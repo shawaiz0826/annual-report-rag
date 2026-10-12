@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from datetime import UTC, datetime
 from typing import Any
@@ -55,6 +56,27 @@ def catalog_summary(catalog: Catalog) -> str:
             + ", ".join(f"{d.file_name} ({d.doc_type})" for d in other)
         )
     return "\n".join(lines) or "- (no documents ingested yet)"
+
+
+_ANNOUNCES_LIST = re.compile(
+    r"\b(the following|as follows|listed below|below)\b[^\n]*$", re.IGNORECASE
+)
+
+
+def incomplete_answer(text: str) -> str | None:
+    """Why ``text`` looks cut short, or None.
+
+    Models sometimes close the JSON string after a lead-in ("...influenced its performance:")
+    and never write the list they announced. Cheap to detect, cheap to ask again.
+    """
+    stripped = text.rstrip()
+    if not stripped:
+        return "empty"
+    if stripped[-1] in ":;,—-–":
+        return f"ends with '{stripped[-1]}'"
+    if "\n" not in stripped and _ANNOUNCES_LIST.search(stripped):
+        return "announces a list that is not written"
+    return None
 
 
 class Agent:
@@ -230,6 +252,22 @@ class Agent:
                                 "role": "tool",
                                 "tool_call_id": final_call.id,
                                 "content": f"final_answer rejected: {str(exc)[:400]}. Fix the arguments and call final_answer again.",
+                            }
+                        )
+                        continue
+                    problem = incomplete_answer(args.answer_markdown) if args.answered else None
+                    if problem and not force_final:
+                        step += 1
+                        log.warning("final_answer rejected as incomplete: %s", problem)
+                        messages.append(
+                            {
+                                "role": "tool",
+                                "tool_call_id": final_call.id,
+                                "content": (
+                                    f"final_answer rejected: answer_markdown is incomplete ({problem}). "
+                                    "Write the whole answer in answer_markdown — every figure, bullet "
+                                    "or table you announced — then call final_answer again."
+                                ),
                             }
                         )
                         continue

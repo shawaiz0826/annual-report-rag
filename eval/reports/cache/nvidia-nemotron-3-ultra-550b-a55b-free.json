@@ -1,0 +1,4930 @@
+[
+ {
+  "id": "q01",
+  "category": "lookup",
+  "question": "What was Tesla's revenue in 2023?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 6803,
+   "completion_tokens": 491,
+   "total_tokens": 7294,
+   "cost_usd": 0.0
+  },
+  "latency_s": 8.6,
+  "trace_id": "5353352ac511",
+  "answer": "Tesla, Inc. (group) reported **revenue of USD 96,773 million** for fiscal year 2023 [Tesla, Inc. FY2023 p.20].",
+  "caveats": [],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Tesla, Inc. FY2023 p.20]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What was Tesla's revenue in 2023?",
+   "answered": true,
+   "answer_markdown": "Tesla, Inc. (group) reported **revenue of USD 96,773 million** for fiscal year 2023 [Tesla, Inc. FY2023 p.20].",
+   "citations": [
+    {
+     "document_id": "589ec657c0b381f6",
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2023,
+     "page": 20,
+     "kind": "fact",
+     "ref": "749628ac8f46"
+    }
+   ],
+   "caveats": [],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Tesla, Inc."
+   ],
+   "years_used": [
+    2023
+   ],
+   "metrics_used": [
+    "revenue"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "5353352ac511",
+   "session_id": "21305eb81da3",
+   "timestamp": "2026-10-12T00:07:42+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What was Tesla's revenue in 2023?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "revenue",
+      "fiscal_years": [
+       2023
+      ],
+      "issuer": "Tesla"
+     },
+     "result_summary": "1 facts for revenue years=[2023]",
+     "result_ref": "results/5353352ac511/1.json",
+     "latency_ms": 1
+    },
+    {
+     "step": 2,
+     "tool": "final_answer",
+     "arguments": {
+      "metrics_used": [
+       "revenue"
+      ],
+      "entities_used": [
+       "Tesla, Inc."
+      ],
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "749628ac8f46"
+       }
+      ],
+      "years_used": [
+       2023
+      ],
+      "answered": true,
+      "confidence": "high",
+      "resolved_question": "What was Tesla's revenue in 2023?",
+      "model_knowledge_note": null,
+      "answer_markdown": "Tesla, Inc. (group) reported **revenue of USD 96,773 million** for fiscal year 2023 [Tesla, Inc. FY2023 p.20].",
+      "caveats": []
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "749628ac8f46",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "revenue",
+     "fiscal_year": 2023,
+     "value_reported": 96773.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 96773000000.0,
+     "formatted": "USD 96,773 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "source_fiscal_year": 2023,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": "also on p.26; also on p.63",
+     "label_seen": "Total revenues"
+    }
+   ],
+   "final": {
+    "resolved_question": "What was Tesla's revenue in 2023?",
+    "answered": true,
+    "answer_markdown": "Tesla, Inc. (group) reported **revenue of USD 96,773 million** for fiscal year 2023 [Tesla, Inc. FY2023 p.20].",
+    "citations": [
+     {
+      "document_id": "589ec657c0b381f6",
+      "file_name": "Tesla_Annual_Report_2023.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2023,
+      "page": 20,
+      "kind": "fact",
+      "ref": "749628ac8f46"
+     }
+    ],
+    "caveats": [],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Tesla, Inc."
+    ],
+    "years_used": [
+     2023
+    ],
+    "metrics_used": [
+     "revenue"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 6803,
+    "completion_tokens": 491,
+    "total_tokens": 7294,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 8581,
+   "error": null
+  }
+ },
+ {
+  "id": "q02",
+  "category": "lookup",
+  "question": "How much revenue did Tesla generate in 2022?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 6809,
+   "completion_tokens": 543,
+   "total_tokens": 7352,
+   "cost_usd": 0.0
+  },
+  "latency_s": 54.5,
+  "trace_id": "d8973e2ae4fc",
+  "answer": "Tesla, Inc. (group) generated **USD 81,462 million** in revenue for FY2022 (i.e., approximately USD 81.5 billion) [Tesla, Inc. FY2022 p.20].",
+  "caveats": [
+   "Figure is from Tesla, Inc. group consolidated financial statements (primary issuer report).",
+   "Revenue reported in USD millions; no currency conversion applied."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Tesla, Inc. FY2022 p.20]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "How much revenue did Tesla generate in 2022?",
+   "answered": true,
+   "answer_markdown": "Tesla, Inc. (group) generated **USD 81,462 million** in revenue for FY2022 (i.e., approximately USD 81.5 billion) [Tesla, Inc. FY2022 p.20].",
+   "citations": [
+    {
+     "document_id": "f585bb475b011102",
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2022,
+     "page": 20,
+     "kind": "fact",
+     "ref": "b57c73d09f47"
+    }
+   ],
+   "caveats": [
+    "Figure is from Tesla, Inc. group consolidated financial statements (primary issuer report).",
+    "Revenue reported in USD millions; no currency conversion applied."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Tesla, Inc."
+   ],
+   "years_used": [
+    2022
+   ],
+   "metrics_used": [
+    "revenue"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "d8973e2ae4fc",
+   "session_id": "4bb58ac60a3a",
+   "timestamp": "2026-10-12T00:07:51+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "How much revenue did Tesla generate in 2022?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "fiscal_years": [
+       2022
+      ],
+      "metric": "revenue",
+      "issuer": "Tesla"
+     },
+     "result_summary": "1 facts for revenue years=[2022]",
+     "result_ref": "results/d8973e2ae4fc/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "final_answer",
+     "arguments": {
+      "answered": true,
+      "confidence": "high",
+      "metrics_used": [
+       "revenue"
+      ],
+      "entities_used": [
+       "Tesla, Inc."
+      ],
+      "resolved_question": "How much revenue did Tesla generate in 2022?",
+      "years_used": [
+       2022
+      ],
+      "model_knowledge_note": null,
+      "answer_markdown": "Tesla, Inc. (group) generated **USD 81,462 million** in revenue for FY2022 (i.e., approximately USD 81.5 billion) [Tesla, Inc. FY2022 p.20].",
+      "caveats": [
+       "Figure is from Tesla, Inc. group consolidated financial statements (primary issuer report).",
+       "Revenue reported in USD millions; no currency conversion applied."
+      ],
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "b57c73d09f47"
+       }
+      ]
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "b57c73d09f47",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "revenue",
+     "fiscal_year": 2022,
+     "value_reported": 81462.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 81462000000.0,
+     "formatted": "USD 81,462 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.59; agrees with FY2023 report",
+     "label_seen": "Total revenues"
+    }
+   ],
+   "final": {
+    "resolved_question": "How much revenue did Tesla generate in 2022?",
+    "answered": true,
+    "answer_markdown": "Tesla, Inc. (group) generated **USD 81,462 million** in revenue for FY2022 (i.e., approximately USD 81.5 billion) [Tesla, Inc. FY2022 p.20].",
+    "citations": [
+     {
+      "document_id": "f585bb475b011102",
+      "file_name": "Tesla_Annual_Report_2022.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2022,
+      "page": 20,
+      "kind": "fact",
+      "ref": "b57c73d09f47"
+     }
+    ],
+    "caveats": [
+     "Figure is from Tesla, Inc. group consolidated financial statements (primary issuer report).",
+     "Revenue reported in USD millions; no currency conversion applied."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Tesla, Inc."
+    ],
+    "years_used": [
+     2022
+    ],
+    "metrics_used": [
+     "revenue"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 6809,
+    "completion_tokens": 543,
+    "total_tokens": 7352,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 54476,
+   "error": null
+  }
+ },
+ {
+  "id": "q03",
+  "category": "lookup",
+  "question": "What was Ford's revenue in 2023?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 6790,
+   "completion_tokens": 533,
+   "total_tokens": 7323,
+   "cost_usd": 0.0
+  },
+  "latency_s": 53.5,
+  "trace_id": "e8bf93c60be9",
+  "answer": "Ford Motor Company (group) reported **revenue of USD 176,191 million** for fiscal year 2023 [Ford Motor Company FY2023 p.44].",
+  "caveats": [
+   "Figure is for the consolidated group (Ford Motor Company), not a subsidiary.",
+   "Currency is USD; unit is millions (i.e., USD 176.191 billion)."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Ford Motor Company FY2023 p.44]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What was Ford's revenue in 2023?",
+   "answered": true,
+   "answer_markdown": "Ford Motor Company (group) reported **revenue of USD 176,191 million** for fiscal year 2023 [Ford Motor Company FY2023 p.44].",
+   "citations": [
+    {
+     "document_id": "f7db8b241a984dab",
+     "file_name": "Ford_Annual_Report_2023.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2023,
+     "page": 44,
+     "kind": "fact",
+     "ref": "fb91fd25dcbf"
+    }
+   ],
+   "caveats": [
+    "Figure is for the consolidated group (Ford Motor Company), not a subsidiary.",
+    "Currency is USD; unit is millions (i.e., USD 176.191 billion)."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Ford Motor Company"
+   ],
+   "years_used": [
+    2023
+   ],
+   "metrics_used": [
+    "revenue"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "e8bf93c60be9",
+   "session_id": "aee37e090094",
+   "timestamp": "2026-10-12T00:08:45+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What was Ford's revenue in 2023?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "issuer": "Ford",
+      "metric": "revenue",
+      "fiscal_years": [
+       2023
+      ]
+     },
+     "result_summary": "1 facts for revenue years=[2023]",
+     "result_ref": "results/e8bf93c60be9/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "final_answer",
+     "arguments": {
+      "metrics_used": [
+       "revenue"
+      ],
+      "years_used": [
+       2023
+      ],
+      "entities_used": [
+       "Ford Motor Company"
+      ],
+      "answer_markdown": "Ford Motor Company (group) reported **revenue of USD 176,191 million** for fiscal year 2023 [Ford Motor Company FY2023 p.44].",
+      "answered": true,
+      "caveats": [
+       "Figure is for the consolidated group (Ford Motor Company), not a subsidiary.",
+       "Currency is USD; unit is millions (i.e., USD 176.191 billion)."
+      ],
+      "model_knowledge_note": null,
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "fb91fd25dcbf"
+       }
+      ],
+      "confidence": "high",
+      "resolved_question": "What was Ford's revenue in 2023?"
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "fb91fd25dcbf",
+     "legal_entity": "Ford Motor Company",
+     "metric": "revenue",
+     "fiscal_year": 2023,
+     "value_reported": 176191.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 176191000000.0,
+     "formatted": "USD 176,191 millions",
+     "page": 44,
+     "file_name": "Ford_Annual_Report_2023.pdf",
+     "source_fiscal_year": 2023,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": null,
+     "label_seen": "Revenue ($M)"
+    }
+   ],
+   "final": {
+    "resolved_question": "What was Ford's revenue in 2023?",
+    "answered": true,
+    "answer_markdown": "Ford Motor Company (group) reported **revenue of USD 176,191 million** for fiscal year 2023 [Ford Motor Company FY2023 p.44].",
+    "citations": [
+     {
+      "document_id": "f7db8b241a984dab",
+      "file_name": "Ford_Annual_Report_2023.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2023,
+      "page": 44,
+      "kind": "fact",
+      "ref": "fb91fd25dcbf"
+     }
+    ],
+    "caveats": [
+     "Figure is for the consolidated group (Ford Motor Company), not a subsidiary.",
+     "Currency is USD; unit is millions (i.e., USD 176.191 billion)."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Ford Motor Company"
+    ],
+    "years_used": [
+     2023
+    ],
+    "metrics_used": [
+     "revenue"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 6790,
+    "completion_tokens": 533,
+    "total_tokens": 7323,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 53456,
+   "error": null
+  }
+ },
+ {
+  "id": "q04",
+  "category": "lookup",
+  "question": "What was Ford's revenue for the year 2020?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 13552,
+   "completion_tokens": 897,
+   "total_tokens": 14449,
+   "cost_usd": 0.0
+  },
+  "latency_s": 18.9,
+  "trace_id": "ff49a66645a2",
+  "answer": "Ford Motor Company (group) reported revenue of **USD 127,144 million** for fiscal year 2020.\n\n| Legal Entity | Fiscal Year | Revenue | Currency | Unit | Source |\n|--------------|-------------|---------|----------|------|--------|\n| Ford Motor Company | 2020 | 127,144 | USD | millions | FY2022 annual report (comparative column) |\n\nThe figure appears as a comparative prior-year value in the Ford Motor Company FY2022 Form 10-K (page 52) and agrees with the FY2021 report.",
+  "caveats": [
+   "Figure is a comparative prior-year value from the FY2022 annual report, not from a standalone FY2020 report."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Ford Motor Company FY2022 p.52]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What was Ford's revenue for the year 2020?",
+   "answered": true,
+   "answer_markdown": "Ford Motor Company (group) reported revenue of **USD 127,144 million** for fiscal year 2020.\n\n| Legal Entity | Fiscal Year | Revenue | Currency | Unit | Source |\n|--------------|-------------|---------|----------|------|--------|\n| Ford Motor Company | 2020 | 127,144 | USD | millions | FY2022 annual report (comparative column) |\n\nThe figure appears as a comparative prior-year value in the Ford Motor Company FY2022 Form 10-K (page 52) and agrees with the FY2021 report.",
+   "citations": [
+    {
+     "document_id": "db760deb91039466",
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2022,
+     "page": 52,
+     "kind": "fact",
+     "ref": "85ef78cb3679"
+    }
+   ],
+   "caveats": [
+    "Figure is a comparative prior-year value from the FY2022 annual report, not from a standalone FY2020 report."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Ford Motor Company"
+   ],
+   "years_used": [
+    2020
+   ],
+   "metrics_used": [
+    "revenue"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "ff49a66645a2",
+   "session_id": "9b5e15fd05f2",
+   "timestamp": "2026-10-12T00:09:38+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What was Ford's revenue for the year 2020?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "list_catalog",
+     "arguments": {},
+     "result_summary": "9 documents, issuers=['BMW', 'Ford', 'Tesla']",
+     "result_ref": "results/ff49a66645a2/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "lookup_facts",
+     "arguments": {
+      "fiscal_years": [
+       2020
+      ],
+      "issuer": "Ford",
+      "metric": "revenue"
+     },
+     "result_summary": "1 facts for revenue years=[2020]",
+     "result_ref": "results/ff49a66645a2/2.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 3,
+     "tool": "final_answer",
+     "arguments": {
+      "caveats": [
+       "Figure is a comparative prior-year value from the FY2022 annual report, not from a standalone FY2020 report."
+      ],
+      "years_used": [
+       2020
+      ],
+      "model_knowledge_note": null,
+      "confidence": "high",
+      "answer_markdown": "Ford Motor Company (group) reported revenue of **USD 127,144 million** for fiscal year 2020.\n\n| Legal Entity | Fiscal Year | Revenue | Currency | Unit | Source |\n|--------------|-------------|---------|----------|------|--------|\n| Ford Motor Company | 2020 | 127,144 | USD | millions | FY2022 annual report (comparative column) |\n\nThe figure appears as a comparative prior-year value in the Ford Motor Company FY2022 Form 10-K (page 52) and agrees with the FY2021 report.",
+      "answered": true,
+      "entities_used": [
+       "Ford Motor Company"
+      ],
+      "metrics_used": [
+       "revenue"
+      ],
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "85ef78cb3679"
+       }
+      ],
+      "resolved_question": "What was Ford's revenue for the year 2020?"
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "85ef78cb3679",
+     "legal_entity": "Ford Motor Company",
+     "metric": "revenue",
+     "fiscal_year": 2020,
+     "value_reported": 127144.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 127144000000.0,
+     "formatted": "USD 127,144 millions",
+     "page": 52,
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": true,
+     "confidence": 0.95,
+     "reconciliation_note": "agrees with FY2021 report",
+     "label_seen": "Revenue ($M)"
+    }
+   ],
+   "final": {
+    "resolved_question": "What was Ford's revenue for the year 2020?",
+    "answered": true,
+    "answer_markdown": "Ford Motor Company (group) reported revenue of **USD 127,144 million** for fiscal year 2020.\n\n| Legal Entity | Fiscal Year | Revenue | Currency | Unit | Source |\n|--------------|-------------|---------|----------|------|--------|\n| Ford Motor Company | 2020 | 127,144 | USD | millions | FY2022 annual report (comparative column) |\n\nThe figure appears as a comparative prior-year value in the Ford Motor Company FY2022 Form 10-K (page 52) and agrees with the FY2021 report.",
+    "citations": [
+     {
+      "document_id": "db760deb91039466",
+      "file_name": "Ford_Annual_Report_2022.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2022,
+      "page": 52,
+      "kind": "fact",
+      "ref": "85ef78cb3679"
+     }
+    ],
+    "caveats": [
+     "Figure is a comparative prior-year value from the FY2022 annual report, not from a standalone FY2020 report."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Ford Motor Company"
+    ],
+    "years_used": [
+     2020
+    ],
+    "metrics_used": [
+     "revenue"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 13552,
+    "completion_tokens": 897,
+    "total_tokens": 14449,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 18918,
+   "error": null
+  }
+ },
+ {
+  "id": "q05",
+  "category": "lookup",
+  "question": "Can you provide the revenue figures for BMW in 2017?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 16415,
+   "completion_tokens": 1012,
+   "total_tokens": 17427,
+   "cost_usd": 0.0
+  },
+  "latency_s": 99.0,
+  "trace_id": "829eafc4885a",
+  "answer": "**BMW Group revenue for FY2017: €98,282 million** (EUR millions)\n\nThis figure comes from the BMW Group's FY2021 annual report, which includes a five-year comparative table showing \"Group revenues\" for 2017–2021. The 2017 value is presented as originally reported in that comparative column.\n\n| Fiscal Year | Group Revenues (€ million) |\n|-------------|----------------------------|\n| 2017        | 98,282                     |\n\n*Source: BMW Group FY2021 Annual Report, \"BMW Group in Figures\" table, p.10* [BMW Group FY2021 p.10]",
+  "caveats": [
+   "Figure is from a comparative column in the FY2021 report, not a standalone FY2017 report.",
+   "The 2018 figures were restated for IFRS 16 adoption (footnote 1), but the 2017 figure appears as originally reported.",
+   "Currency: EUR; Unit: millions; Legal entity: BMW Group (consolidated group)."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[BMW Group FY2021 p.10]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What was BMW's revenue in 2017?",
+   "answered": true,
+   "answer_markdown": "**BMW Group revenue for FY2017: €98,282 million** (EUR millions)\n\nThis figure comes from the BMW Group's FY2021 annual report, which includes a five-year comparative table showing \"Group revenues\" for 2017–2021. The 2017 value is presented as originally reported in that comparative column.\n\n| Fiscal Year | Group Revenues (€ million) |\n|-------------|----------------------------|\n| 2017        | 98,282                     |\n\n*Source: BMW Group FY2021 Annual Report, \"BMW Group in Figures\" table, p.10* [BMW Group FY2021 p.10]",
+   "citations": [
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "chunk",
+     "ref": "a22e48d2fa107385:p10:c0"
+    }
+   ],
+   "caveats": [
+    "Figure is from a comparative column in the FY2021 report, not a standalone FY2017 report.",
+    "The 2018 figures were restated for IFRS 16 adoption (footnote 1), but the 2017 figure appears as originally reported.",
+    "Currency: EUR; Unit: millions; Legal entity: BMW Group (consolidated group)."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "BMW Group"
+   ],
+   "years_used": [
+    2017
+   ],
+   "metrics_used": [
+    "revenue"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "829eafc4885a",
+   "session_id": "65aa009997f9",
+   "timestamp": "2026-10-12T00:09:57+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "Can you provide the revenue figures for BMW in 2017?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "list_catalog",
+     "arguments": {},
+     "result_summary": "9 documents, issuers=['BMW', 'Ford', 'Tesla']",
+     "result_ref": "results/829eafc4885a/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "search_documents",
+     "arguments": {
+      "issuers": [
+       "BMW"
+      ],
+      "query": "BMW revenue 2017"
+     },
+     "result_summary": "8 chunks for issuers=['BMW']",
+     "result_ref": "results/829eafc4885a/2.json",
+     "latency_ms": 71681
+    },
+    {
+     "step": 3,
+     "tool": "final_answer",
+     "arguments": {
+      "caveats": [
+       "Figure is from a comparative column in the FY2021 report, not a standalone FY2017 report.",
+       "The 2018 figures were restated for IFRS 16 adoption (footnote 1), but the 2017 figure appears as originally reported.",
+       "Currency: EUR; Unit: millions; Legal entity: BMW Group (consolidated group)."
+      ],
+      "answered": true,
+      "resolved_question": "What was BMW's revenue in 2017?",
+      "answer_markdown": "**BMW Group revenue for FY2017: €98,282 million** (EUR millions)\n\nThis figure comes from the BMW Group's FY2021 annual report, which includes a five-year comparative table showing \"Group revenues\" for 2017–2021. The 2017 value is presented as originally reported in that comparative column.\n\n| Fiscal Year | Group Revenues (€ million) |\n|-------------|----------------------------|\n| 2017        | 98,282                     |\n\n*Source: BMW Group FY2021 Annual Report, \"BMW Group in Figures\" table, p.10* [BMW Group FY2021 p.10]",
+      "years_used": [
+       2017
+      ],
+      "confidence": "high",
+      "entities_used": [
+       "BMW Group"
+      ],
+      "metrics_used": [
+       "revenue"
+      ],
+      "model_knowledge_note": null,
+      "citations": [
+       {
+        "kind": "chunk",
+        "ref": "a22e48d2fa107385:p10:c0"
+       }
+      ]
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [
+    {
+     "chunk_id": "a22e48d2fa107385:p10:c0",
+     "document_id": "a22e48d2fa107385",
+     "page": 10,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 1,
+     "lexical_rank": 11,
+     "rrf_score": 0.0305,
+     "expanded": true
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p11:c0",
+     "document_id": "a22e48d2fa107385",
+     "page": 11,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 2,
+     "lexical_rank": 10,
+     "rrf_score": 0.0304,
+     "expanded": true
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p9:c0",
+     "document_id": "a22e48d2fa107385",
+     "page": 9,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 3,
+     "lexical_rank": 9,
+     "rrf_score": 0.0304,
+     "expanded": true
+    },
+    {
+     "chunk_id": "1b11e3c787f98fd7:p20:c4",
+     "document_id": "1b11e3c787f98fd7",
+     "page": 20,
+     "legal_entity": "BMW Finance N.V.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 11,
+     "lexical_rank": 13,
+     "rrf_score": 0.0278,
+     "expanded": true
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p11:c2",
+     "document_id": "a22e48d2fa107385",
+     "page": 11,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": null,
+     "lexical_rank": 1,
+     "rrf_score": 0.0164,
+     "expanded": false
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p11:c3",
+     "document_id": "a22e48d2fa107385",
+     "page": 11,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": null,
+     "lexical_rank": 2,
+     "rrf_score": 0.0161,
+     "expanded": false
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p9:c6",
+     "document_id": "a22e48d2fa107385",
+     "page": 9,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": null,
+     "lexical_rank": 3,
+     "rrf_score": 0.0159,
+     "expanded": false
+    },
+    {
+     "chunk_id": "1b11e3c787f98fd7:p4:c3",
+     "document_id": "1b11e3c787f98fd7",
+     "page": 4,
+     "legal_entity": "BMW Finance N.V.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 4,
+     "lexical_rank": null,
+     "rrf_score": 0.0156,
+     "expanded": true
+    }
+   ],
+   "facts_used": [],
+   "final": {
+    "resolved_question": "What was BMW's revenue in 2017?",
+    "answered": true,
+    "answer_markdown": "**BMW Group revenue for FY2017: €98,282 million** (EUR millions)\n\nThis figure comes from the BMW Group's FY2021 annual report, which includes a five-year comparative table showing \"Group revenues\" for 2017–2021. The 2017 value is presented as originally reported in that comparative column.\n\n| Fiscal Year | Group Revenues (€ million) |\n|-------------|----------------------------|\n| 2017        | 98,282                     |\n\n*Source: BMW Group FY2021 Annual Report, \"BMW Group in Figures\" table, p.10* [BMW Group FY2021 p.10]",
+    "citations": [
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "chunk",
+      "ref": "a22e48d2fa107385:p10:c0"
+     }
+    ],
+    "caveats": [
+     "Figure is from a comparative column in the FY2021 report, not a standalone FY2017 report.",
+     "The 2018 figures were restated for IFRS 16 adoption (footnote 1), but the 2017 figure appears as originally reported.",
+     "Currency: EUR; Unit: millions; Legal entity: BMW Group (consolidated group)."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "BMW Group"
+    ],
+    "years_used": [
+     2017
+    ],
+    "metrics_used": [
+     "revenue"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 16415,
+    "completion_tokens": 1012,
+    "total_tokens": 17427,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 98966,
+   "error": null
+  }
+ },
+ {
+  "id": "q06",
+  "category": "entity_trap",
+  "question": "What was BMW's total revenue in 2023?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 7593,
+   "completion_tokens": 1183,
+   "total_tokens": 8776,
+   "cost_usd": 0.0
+  },
+  "latency_s": 17.3,
+  "trace_id": "1de68308d83a",
+  "answer": "**BMW Group's total revenue for FY2023 is not in the provided documents.**\n\nThe available group-level annual report covers only up to **FY2021**, which shows revenue of **EUR 111,239 million** (BMW Group, FY2021, EUR millions) [d1e2a33556ec].\n\nThe documents do include **BMW Finance N.V.** (a financing subsidiary) annual reports for FY2022 and FY2023, but a subsidiary's revenue does not represent the group's total revenue.\n\n| Legal Entity | Fiscal Year | Revenue (EUR millions) | Source |\n|--------------|-------------|------------------------|--------|\n| BMW Group (group) | 2021 | 111,239 | [d1e2a33556ec] |\n| BMW Finance N.V. (subsidiary) | 2022, 2023 | *reports exist but revenue not extracted* | — |\n\n**What is available:** BMW Group revenue for FY2017–FY2021 (from the FY2021 annual report). No group report for FY2022 or FY2023 is in the provided set.",
+  "caveats": [
+   "Entity mismatch: the only FY2023 document is for BMW Finance N.V., a subsidiary, not the group.",
+   "Currency: all figures are in EUR.",
+   "Missing years: group revenue for FY2022 and FY2023 is not in the provided documents."
+  ],
+  "answered": false,
+  "confidence": "high",
+  "citations": [
+   "[BMW Group FY2021 p.10]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What was BMW's total revenue in 2023?",
+   "answered": false,
+   "answer_markdown": "**BMW Group's total revenue for FY2023 is not in the provided documents.**\n\nThe available group-level annual report covers only up to **FY2021**, which shows revenue of **EUR 111,239 million** (BMW Group, FY2021, EUR millions) [d1e2a33556ec].\n\nThe documents do include **BMW Finance N.V.** (a financing subsidiary) annual reports for FY2022 and FY2023, but a subsidiary's revenue does not represent the group's total revenue.\n\n| Legal Entity | Fiscal Year | Revenue (EUR millions) | Source |\n|--------------|-------------|------------------------|--------|\n| BMW Group (group) | 2021 | 111,239 | [d1e2a33556ec] |\n| BMW Finance N.V. (subsidiary) | 2022, 2023 | *reports exist but revenue not extracted* | — |\n\n**What is available:** BMW Group revenue for FY2017–FY2021 (from the FY2021 annual report). No group report for FY2022 or FY2023 is in the provided set.",
+   "citations": [
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "fact",
+     "ref": "d1e2a33556ec"
+    }
+   ],
+   "caveats": [
+    "Entity mismatch: the only FY2023 document is for BMW Finance N.V., a subsidiary, not the group.",
+    "Currency: all figures are in EUR.",
+    "Missing years: group revenue for FY2022 and FY2023 is not in the provided documents."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "BMW Group",
+    "BMW Finance N.V."
+   ],
+   "years_used": [
+    2021,
+    2022,
+    2023
+   ],
+   "metrics_used": [
+    "revenue"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "1de68308d83a",
+   "session_id": "d58553751d2d",
+   "timestamp": "2026-10-12T00:11:36+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What was BMW's total revenue in 2023?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "revenue",
+      "fiscal_years": [
+       2023
+      ],
+      "issuer": "BMW"
+     },
+     "result_summary": "0 facts for revenue years=[] (nearest available: 5)",
+     "result_ref": "results/1de68308d83a/1.json",
+     "latency_ms": 1
+    },
+    {
+     "step": 2,
+     "tool": "final_answer",
+     "arguments": {
+      "caveats": [
+       "Entity mismatch: the only FY2023 document is for BMW Finance N.V., a subsidiary, not the group.",
+       "Currency: all figures are in EUR.",
+       "Missing years: group revenue for FY2022 and FY2023 is not in the provided documents."
+      ],
+      "entities_used": [
+       "BMW Group",
+       "BMW Finance N.V."
+      ],
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "d1e2a33556ec"
+       }
+      ],
+      "metrics_used": [
+       "revenue"
+      ],
+      "years_used": [
+       2021,
+       2022,
+       2023
+      ],
+      "resolved_question": "What was BMW's total revenue in 2023?",
+      "answered": false,
+      "answer_markdown": "**BMW Group's total revenue for FY2023 is not in the provided documents.**\n\nThe available group-level annual report covers only up to **FY2021**, which shows revenue of **EUR 111,239 million** (BMW Group, FY2021, EUR millions) [d1e2a33556ec].\n\nThe documents do include **BMW Finance N.V.** (a financing subsidiary) annual reports for FY2022 and FY2023, but a subsidiary's revenue does not represent the group's total revenue.\n\n| Legal Entity | Fiscal Year | Revenue (EUR millions) | Source |\n|--------------|-------------|------------------------|--------|\n| BMW Group (group) | 2021 | 111,239 | [d1e2a33556ec] |\n| BMW Finance N.V. (subsidiary) | 2022, 2023 | *reports exist but revenue not extracted* | — |\n\n**What is available:** BMW Group revenue for FY2017–FY2021 (from the FY2021 annual report). No group report for FY2022 or FY2023 is in the provided set.",
+      "confidence": "high",
+      "model_knowledge_note": null
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "d1e2a33556ec",
+     "legal_entity": "BMW Group",
+     "metric": "revenue",
+     "fiscal_year": 2021,
+     "value_reported": 111239.0,
+     "unit_reported": "millions",
+     "currency": "EUR",
+     "value_base": 111239000000.0,
+     "formatted": "EUR 111,239 millions",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": null,
+     "label_seen": ""
+    }
+   ],
+   "final": {
+    "resolved_question": "What was BMW's total revenue in 2023?",
+    "answered": false,
+    "answer_markdown": "**BMW Group's total revenue for FY2023 is not in the provided documents.**\n\nThe available group-level annual report covers only up to **FY2021**, which shows revenue of **EUR 111,239 million** (BMW Group, FY2021, EUR millions) [d1e2a33556ec].\n\nThe documents do include **BMW Finance N.V.** (a financing subsidiary) annual reports for FY2022 and FY2023, but a subsidiary's revenue does not represent the group's total revenue.\n\n| Legal Entity | Fiscal Year | Revenue (EUR millions) | Source |\n|--------------|-------------|------------------------|--------|\n| BMW Group (group) | 2021 | 111,239 | [d1e2a33556ec] |\n| BMW Finance N.V. (subsidiary) | 2022, 2023 | *reports exist but revenue not extracted* | — |\n\n**What is available:** BMW Group revenue for FY2017–FY2021 (from the FY2021 annual report). No group report for FY2022 or FY2023 is in the provided set.",
+    "citations": [
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "fact",
+      "ref": "d1e2a33556ec"
+     }
+    ],
+    "caveats": [
+     "Entity mismatch: the only FY2023 document is for BMW Finance N.V., a subsidiary, not the group.",
+     "Currency: all figures are in EUR.",
+     "Missing years: group revenue for FY2022 and FY2023 is not in the provided documents."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "BMW Group",
+     "BMW Finance N.V."
+    ],
+    "years_used": [
+     2021,
+     2022,
+     2023
+    ],
+    "metrics_used": [
+     "revenue"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 7593,
+    "completion_tokens": 1183,
+    "total_tokens": 8776,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 17264,
+   "error": null
+  }
+ },
+ {
+  "id": "q07",
+  "category": "entity_trap",
+  "question": "What were BMW's profit figures for 2020 and 2023?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 8150,
+   "completion_tokens": 1418,
+   "total_tokens": 9568,
+   "cost_usd": 0.0
+  },
+  "latency_s": 21.6,
+  "trace_id": "8c97cced4669",
+  "answer": "**BMW profit figures (net income) from the provided documents:**\n\n| Fiscal Year | Legal Entity | Net Income | Currency | Unit | Source |\n|-------------|--------------|------------|----------|------|--------|\n| 2020 | BMW Group (group) | 3,857 | EUR | millions | BMW Group Annual Report 2021 (comparative) |\n| 2023 | BMW Finance N.V. (subsidiary) | -394,288 | EUR | thousands | BMW Finance N.V. Annual Report 2023 |\n\n**Key points:**\n- **2020**: The figure comes from the **BMW Group** (parent/group) annual report for FY2021, which includes a comparative column for 2020. This is the consolidated group net income: **EUR 3,857 million**.\n- **2023**: The only 2023 net income figure in the provided documents is for **BMW Finance N.V.**, a financing subsidiary of BMW Group. Its net income was **EUR -394,288 thousand** (a loss of about EUR 394.3 million). This is **not** the group’s consolidated result.\n- The BMW Group’s own annual report for FY2023 is **not included** in the document set, so the group’s 2023 consolidated profit is not available here.\n\n**Caveats:**\n- Entity mismatch: 2020 figure is for the group; 2023 figure is for a subsidiary.\n- Currency and unit differ: 2020 in EUR millions, 2023 in EUR thousands.\n- The 2020 figure is a comparative value from the 2021 report (confidence 0.6); the 2023 figure is from the subsidiary’s 2023 report (confidence 0.8).\n- No group-level profit for 2023 is present in the provided documents.",
+  "caveats": [
+   "Entity mismatch: 2020 figure is for BMW Group (group), 2023 figure is for BMW Finance N.V. (subsidiary).",
+   "Currency/unit mismatch: 2020 in EUR millions, 2023 in EUR thousands.",
+   "2020 figure is a comparative value from the 2021 group report (confidence 0.6).",
+   "BMW Group consolidated annual report for FY2023 is not in the provided documents, so group profit for 2023 is unavailable."
+  ],
+  "answered": true,
+  "confidence": "medium",
+  "citations": [
+   "[BMW Group FY2021 p.10]",
+   "[BMW Finance N.V. FY2023 p.10]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What were BMW's profit figures for 2020 and 2023?",
+   "answered": true,
+   "answer_markdown": "**BMW profit figures (net income) from the provided documents:**\n\n| Fiscal Year | Legal Entity | Net Income | Currency | Unit | Source |\n|-------------|--------------|------------|----------|------|--------|\n| 2020 | BMW Group (group) | 3,857 | EUR | millions | BMW Group Annual Report 2021 (comparative) |\n| 2023 | BMW Finance N.V. (subsidiary) | -394,288 | EUR | thousands | BMW Finance N.V. Annual Report 2023 |\n\n**Key points:**\n- **2020**: The figure comes from the **BMW Group** (parent/group) annual report for FY2021, which includes a comparative column for 2020. This is the consolidated group net income: **EUR 3,857 million**.\n- **2023**: The only 2023 net income figure in the provided documents is for **BMW Finance N.V.**, a financing subsidiary of BMW Group. Its net income was **EUR -394,288 thousand** (a loss of about EUR 394.3 million). This is **not** the group’s consolidated result.\n- The BMW Group’s own annual report for FY2023 is **not included** in the document set, so the group’s 2023 consolidated profit is not available here.\n\n**Caveats:**\n- Entity mismatch: 2020 figure is for the group; 2023 figure is for a subsidiary.\n- Currency and unit differ: 2020 in EUR millions, 2023 in EUR thousands.\n- The 2020 figure is a comparative value from the 2021 report (confidence 0.6); the 2023 figure is from the subsidiary’s 2023 report (confidence 0.8).\n- No group-level profit for 2023 is present in the provided documents.",
+   "citations": [
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "fact",
+     "ref": "7d70633b33a7"
+    },
+    {
+     "document_id": "b126af61b7f13344",
+     "file_name": "BMW_Annual_Report_2023.pdf",
+     "legal_entity": "BMW Finance N.V.",
+     "fiscal_year": 2023,
+     "page": 10,
+     "kind": "fact",
+     "ref": "1226c2486eda"
+    }
+   ],
+   "caveats": [
+    "Entity mismatch: 2020 figure is for BMW Group (group), 2023 figure is for BMW Finance N.V. (subsidiary).",
+    "Currency/unit mismatch: 2020 in EUR millions, 2023 in EUR thousands.",
+    "2020 figure is a comparative value from the 2021 group report (confidence 0.6).",
+    "BMW Group consolidated annual report for FY2023 is not in the provided documents, so group profit for 2023 is unavailable."
+   ],
+   "confidence": "medium",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "BMW Group",
+    "BMW Finance N.V."
+   ],
+   "years_used": [
+    2020,
+    2023
+   ],
+   "metrics_used": [
+    "net_income"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "8c97cced4669",
+   "session_id": "08cea6ce2edd",
+   "timestamp": "2026-10-12T00:11:54+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What were BMW's profit figures for 2020 and 2023?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "net income",
+      "issuer": "BMW"
+     },
+     "result_summary": "8 facts for net_income years=[2017, 2018, 2019, 2020, 2021, 2022, 2023]",
+     "result_ref": "results/8c97cced4669/1.json",
+     "latency_ms": 1
+    },
+    {
+     "step": 2,
+     "tool": "final_answer",
+     "arguments": {
+      "resolved_question": "What were BMW's profit figures for 2020 and 2023?",
+      "metrics_used": [
+       "net_income"
+      ],
+      "caveats": [
+       "Entity mismatch: 2020 figure is for BMW Group (group), 2023 figure is for BMW Finance N.V. (subsidiary).",
+       "Currency/unit mismatch: 2020 in EUR millions, 2023 in EUR thousands.",
+       "2020 figure is a comparative value from the 2021 group report (confidence 0.6).",
+       "BMW Group consolidated annual report for FY2023 is not in the provided documents, so group profit for 2023 is unavailable."
+      ],
+      "model_knowledge_note": null,
+      "answered": true,
+      "answer_markdown": "**BMW profit figures (net income) from the provided documents:**\n\n| Fiscal Year | Legal Entity | Net Income | Currency | Unit | Source |\n|-------------|--------------|------------|----------|------|--------|\n| 2020 | BMW Group (group) | 3,857 | EUR | millions | BMW Group Annual Report 2021 (comparative) |\n| 2023 | BMW Finance N.V. (subsidiary) | -394,288 | EUR | thousands | BMW Finance N.V. Annual Report 2023 |\n\n**Key points:**\n- **2020**: The figure comes from the **BMW Group** (parent/group) annual report for FY2021, which includes a comparative column for 2020. This is the consolidated group net income: **EUR 3,857 million**.\n- **2023**: The only 2023 net income figure in the provided documents is for **BMW Finance N.V.**, a financing subsidiary of BMW Group. Its net income was **EUR -394,288 thousand** (a loss of about EUR 394.3 million). This is **not** the group’s consolidated result.\n- The BMW Group’s own annual report for FY2023 is **not included** in the document set, so the group’s 2023 consolidated profit is not available here.\n\n**Caveats:**\n- Entity mismatch: 2020 figure is for the group; 2023 figure is for a subsidiary.\n- Currency and unit differ: 2020 in EUR millions, 2023 in EUR thousands.\n- The 2020 figure is a comparative value from the 2021 report (confidence 0.6); the 2023 figure is from the subsidiary’s 2023 report (confidence 0.8).\n- No group-level profit for 2023 is present in the provided documents.",
+      "confidence": "medium",
+      "entities_used": [
+       "BMW Group",
+       "BMW Finance N.V."
+      ],
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "7d70633b33a7"
+       },
+       {
+        "kind": "fact",
+        "ref": "1226c2486eda"
+       }
+      ],
+      "years_used": [
+       2020,
+       2023
+      ]
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "1226c2486eda",
+     "legal_entity": "BMW Finance N.V.",
+     "metric": "net_income",
+     "fiscal_year": 2023,
+     "value_reported": -394288.0,
+     "unit_reported": "thousands",
+     "currency": "EUR",
+     "value_base": -394288000.0,
+     "formatted": "EUR -394,288 thousands",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2023.pdf",
+     "source_fiscal_year": 2023,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": null,
+     "label_seen": ""
+    },
+    {
+     "fact_id": "7d70633b33a7",
+     "legal_entity": "BMW Group",
+     "metric": "net_income",
+     "fiscal_year": 2020,
+     "value_reported": 3857.0,
+     "unit_reported": "millions",
+     "currency": "EUR",
+     "value_base": 3857000000.0,
+     "formatted": "EUR 3,857 millions",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": true,
+     "confidence": 0.6,
+     "reconciliation_note": null,
+     "label_seen": ""
+    }
+   ],
+   "final": {
+    "resolved_question": "What were BMW's profit figures for 2020 and 2023?",
+    "answered": true,
+    "answer_markdown": "**BMW profit figures (net income) from the provided documents:**\n\n| Fiscal Year | Legal Entity | Net Income | Currency | Unit | Source |\n|-------------|--------------|------------|----------|------|--------|\n| 2020 | BMW Group (group) | 3,857 | EUR | millions | BMW Group Annual Report 2021 (comparative) |\n| 2023 | BMW Finance N.V. (subsidiary) | -394,288 | EUR | thousands | BMW Finance N.V. Annual Report 2023 |\n\n**Key points:**\n- **2020**: The figure comes from the **BMW Group** (parent/group) annual report for FY2021, which includes a comparative column for 2020. This is the consolidated group net income: **EUR 3,857 million**.\n- **2023**: The only 2023 net income figure in the provided documents is for **BMW Finance N.V.**, a financing subsidiary of BMW Group. Its net income was **EUR -394,288 thousand** (a loss of about EUR 394.3 million). This is **not** the group’s consolidated result.\n- The BMW Group’s own annual report for FY2023 is **not included** in the document set, so the group’s 2023 consolidated profit is not available here.\n\n**Caveats:**\n- Entity mismatch: 2020 figure is for the group; 2023 figure is for a subsidiary.\n- Currency and unit differ: 2020 in EUR millions, 2023 in EUR thousands.\n- The 2020 figure is a comparative value from the 2021 report (confidence 0.6); the 2023 figure is from the subsidiary’s 2023 report (confidence 0.8).\n- No group-level profit for 2023 is present in the provided documents.",
+    "citations": [
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "fact",
+      "ref": "7d70633b33a7"
+     },
+     {
+      "document_id": "b126af61b7f13344",
+      "file_name": "BMW_Annual_Report_2023.pdf",
+      "legal_entity": "BMW Finance N.V.",
+      "fiscal_year": 2023,
+      "page": 10,
+      "kind": "fact",
+      "ref": "1226c2486eda"
+     }
+    ],
+    "caveats": [
+     "Entity mismatch: 2020 figure is for BMW Group (group), 2023 figure is for BMW Finance N.V. (subsidiary).",
+     "Currency/unit mismatch: 2020 in EUR millions, 2023 in EUR thousands.",
+     "2020 figure is a comparative value from the 2021 group report (confidence 0.6).",
+     "BMW Group consolidated annual report for FY2023 is not in the provided documents, so group profit for 2023 is unavailable."
+    ],
+    "confidence": "medium",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "BMW Group",
+     "BMW Finance N.V."
+    ],
+    "years_used": [
+     2020,
+     2023
+    ],
+    "metrics_used": [
+     "net_income"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 8150,
+    "completion_tokens": 1418,
+    "total_tokens": 9568,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 21593,
+   "error": null
+  }
+ },
+ {
+  "id": "q08",
+  "category": "comparison",
+  "question": "Between Tesla and Ford, which company achieved higher profits in 2022?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 15304,
+   "completion_tokens": 1165,
+   "total_tokens": 16469,
+   "cost_usd": 0.0
+  },
+  "latency_s": 27.8,
+  "trace_id": "55977753189d",
+  "answer": "**Tesla achieved higher profits in 2022.** In fact, Tesla reported a profit while Ford reported a loss.\n\n| Company | Legal Entity | FY2022 Net Income |\n|---------|--------------|-------------------|\n| Tesla | Tesla, Inc. (group) | **USD 12,587 million** (profit) |\n| Ford | Ford Motor Company (group) | **USD -1,981 million** (loss) |\n\nBoth figures are from the respective group annual reports for FY2022, reported in USD millions, so they are directly comparable. Tesla's net income of $12.6 billion far exceeds Ford's net loss of $2.0 billion.",
+  "caveats": [
+   "None — both figures are from group-level reports in the same currency (USD) and same unit (millions) for the same fiscal year (2022)."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Tesla, Inc. FY2022 p.20]",
+   "[Ford Motor Company FY2022 p.39]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "Between Tesla and Ford, which company achieved higher profits in 2022?",
+   "answered": true,
+   "answer_markdown": "**Tesla achieved higher profits in 2022.** In fact, Tesla reported a profit while Ford reported a loss.\n\n| Company | Legal Entity | FY2022 Net Income |\n|---------|--------------|-------------------|\n| Tesla | Tesla, Inc. (group) | **USD 12,587 million** (profit) |\n| Ford | Ford Motor Company (group) | **USD -1,981 million** (loss) |\n\nBoth figures are from the respective group annual reports for FY2022, reported in USD millions, so they are directly comparable. Tesla's net income of $12.6 billion far exceeds Ford's net loss of $2.0 billion.",
+   "citations": [
+    {
+     "document_id": "f585bb475b011102",
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2022,
+     "page": 20,
+     "kind": "fact",
+     "ref": "b7b015134d9c"
+    },
+    {
+     "document_id": "db760deb91039466",
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2022,
+     "page": 39,
+     "kind": "fact",
+     "ref": "e9276dd2b17b"
+    }
+   ],
+   "caveats": [
+    "None — both figures are from group-level reports in the same currency (USD) and same unit (millions) for the same fiscal year (2022)."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Tesla, Inc.",
+    "Ford Motor Company"
+   ],
+   "years_used": [
+    2022
+   ],
+   "metrics_used": [
+    "net_income"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "55977753189d",
+   "session_id": "68dcb5ab9667",
+   "timestamp": "2026-10-12T00:12:15+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "Between Tesla and Ford, which company achieved higher profits in 2022?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "fiscal_years": [
+       2022
+      ],
+      "issuer": "Tesla",
+      "metric": "net income"
+     },
+     "result_summary": "1 facts for net_income years=[2022]",
+     "result_ref": "results/55977753189d/1.json",
+     "latency_ms": 1
+    },
+    {
+     "step": 2,
+     "tool": "lookup_facts",
+     "arguments": {
+      "fiscal_years": [
+       2022
+      ],
+      "issuer": "Ford",
+      "metric": "net income"
+     },
+     "result_summary": "1 facts for net_income years=[2022]",
+     "result_ref": "results/55977753189d/2.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 4,
+     "tool": "final_answer",
+     "arguments": {
+      "answered": true,
+      "metrics_used": [
+       "net_income"
+      ],
+      "confidence": "high",
+      "entities_used": [
+       "Tesla, Inc.",
+       "Ford Motor Company"
+      ],
+      "caveats": [
+       "None — both figures are from group-level reports in the same currency (USD) and same unit (millions) for the same fiscal year (2022)."
+      ],
+      "resolved_question": "Between Tesla and Ford, which company achieved higher profits in 2022?",
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "b7b015134d9c"
+       },
+       {
+        "kind": "fact",
+        "ref": "e9276dd2b17b"
+       }
+      ],
+      "years_used": [
+       2022
+      ],
+      "answer_markdown": "**Tesla achieved higher profits in 2022.** In fact, Tesla reported a profit while Ford reported a loss.\n\n| Company | Legal Entity | FY2022 Net Income |\n|---------|--------------|-------------------|\n| Tesla | Tesla, Inc. (group) | **USD 12,587 million** (profit) |\n| Ford | Ford Motor Company (group) | **USD -1,981 million** (loss) |\n\nBoth figures are from the respective group annual reports for FY2022, reported in USD millions, so they are directly comparable. Tesla's net income of $12.6 billion far exceeds Ford's net loss of $2.0 billion.",
+      "model_knowledge_note": "none"
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "b7b015134d9c",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "net_income",
+     "fiscal_year": 2022,
+     "value_reported": 12587.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 12587000000.0,
+     "formatted": "USD 12,587 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.31; agrees with FY2023 report",
+     "label_seen": "Net income"
+    },
+    {
+     "fact_id": "e9276dd2b17b",
+     "legal_entity": "Ford Motor Company",
+     "metric": "net_income",
+     "fiscal_year": 2022,
+     "value_reported": -1981.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": -1981000000.0,
+     "formatted": "USD -1,981 millions",
+     "page": 39,
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.71; agrees with FY2023 report",
+     "label_seen": "Net Income/(Loss) ($M)"
+    }
+   ],
+   "final": {
+    "resolved_question": "Between Tesla and Ford, which company achieved higher profits in 2022?",
+    "answered": true,
+    "answer_markdown": "**Tesla achieved higher profits in 2022.** In fact, Tesla reported a profit while Ford reported a loss.\n\n| Company | Legal Entity | FY2022 Net Income |\n|---------|--------------|-------------------|\n| Tesla | Tesla, Inc. (group) | **USD 12,587 million** (profit) |\n| Ford | Ford Motor Company (group) | **USD -1,981 million** (loss) |\n\nBoth figures are from the respective group annual reports for FY2022, reported in USD millions, so they are directly comparable. Tesla's net income of $12.6 billion far exceeds Ford's net loss of $2.0 billion.",
+    "citations": [
+     {
+      "document_id": "f585bb475b011102",
+      "file_name": "Tesla_Annual_Report_2022.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2022,
+      "page": 20,
+      "kind": "fact",
+      "ref": "b7b015134d9c"
+     },
+     {
+      "document_id": "db760deb91039466",
+      "file_name": "Ford_Annual_Report_2022.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2022,
+      "page": 39,
+      "kind": "fact",
+      "ref": "e9276dd2b17b"
+     }
+    ],
+    "caveats": [
+     "None — both figures are from group-level reports in the same currency (USD) and same unit (millions) for the same fiscal year (2022)."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Tesla, Inc.",
+     "Ford Motor Company"
+    ],
+    "years_used": [
+     2022
+    ],
+    "metrics_used": [
+     "net_income"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 15304,
+    "completion_tokens": 1165,
+    "total_tokens": 16469,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 27817,
+   "error": null
+  }
+ },
+ {
+  "id": "q09",
+  "category": "lookup",
+  "question": "What were Tesla's profit numbers for 2022 and 2023?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 7018,
+   "completion_tokens": 668,
+   "total_tokens": 7686,
+   "cost_usd": 0.0
+  },
+  "latency_s": 11.0,
+  "trace_id": "c115f66cea30",
+  "answer": "Tesla, Inc. (group) reported the following net income (profit) for FY2022 and FY2023:\n\n| Fiscal Year | Net Income (USD millions) |\n|-------------|---------------------------|\n| 2022        | 12,587                    |\n| 2023        | 14,974                    |\n\nBoth figures are from Tesla, Inc.'s annual reports, in USD millions.",
+  "caveats": [],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Tesla, Inc. FY2022 p.20]",
+   "[Tesla, Inc. FY2023 p.20]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What were Tesla's profit numbers for 2022 and 2023?",
+   "answered": true,
+   "answer_markdown": "Tesla, Inc. (group) reported the following net income (profit) for FY2022 and FY2023:\n\n| Fiscal Year | Net Income (USD millions) |\n|-------------|---------------------------|\n| 2022        | 12,587                    |\n| 2023        | 14,974                    |\n\nBoth figures are from Tesla, Inc.'s annual reports, in USD millions.",
+   "citations": [
+    {
+     "document_id": "f585bb475b011102",
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2022,
+     "page": 20,
+     "kind": "fact",
+     "ref": "b7b015134d9c"
+    },
+    {
+     "document_id": "589ec657c0b381f6",
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2023,
+     "page": 20,
+     "kind": "fact",
+     "ref": "1e6b50ca22db"
+    }
+   ],
+   "caveats": [],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Tesla, Inc."
+   ],
+   "years_used": [
+    2022,
+    2023
+   ],
+   "metrics_used": [
+    "net_income"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "c115f66cea30",
+   "session_id": "af0494c6af21",
+   "timestamp": "2026-10-12T00:12:43+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What were Tesla's profit numbers for 2022 and 2023?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "issuer": "Tesla",
+      "metric": "net income",
+      "fiscal_years": [
+       2022,
+       2023
+      ]
+     },
+     "result_summary": "2 facts for net_income years=[2022, 2023]",
+     "result_ref": "results/c115f66cea30/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "final_answer",
+     "arguments": {
+      "metrics_used": [
+       "net_income"
+      ],
+      "entities_used": [
+       "Tesla, Inc."
+      ],
+      "years_used": [
+       2022,
+       2023
+      ],
+      "caveats": [],
+      "model_knowledge_note": null,
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "b7b015134d9c"
+       },
+       {
+        "kind": "fact",
+        "ref": "1e6b50ca22db"
+       }
+      ],
+      "answer_markdown": "Tesla, Inc. (group) reported the following net income (profit) for FY2022 and FY2023:\n\n| Fiscal Year | Net Income (USD millions) |\n|-------------|---------------------------|\n| 2022        | 12,587                    |\n| 2023        | 14,974                    |\n\nBoth figures are from Tesla, Inc.'s annual reports, in USD millions.",
+      "resolved_question": "What were Tesla's profit numbers for 2022 and 2023?",
+      "answered": true,
+      "confidence": "high"
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "b7b015134d9c",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "net_income",
+     "fiscal_year": 2022,
+     "value_reported": 12587.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 12587000000.0,
+     "formatted": "USD 12,587 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.31; agrees with FY2023 report",
+     "label_seen": "Net income"
+    },
+    {
+     "fact_id": "1e6b50ca22db",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "net_income",
+     "fiscal_year": 2023,
+     "value_reported": 14974.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 14974000000.0,
+     "formatted": "USD 14,974 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "source_fiscal_year": 2023,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": "also on p.32",
+     "label_seen": "Net income"
+    }
+   ],
+   "final": {
+    "resolved_question": "What were Tesla's profit numbers for 2022 and 2023?",
+    "answered": true,
+    "answer_markdown": "Tesla, Inc. (group) reported the following net income (profit) for FY2022 and FY2023:\n\n| Fiscal Year | Net Income (USD millions) |\n|-------------|---------------------------|\n| 2022        | 12,587                    |\n| 2023        | 14,974                    |\n\nBoth figures are from Tesla, Inc.'s annual reports, in USD millions.",
+    "citations": [
+     {
+      "document_id": "f585bb475b011102",
+      "file_name": "Tesla_Annual_Report_2022.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2022,
+      "page": 20,
+      "kind": "fact",
+      "ref": "b7b015134d9c"
+     },
+     {
+      "document_id": "589ec657c0b381f6",
+      "file_name": "Tesla_Annual_Report_2023.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2023,
+      "page": 20,
+      "kind": "fact",
+      "ref": "1e6b50ca22db"
+     }
+    ],
+    "caveats": [],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Tesla, Inc."
+    ],
+    "years_used": [
+     2022,
+     2023
+    ],
+    "metrics_used": [
+     "net_income"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 7018,
+    "completion_tokens": 668,
+    "total_tokens": 7686,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 10963,
+   "error": null
+  }
+ },
+ {
+  "id": "q10",
+  "category": "comparison",
+  "question": "Which company recorded better profitability in 2022 overall?",
+  "scores": {
+   "passed": false,
+   "behaviour": true,
+   "numeric": false,
+   "numeric_missing": [
+    "Tesla net_margin FY2022=0.1545",
+    "Ford net_margin FY2022=-0.0125"
+   ],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 35777,
+   "completion_tokens": 1280,
+   "total_tokens": 37057,
+   "cost_usd": 0.0
+  },
+  "latency_s": 29.5,
+  "trace_id": "042700ad84ef",
+  "answer": "Based on the provided documents, **Tesla, Inc.** recorded better profitability in 2022 than Ford Motor Company. BMW Group's 2022 profitability is not available in the provided documents (only its subsidiary BMW Finance N.V. has 2022 data).",
+  "caveats": [
+   "BMW Group's 2022 net income and revenue are not in the provided documents; only BMW Finance N.V. (a financing subsidiary) has 2022 figures (EUR 403,943 thousand net income). Subsidiary figures do not represent group profitability.",
+   "Ford and Tesla report in USD; BMW reports in EUR. Currency differences prevent direct absolute comparison, but net margin ratios are comparable.",
+   "Profitability assessed via net margin (net income / revenue) for Ford and Tesla. Other profitability metrics (operating margin, EBITDA margin) are not computed here."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Tesla, Inc. FY2022 p.20]",
+   "[Tesla, Inc. FY2022 p.20]",
+   "[Ford Motor Company FY2022 p.39]",
+   "[Ford Motor Company FY2022 p.39]",
+   "[BMW Finance N.V. FY2022 p.10]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "Which company recorded better profitability in 2022 overall?",
+   "answered": true,
+   "answer_markdown": "Based on the provided documents, **Tesla, Inc.** recorded better profitability in 2022 than Ford Motor Company. BMW Group's 2022 profitability is not available in the provided documents (only its subsidiary BMW Finance N.V. has 2022 data).",
+   "citations": [
+    {
+     "document_id": "f585bb475b011102",
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2022,
+     "page": 20,
+     "kind": "fact",
+     "ref": "b7b015134d9c"
+    },
+    {
+     "document_id": "f585bb475b011102",
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2022,
+     "page": 20,
+     "kind": "fact",
+     "ref": "b57c73d09f47"
+    },
+    {
+     "document_id": "db760deb91039466",
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2022,
+     "page": 39,
+     "kind": "fact",
+     "ref": "e9276dd2b17b"
+    },
+    {
+     "document_id": "db760deb91039466",
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2022,
+     "page": 39,
+     "kind": "fact",
+     "ref": "a893cf44b579"
+    },
+    {
+     "document_id": "1b11e3c787f98fd7",
+     "file_name": "BMW_Annual_Report_2022.pdf",
+     "legal_entity": "BMW Finance N.V.",
+     "fiscal_year": 2022,
+     "page": 10,
+     "kind": "fact",
+     "ref": "44704fdcaf13"
+    }
+   ],
+   "caveats": [
+    "BMW Group's 2022 net income and revenue are not in the provided documents; only BMW Finance N.V. (a financing subsidiary) has 2022 figures (EUR 403,943 thousand net income). Subsidiary figures do not represent group profitability.",
+    "Ford and Tesla report in USD; BMW reports in EUR. Currency differences prevent direct absolute comparison, but net margin ratios are comparable.",
+    "Profitability assessed via net margin (net income / revenue) for Ford and Tesla. Other profitability metrics (operating margin, EBITDA margin) are not computed here."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Tesla, Inc.",
+    "Ford Motor Company",
+    "BMW Finance N.V."
+   ],
+   "years_used": [
+    2022
+   ],
+   "metrics_used": [
+    "net_income",
+    "revenue",
+    "net margin"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "042700ad84ef",
+   "session_id": "c9f18f8d6df8",
+   "timestamp": "2026-10-12T00:12:54+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "Which company recorded better profitability in 2022 overall?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "revenue",
+      "fiscal_years": [
+       2022
+      ],
+      "issuer": "BMW"
+     },
+     "result_summary": "0 facts for revenue years=[] (nearest available: 5)",
+     "result_ref": "results/042700ad84ef/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "lookup_facts",
+     "arguments": {
+      "fiscal_years": [
+       2022
+      ],
+      "issuer": "BMW",
+      "metric": "net income"
+     },
+     "result_summary": "1 facts for net_income years=[2022]",
+     "result_ref": "results/042700ad84ef/2.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 3,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "net income",
+      "fiscal_years": [
+       2022
+      ],
+      "issuer": "Ford"
+     },
+     "result_summary": "1 facts for net_income years=[2022]",
+     "result_ref": "results/042700ad84ef/3.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 4,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "net income",
+      "fiscal_years": [
+       2022
+      ],
+      "issuer": "Tesla"
+     },
+     "result_summary": "1 facts for net_income years=[2022]",
+     "result_ref": "results/042700ad84ef/4.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 5,
+     "tool": "lookup_facts",
+     "arguments": {
+      "issuer": "Ford",
+      "fiscal_years": [
+       2022
+      ],
+      "metric": "revenue"
+     },
+     "result_summary": "1 facts for revenue years=[2022]",
+     "result_ref": "results/042700ad84ef/5.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 6,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "revenue",
+      "fiscal_years": [
+       2022
+      ],
+      "issuer": "Tesla"
+     },
+     "result_summary": "1 facts for revenue years=[2022]",
+     "result_ref": "results/042700ad84ef/6.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 7,
+     "tool": "final_answer",
+     "arguments": {
+      "resolved_question": "Which company recorded better profitability in 2022 overall?",
+      "answered": true,
+      "answer_markdown": "Based on the provided documents, **Tesla, Inc.** recorded better profitability in 2022 than Ford Motor Company. BMW Group's 2022 profitability is not available in the provided documents (only its subsidiary BMW Finance N.V. has 2022 data).",
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "b7b015134d9c"
+       },
+       {
+        "kind": "fact",
+        "ref": "b57c73d09f47"
+       },
+       {
+        "kind": "fact",
+        "ref": "e9276dd2b17b"
+       },
+       {
+        "kind": "fact",
+        "ref": "a893cf44b579"
+       },
+       {
+        "kind": "fact",
+        "ref": "44704fdcaf13"
+       }
+      ],
+      "caveats": [
+       "BMW Group's 2022 net income and revenue are not in the provided documents; only BMW Finance N.V. (a financing subsidiary) has 2022 figures (EUR 403,943 thousand net income). Subsidiary figures do not represent group profitability.",
+       "Ford and Tesla report in USD; BMW reports in EUR. Currency differences prevent direct absolute comparison, but net margin ratios are comparable.",
+       "Profitability assessed via net margin (net income / revenue) for Ford and Tesla. Other profitability metrics (operating margin, EBITDA margin) are not computed here."
+      ],
+      "confidence": "high",
+      "entities_used": [
+       "Tesla, Inc.",
+       "Ford Motor Company",
+       "BMW Finance N.V."
+      ],
+      "years_used": [
+       2022
+      ],
+      "metrics_used": [
+       "net income",
+       "revenue",
+       "net margin"
+      ]
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "44704fdcaf13",
+     "legal_entity": "BMW Finance N.V.",
+     "metric": "net_income",
+     "fiscal_year": 2022,
+     "value_reported": 403943.0,
+     "unit_reported": "thousands",
+     "currency": "EUR",
+     "value_base": 403943000.0,
+     "formatted": "EUR 403,943 thousands",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.13; agrees with FY2023 report",
+     "label_seen": ""
+    },
+    {
+     "fact_id": "e9276dd2b17b",
+     "legal_entity": "Ford Motor Company",
+     "metric": "net_income",
+     "fiscal_year": 2022,
+     "value_reported": -1981.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": -1981000000.0,
+     "formatted": "USD -1,981 millions",
+     "page": 39,
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.71; agrees with FY2023 report",
+     "label_seen": "Net Income/(Loss) ($M)"
+    },
+    {
+     "fact_id": "b7b015134d9c",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "net_income",
+     "fiscal_year": 2022,
+     "value_reported": 12587.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 12587000000.0,
+     "formatted": "USD 12,587 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.31; agrees with FY2023 report",
+     "label_seen": "Net income"
+    },
+    {
+     "fact_id": "a893cf44b579",
+     "legal_entity": "Ford Motor Company",
+     "metric": "revenue",
+     "fiscal_year": 2022,
+     "value_reported": 158057.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 158057000000.0,
+     "formatted": "USD 158,057 millions",
+     "page": 39,
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "agrees with FY2023 report",
+     "label_seen": "Revenue ($M)"
+    },
+    {
+     "fact_id": "b57c73d09f47",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "revenue",
+     "fiscal_year": 2022,
+     "value_reported": 81462.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 81462000000.0,
+     "formatted": "USD 81,462 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.59; agrees with FY2023 report",
+     "label_seen": "Total revenues"
+    }
+   ],
+   "final": {
+    "resolved_question": "Which company recorded better profitability in 2022 overall?",
+    "answered": true,
+    "answer_markdown": "Based on the provided documents, **Tesla, Inc.** recorded better profitability in 2022 than Ford Motor Company. BMW Group's 2022 profitability is not available in the provided documents (only its subsidiary BMW Finance N.V. has 2022 data).",
+    "citations": [
+     {
+      "document_id": "f585bb475b011102",
+      "file_name": "Tesla_Annual_Report_2022.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2022,
+      "page": 20,
+      "kind": "fact",
+      "ref": "b7b015134d9c"
+     },
+     {
+      "document_id": "f585bb475b011102",
+      "file_name": "Tesla_Annual_Report_2022.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2022,
+      "page": 20,
+      "kind": "fact",
+      "ref": "b57c73d09f47"
+     },
+     {
+      "document_id": "db760deb91039466",
+      "file_name": "Ford_Annual_Report_2022.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2022,
+      "page": 39,
+      "kind": "fact",
+      "ref": "e9276dd2b17b"
+     },
+     {
+      "document_id": "db760deb91039466",
+      "file_name": "Ford_Annual_Report_2022.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2022,
+      "page": 39,
+      "kind": "fact",
+      "ref": "a893cf44b579"
+     },
+     {
+      "document_id": "1b11e3c787f98fd7",
+      "file_name": "BMW_Annual_Report_2022.pdf",
+      "legal_entity": "BMW Finance N.V.",
+      "fiscal_year": 2022,
+      "page": 10,
+      "kind": "fact",
+      "ref": "44704fdcaf13"
+     }
+    ],
+    "caveats": [
+     "BMW Group's 2022 net income and revenue are not in the provided documents; only BMW Finance N.V. (a financing subsidiary) has 2022 figures (EUR 403,943 thousand net income). Subsidiary figures do not represent group profitability.",
+     "Ford and Tesla report in USD; BMW reports in EUR. Currency differences prevent direct absolute comparison, but net margin ratios are comparable.",
+     "Profitability assessed via net margin (net income / revenue) for Ford and Tesla. Other profitability metrics (operating margin, EBITDA margin) are not computed here."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Tesla, Inc.",
+     "Ford Motor Company",
+     "BMW Finance N.V."
+    ],
+    "years_used": [
+     2022
+    ],
+    "metrics_used": [
+     "net_income",
+     "revenue",
+     "net margin"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 35777,
+    "completion_tokens": 1280,
+    "total_tokens": 37057,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 29530,
+   "error": null
+  }
+ },
+ {
+  "id": "q11",
+  "category": "trend",
+  "question": "Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years.",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 29407,
+   "completion_tokens": 1790,
+   "total_tokens": 31197,
+   "cost_usd": 0.0
+  },
+  "latency_s": 29.2,
+  "trace_id": "84e3ddc79451",
+  "answer": "## Revenue Summary (Past Three Fiscal Years)\n\n| Company (Legal Entity) | FY2021 | FY2022 | FY2023 |\n|------------------------|--------|--------|--------|\n| **Tesla, Inc.** (group) | USD 53,823 million | USD 81,462 million | USD 96,773 million |\n| **Ford Motor Company** (group) | USD 136,341 million | USD 158,057 million | USD 176,191 million |\n| **BMW Group** (group) | EUR 111,239 million | *Not in provided documents* | *Not in provided documents* |\n\n### Key Notes\n- **Tesla & Ford**: Full three-year series available from group-level annual reports (Form 10-K). Figures are in **USD millions**.\n- **BMW**: Only the **FY2021** group revenue is available (from the BMW Group 2021 annual report, in **EUR millions**). The 2022 and 2023 documents in the collection are for **BMW Finance N.V.**, a financing subsidiary, and do not contain consolidated group revenue.\n- **Currency mismatch**: Tesla and Ford report in USD; BMW reports in EUR. Absolute amounts are not directly comparable across currencies.\n- **Tesla FY2021** figure comes from the FY2023 report’s comparative column (high confidence, cross-checked with FY2022 report).\n- **Ford FY2021–2023** figures are from each year’s own 10-K, with cross-year agreement noted in the reconciliation notes.\n- **BMW FY2021** figure is from the BMW Group 2021 annual report (confidence 0.8).\n\n### Caveats\n- BMW Group revenue for FY2022 and FY2023 is **not in the provided documents**; only the subsidiary BMW Finance N.V. reports for those years are available.\n- No currency conversion has been performed; comparisons across companies should use ratios (margins, growth rates) computed within each company’s reporting currency.\n- All figures are as reported in the respective annual reports; restatements (if any) are noted in the reconciliation notes of the source facts.",
+  "caveats": [
+   "BMW Group revenue for FY2022 and FY2023 not available in provided documents; only subsidiary (BMW Finance N.V.) reports exist for those years.",
+   "Currency mismatch: Tesla and Ford in USD, BMW in EUR — absolute amounts not directly comparable.",
+   "Tesla FY2021 figure is from comparative column in FY2023 report (cross-checked with FY2022 report).",
+   "Ford figures from each year's 10-K with cross-year agreement."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Tesla, Inc. FY2023 p.20]",
+   "[Tesla, Inc. FY2022 p.20]",
+   "[Tesla, Inc. FY2023 p.20]",
+   "[Ford Motor Company FY2021 p.39]",
+   "[Ford Motor Company FY2022 p.39]",
+   "[Ford Motor Company FY2023 p.44]",
+   "[BMW Group FY2021 p.10]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years.",
+   "answered": true,
+   "answer_markdown": "## Revenue Summary (Past Three Fiscal Years)\n\n| Company (Legal Entity) | FY2021 | FY2022 | FY2023 |\n|------------------------|--------|--------|--------|\n| **Tesla, Inc.** (group) | USD 53,823 million | USD 81,462 million | USD 96,773 million |\n| **Ford Motor Company** (group) | USD 136,341 million | USD 158,057 million | USD 176,191 million |\n| **BMW Group** (group) | EUR 111,239 million | *Not in provided documents* | *Not in provided documents* |\n\n### Key Notes\n- **Tesla & Ford**: Full three-year series available from group-level annual reports (Form 10-K). Figures are in **USD millions**.\n- **BMW**: Only the **FY2021** group revenue is available (from the BMW Group 2021 annual report, in **EUR millions**). The 2022 and 2023 documents in the collection are for **BMW Finance N.V.**, a financing subsidiary, and do not contain consolidated group revenue.\n- **Currency mismatch**: Tesla and Ford report in USD; BMW reports in EUR. Absolute amounts are not directly comparable across currencies.\n- **Tesla FY2021** figure comes from the FY2023 report’s comparative column (high confidence, cross-checked with FY2022 report).\n- **Ford FY2021–2023** figures are from each year’s own 10-K, with cross-year agreement noted in the reconciliation notes.\n- **BMW FY2021** figure is from the BMW Group 2021 annual report (confidence 0.8).\n\n### Caveats\n- BMW Group revenue for FY2022 and FY2023 is **not in the provided documents**; only the subsidiary BMW Finance N.V. reports for those years are available.\n- No currency conversion has been performed; comparisons across companies should use ratios (margins, growth rates) computed within each company’s reporting currency.\n- All figures are as reported in the respective annual reports; restatements (if any) are noted in the reconciliation notes of the source facts.",
+   "citations": [
+    {
+     "document_id": "589ec657c0b381f6",
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2023,
+     "page": 20,
+     "kind": "fact",
+     "ref": "1c7880dc7e3f"
+    },
+    {
+     "document_id": "f585bb475b011102",
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2022,
+     "page": 20,
+     "kind": "fact",
+     "ref": "b57c73d09f47"
+    },
+    {
+     "document_id": "589ec657c0b381f6",
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2023,
+     "page": 20,
+     "kind": "fact",
+     "ref": "749628ac8f46"
+    },
+    {
+     "document_id": "f87c2cdad276d476",
+     "file_name": "Ford_Annual_Report_2021.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2021,
+     "page": 39,
+     "kind": "fact",
+     "ref": "82965956af41"
+    },
+    {
+     "document_id": "db760deb91039466",
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2022,
+     "page": 39,
+     "kind": "fact",
+     "ref": "a893cf44b579"
+    },
+    {
+     "document_id": "f7db8b241a984dab",
+     "file_name": "Ford_Annual_Report_2023.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2023,
+     "page": 44,
+     "kind": "fact",
+     "ref": "fb91fd25dcbf"
+    },
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "fact",
+     "ref": "d1e2a33556ec"
+    }
+   ],
+   "caveats": [
+    "BMW Group revenue for FY2022 and FY2023 not available in provided documents; only subsidiary (BMW Finance N.V.) reports exist for those years.",
+    "Currency mismatch: Tesla and Ford in USD, BMW in EUR — absolute amounts not directly comparable.",
+    "Tesla FY2021 figure is from comparative column in FY2023 report (cross-checked with FY2022 report).",
+    "Ford figures from each year's 10-K with cross-year agreement."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Tesla, Inc.",
+    "Ford Motor Company",
+    "BMW Group"
+   ],
+   "years_used": [
+    2021,
+    2022,
+    2023
+   ],
+   "metrics_used": [
+    "revenue"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "84e3ddc79451",
+   "session_id": "6fca95b3d0b3",
+   "timestamp": "2026-10-12T00:13:24+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years.",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "list_catalog",
+     "arguments": {},
+     "result_summary": "9 documents, issuers=['BMW', 'Ford', 'Tesla']",
+     "result_ref": "results/84e3ddc79451/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "revenue",
+      "issuer": "Tesla"
+     },
+     "result_summary": "4 facts for revenue years=[2020, 2021, 2022, 2023]",
+     "result_ref": "results/84e3ddc79451/2.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 3,
+     "tool": "lookup_facts",
+     "arguments": {
+      "issuer": "Ford",
+      "metric": "revenue"
+     },
+     "result_summary": "5 facts for revenue years=[2019, 2020, 2021, 2022, 2023]",
+     "result_ref": "results/84e3ddc79451/3.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 4,
+     "tool": "lookup_facts",
+     "arguments": {
+      "issuer": "BMW",
+      "metric": "revenue"
+     },
+     "result_summary": "5 facts for revenue years=[2017, 2018, 2019, 2020, 2021]",
+     "result_ref": "results/84e3ddc79451/4.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 5,
+     "tool": "final_answer",
+     "arguments": {
+      "resolved_question": "Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years.",
+      "years_used": [
+       2021,
+       2022,
+       2023
+      ],
+      "answer_markdown": "## Revenue Summary (Past Three Fiscal Years)\n\n| Company (Legal Entity) | FY2021 | FY2022 | FY2023 |\n|------------------------|--------|--------|--------|\n| **Tesla, Inc.** (group) | USD 53,823 million | USD 81,462 million | USD 96,773 million |\n| **Ford Motor Company** (group) | USD 136,341 million | USD 158,057 million | USD 176,191 million |\n| **BMW Group** (group) | EUR 111,239 million | *Not in provided documents* | *Not in provided documents* |\n\n### Key Notes\n- **Tesla & Ford**: Full three-year series available from group-level annual reports (Form 10-K). Figures are in **USD millions**.\n- **BMW**: Only the **FY2021** group revenue is available (from the BMW Group 2021 annual report, in **EUR millions**). The 2022 and 2023 documents in the collection are for **BMW Finance N.V.**, a financing subsidiary, and do not contain consolidated group revenue.\n- **Currency mismatch**: Tesla and Ford report in USD; BMW reports in EUR. Absolute amounts are not directly comparable across currencies.\n- **Tesla FY2021** figure comes from the FY2023 report’s comparative column (high confidence, cross-checked with FY2022 report).\n- **Ford FY2021–2023** figures are from each year’s own 10-K, with cross-year agreement noted in the reconciliation notes.\n- **BMW FY2021** figure is from the BMW Group 2021 annual report (confidence 0.8).\n\n### Caveats\n- BMW Group revenue for FY2022 and FY2023 is **not in the provided documents**; only the subsidiary BMW Finance N.V. reports for those years are available.\n- No currency conversion has been performed; comparisons across companies should use ratios (margins, growth rates) computed within each company’s reporting currency.\n- All figures are as reported in the respective annual reports; restatements (if any) are noted in the reconciliation notes of the source facts.",
+      "answered": true,
+      "model_knowledge_note": null,
+      "caveats": [
+       "BMW Group revenue for FY2022 and FY2023 not available in provided documents; only subsidiary (BMW Finance N.V.) reports exist for those years.",
+       "Currency mismatch: Tesla and Ford in USD, BMW in EUR — absolute amounts not directly comparable.",
+       "Tesla FY2021 figure is from comparative column in FY2023 report (cross-checked with FY2022 report).",
+       "Ford figures from each year's 10-K with cross-year agreement."
+      ],
+      "metrics_used": [
+       "revenue"
+      ],
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "1c7880dc7e3f"
+       },
+       {
+        "kind": "fact",
+        "ref": "b57c73d09f47"
+       },
+       {
+        "kind": "fact",
+        "ref": "749628ac8f46"
+       },
+       {
+        "kind": "fact",
+        "ref": "82965956af41"
+       },
+       {
+        "kind": "fact",
+        "ref": "a893cf44b579"
+       },
+       {
+        "kind": "fact",
+        "ref": "fb91fd25dcbf"
+       },
+       {
+        "kind": "fact",
+        "ref": "d1e2a33556ec"
+       }
+      ],
+      "entities_used": [
+       "Tesla, Inc.",
+       "Ford Motor Company",
+       "BMW Group"
+      ],
+      "confidence": "high"
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [
+    {
+     "fact_id": "1c7880dc7e3f",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "revenue",
+     "fiscal_year": 2021,
+     "value_reported": 53823.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 53823000000.0,
+     "formatted": "USD 53,823 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "source_fiscal_year": 2023,
+     "is_comparative": true,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.26; also on p.63; agrees with FY2022 report",
+     "label_seen": "Total revenues"
+    },
+    {
+     "fact_id": "b57c73d09f47",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "revenue",
+     "fiscal_year": 2022,
+     "value_reported": 81462.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 81462000000.0,
+     "formatted": "USD 81,462 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "also on p.59; agrees with FY2023 report",
+     "label_seen": "Total revenues"
+    },
+    {
+     "fact_id": "749628ac8f46",
+     "legal_entity": "Tesla, Inc.",
+     "metric": "revenue",
+     "fiscal_year": 2023,
+     "value_reported": 96773.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 96773000000.0,
+     "formatted": "USD 96,773 millions",
+     "page": 20,
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "source_fiscal_year": 2023,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": "also on p.26; also on p.63",
+     "label_seen": "Total revenues"
+    },
+    {
+     "fact_id": "82965956af41",
+     "legal_entity": "Ford Motor Company",
+     "metric": "revenue",
+     "fiscal_year": 2021,
+     "value_reported": 136341.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 136341000000.0,
+     "formatted": "USD 136,341 millions",
+     "page": 39,
+     "file_name": "Ford_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "agrees with FY2022 report; agrees with FY2023 report",
+     "label_seen": ""
+    },
+    {
+     "fact_id": "a893cf44b579",
+     "legal_entity": "Ford Motor Company",
+     "metric": "revenue",
+     "fiscal_year": 2022,
+     "value_reported": 158057.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 158057000000.0,
+     "formatted": "USD 158,057 millions",
+     "page": 39,
+     "file_name": "Ford_Annual_Report_2022.pdf",
+     "source_fiscal_year": 2022,
+     "is_comparative": false,
+     "confidence": 0.95,
+     "reconciliation_note": "agrees with FY2023 report",
+     "label_seen": "Revenue ($M)"
+    },
+    {
+     "fact_id": "fb91fd25dcbf",
+     "legal_entity": "Ford Motor Company",
+     "metric": "revenue",
+     "fiscal_year": 2023,
+     "value_reported": 176191.0,
+     "unit_reported": "millions",
+     "currency": "USD",
+     "value_base": 176191000000.0,
+     "formatted": "USD 176,191 millions",
+     "page": 44,
+     "file_name": "Ford_Annual_Report_2023.pdf",
+     "source_fiscal_year": 2023,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": null,
+     "label_seen": "Revenue ($M)"
+    },
+    {
+     "fact_id": "d1e2a33556ec",
+     "legal_entity": "BMW Group",
+     "metric": "revenue",
+     "fiscal_year": 2021,
+     "value_reported": 111239.0,
+     "unit_reported": "millions",
+     "currency": "EUR",
+     "value_base": 111239000000.0,
+     "formatted": "EUR 111,239 millions",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": null,
+     "label_seen": ""
+    }
+   ],
+   "final": {
+    "resolved_question": "Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years.",
+    "answered": true,
+    "answer_markdown": "## Revenue Summary (Past Three Fiscal Years)\n\n| Company (Legal Entity) | FY2021 | FY2022 | FY2023 |\n|------------------------|--------|--------|--------|\n| **Tesla, Inc.** (group) | USD 53,823 million | USD 81,462 million | USD 96,773 million |\n| **Ford Motor Company** (group) | USD 136,341 million | USD 158,057 million | USD 176,191 million |\n| **BMW Group** (group) | EUR 111,239 million | *Not in provided documents* | *Not in provided documents* |\n\n### Key Notes\n- **Tesla & Ford**: Full three-year series available from group-level annual reports (Form 10-K). Figures are in **USD millions**.\n- **BMW**: Only the **FY2021** group revenue is available (from the BMW Group 2021 annual report, in **EUR millions**). The 2022 and 2023 documents in the collection are for **BMW Finance N.V.**, a financing subsidiary, and do not contain consolidated group revenue.\n- **Currency mismatch**: Tesla and Ford report in USD; BMW reports in EUR. Absolute amounts are not directly comparable across currencies.\n- **Tesla FY2021** figure comes from the FY2023 report’s comparative column (high confidence, cross-checked with FY2022 report).\n- **Ford FY2021–2023** figures are from each year’s own 10-K, with cross-year agreement noted in the reconciliation notes.\n- **BMW FY2021** figure is from the BMW Group 2021 annual report (confidence 0.8).\n\n### Caveats\n- BMW Group revenue for FY2022 and FY2023 is **not in the provided documents**; only the subsidiary BMW Finance N.V. reports for those years are available.\n- No currency conversion has been performed; comparisons across companies should use ratios (margins, growth rates) computed within each company’s reporting currency.\n- All figures are as reported in the respective annual reports; restatements (if any) are noted in the reconciliation notes of the source facts.",
+    "citations": [
+     {
+      "document_id": "589ec657c0b381f6",
+      "file_name": "Tesla_Annual_Report_2023.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2023,
+      "page": 20,
+      "kind": "fact",
+      "ref": "1c7880dc7e3f"
+     },
+     {
+      "document_id": "f585bb475b011102",
+      "file_name": "Tesla_Annual_Report_2022.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2022,
+      "page": 20,
+      "kind": "fact",
+      "ref": "b57c73d09f47"
+     },
+     {
+      "document_id": "589ec657c0b381f6",
+      "file_name": "Tesla_Annual_Report_2023.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2023,
+      "page": 20,
+      "kind": "fact",
+      "ref": "749628ac8f46"
+     },
+     {
+      "document_id": "f87c2cdad276d476",
+      "file_name": "Ford_Annual_Report_2021.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2021,
+      "page": 39,
+      "kind": "fact",
+      "ref": "82965956af41"
+     },
+     {
+      "document_id": "db760deb91039466",
+      "file_name": "Ford_Annual_Report_2022.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2022,
+      "page": 39,
+      "kind": "fact",
+      "ref": "a893cf44b579"
+     },
+     {
+      "document_id": "f7db8b241a984dab",
+      "file_name": "Ford_Annual_Report_2023.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2023,
+      "page": 44,
+      "kind": "fact",
+      "ref": "fb91fd25dcbf"
+     },
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "fact",
+      "ref": "d1e2a33556ec"
+     }
+    ],
+    "caveats": [
+     "BMW Group revenue for FY2022 and FY2023 not available in provided documents; only subsidiary (BMW Finance N.V.) reports exist for those years.",
+     "Currency mismatch: Tesla and Ford in USD, BMW in EUR — absolute amounts not directly comparable.",
+     "Tesla FY2021 figure is from comparative column in FY2023 report (cross-checked with FY2022 report).",
+     "Ford figures from each year's 10-K with cross-year agreement."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Tesla, Inc.",
+     "Ford Motor Company",
+     "BMW Group"
+    ],
+    "years_used": [
+     2021,
+     2022,
+     2023
+    ],
+    "metrics_used": [
+     "revenue"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 29407,
+    "completion_tokens": 1790,
+    "total_tokens": 31197,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 29243,
+   "error": null
+  }
+ },
+ {
+  "id": "q12",
+  "category": "trend",
+  "question": "What were the growth trends for BMW's financial performance from 2020 to 2023?",
+  "scores": {
+   "passed": false,
+   "behaviour": true,
+   "numeric": false,
+   "numeric_missing": [
+    "BMW revenue FY2020=98990000000",
+    "BMW revenue FY2021=111239000000",
+    "BMW net_income FY2021=12463000000"
+   ],
+   "numeric_applicable": true,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 50168,
+   "completion_tokens": 2007,
+   "total_tokens": 52175,
+   "cost_usd": 0.0
+  },
+  "latency_s": 51.3,
+  "trace_id": "7ccb8e9001d3",
+  "answer": "Based on the provided documents, I can only report BMW Group's financial performance trends from **2020 to 2021**. The documents do not contain BMW Group (consolidated) financial statements for fiscal years 2022 or 2023 — only the 2021 group annual report (which includes comparative figures back to 2017) and the 2022/2023 annual reports of **BMW Finance N.V.**, a financing subsidiary that reports in EUR thousands and is not representative of the group's overall performance.",
+  "caveats": [
+   "BMW Group consolidated data is only available through FY2021 in the provided documents.",
+   "BMW Finance N.V. (subsidiary) reports for FY2022 and FY2023 are in EUR thousands and cover only the financing subsidiary, not the group.",
+   "Revenue and net income figures for FY2020 are comparative figures from the FY2021 report (confidence 0.6).",
+   "Currency and unit mismatch: Group reports in EUR millions; subsidiary reports in EUR thousands.",
+   "No group-level revenue, net income, or other performance metrics for FY2022 or FY2023 are present in the provided documents."
+  ],
+  "answered": false,
+  "confidence": "medium",
+  "citations": [
+   "[BMW Group FY2021 p.10]",
+   "[BMW Group FY2021 p.10]",
+   "[BMW Group FY2021 p.10]",
+   "[BMW Group FY2021 p.10]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What were the growth trends for BMW's financial performance from 2020 to 2023?",
+   "answered": false,
+   "answer_markdown": "Based on the provided documents, I can only report BMW Group's financial performance trends from **2020 to 2021**. The documents do not contain BMW Group (consolidated) financial statements for fiscal years 2022 or 2023 — only the 2021 group annual report (which includes comparative figures back to 2017) and the 2022/2023 annual reports of **BMW Finance N.V.**, a financing subsidiary that reports in EUR thousands and is not representative of the group's overall performance.",
+   "citations": [
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "fact",
+     "ref": "d1e2a33556ec"
+    },
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "fact",
+     "ref": "88c942f5c1db"
+    },
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "fact",
+     "ref": "ba82d9e7b3ed"
+    },
+    {
+     "document_id": "a22e48d2fa107385",
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "legal_entity": "BMW Group",
+     "fiscal_year": 2021,
+     "page": 10,
+     "kind": "fact",
+     "ref": "7d70633b33a7"
+    }
+   ],
+   "caveats": [
+    "BMW Group consolidated data is only available through FY2021 in the provided documents.",
+    "BMW Finance N.V. (subsidiary) reports for FY2022 and FY2023 are in EUR thousands and cover only the financing subsidiary, not the group.",
+    "Revenue and net income figures for FY2020 are comparative figures from the FY2021 report (confidence 0.6).",
+    "Currency and unit mismatch: Group reports in EUR millions; subsidiary reports in EUR thousands.",
+    "No group-level revenue, net income, or other performance metrics for FY2022 or FY2023 are present in the provided documents."
+   ],
+   "confidence": "medium",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "BMW Group"
+   ],
+   "years_used": [
+    2020,
+    2021
+   ],
+   "metrics_used": [
+    "revenue",
+    "net_income"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "7ccb8e9001d3",
+   "session_id": "0647b56a2245",
+   "timestamp": "2026-10-12T00:13:53+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What were the growth trends for BMW's financial performance from 2020 to 2023?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "list_catalog",
+     "arguments": {},
+     "result_summary": "9 documents, issuers=['BMW', 'Ford', 'Tesla']",
+     "result_ref": "results/7ccb8e9001d3/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "revenue",
+      "issuer": "BMW"
+     },
+     "result_summary": "5 facts for revenue years=[2017, 2018, 2019, 2020, 2021]",
+     "result_ref": "results/7ccb8e9001d3/2.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 3,
+     "tool": "lookup_facts",
+     "arguments": {
+      "metric": "net income",
+      "issuer": "BMW"
+     },
+     "result_summary": "8 facts for net_income years=[2017, 2018, 2019, 2020, 2021, 2022, 2023]",
+     "result_ref": "results/7ccb8e9001d3/3.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 4,
+     "tool": "compute_metric",
+     "arguments": {
+      "inputs": {
+       "current": "d1e2a33556ec",
+       "previous": "88c942f5c1db"
+      },
+      "derived": "yoy_growth"
+     },
+     "result_summary": "yoy_growth = 12.4%",
+     "result_ref": "results/7ccb8e9001d3/4.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 5,
+     "tool": "compute_metric",
+     "arguments": {
+      "inputs": {
+       "current": "ba82d9e7b3ed",
+       "previous": "7d70633b33a7"
+      },
+      "derived": "yoy_growth"
+     },
+     "result_summary": "yoy_growth = 223.1%",
+     "result_ref": "results/7ccb8e9001d3/5.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 6,
+     "tool": "search_documents",
+     "arguments": {
+      "query": "BMW Group financial performance 2022 2023 outlook trends",
+      "issuers": [
+       "BMW"
+      ]
+     },
+     "result_summary": "8 chunks for issuers=['BMW']",
+     "result_ref": "results/7ccb8e9001d3/6.json",
+     "latency_ms": 901
+    },
+    {
+     "step": 7,
+     "tool": "final_answer",
+     "arguments": {
+      "resolved_question": "What were the growth trends for BMW's financial performance from 2020 to 2023?",
+      "answered": false,
+      "answer_markdown": "Based on the provided documents, I can only report BMW Group's financial performance trends from **2020 to 2021**. The documents do not contain BMW Group (consolidated) financial statements for fiscal years 2022 or 2023 — only the 2021 group annual report (which includes comparative figures back to 2017) and the 2022/2023 annual reports of **BMW Finance N.V.**, a financing subsidiary that reports in EUR thousands and is not representative of the group's overall performance.",
+      "citations": [
+       {
+        "kind": "fact",
+        "ref": "d1e2a33556ec"
+       },
+       {
+        "kind": "fact",
+        "ref": "88c942f5c1db"
+       },
+       {
+        "kind": "fact",
+        "ref": "ba82d9e7b3ed"
+       },
+       {
+        "kind": "fact",
+        "ref": "7d70633b33a7"
+       }
+      ],
+      "caveats": [
+       "BMW Group consolidated data is only available through FY2021 in the provided documents.",
+       "BMW Finance N.V. (subsidiary) reports for FY2022 and FY2023 are in EUR thousands and cover only the financing subsidiary, not the group.",
+       "Revenue and net income figures for FY2020 are comparative figures from the FY2021 report (confidence 0.6).",
+       "Currency and unit mismatch: Group reports in EUR millions; subsidiary reports in EUR thousands.",
+       "No group-level revenue, net income, or other performance metrics for FY2022 or FY2023 are present in the provided documents."
+      ],
+      "confidence": "medium",
+      "entities_used": [
+       "BMW Group"
+      ],
+      "years_used": [
+       2020,
+       2021
+      ],
+      "metrics_used": [
+       "revenue",
+       "net income"
+      ],
+      "model_knowledge_note": null
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [
+    {
+     "chunk_id": "a22e48d2fa107385:p20:c1",
+     "document_id": "a22e48d2fa107385",
+     "page": 20,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 2,
+     "lexical_rank": 8,
+     "rrf_score": 0.0308,
+     "expanded": true
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p6:c2",
+     "document_id": "a22e48d2fa107385",
+     "page": 6,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 12,
+     "lexical_rank": 1,
+     "rrf_score": 0.0303,
+     "expanded": false
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p41:c1",
+     "document_id": "a22e48d2fa107385",
+     "page": 41,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 5,
+     "lexical_rank": 17,
+     "rrf_score": 0.0284,
+     "expanded": false
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p47:c7",
+     "document_id": "a22e48d2fa107385",
+     "page": 47,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 18,
+     "lexical_rank": 9,
+     "rrf_score": 0.0273,
+     "expanded": true
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p31:c2",
+     "document_id": "a22e48d2fa107385",
+     "page": 31,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 17,
+     "lexical_rank": 12,
+     "rrf_score": 0.0269,
+     "expanded": true
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p33:c0",
+     "document_id": "a22e48d2fa107385",
+     "page": 33,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 28,
+     "lexical_rank": 5,
+     "rrf_score": 0.0267,
+     "expanded": true
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p31:c0",
+     "document_id": "a22e48d2fa107385",
+     "page": 31,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 13,
+     "lexical_rank": 20,
+     "rrf_score": 0.0262,
+     "expanded": false
+    },
+    {
+     "chunk_id": "a22e48d2fa107385:p26:c0",
+     "document_id": "a22e48d2fa107385",
+     "page": 26,
+     "legal_entity": "BMW Group",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 29,
+     "lexical_rank": 13,
+     "rrf_score": 0.0249,
+     "expanded": false
+    }
+   ],
+   "facts_used": [
+    {
+     "fact_id": "88c942f5c1db",
+     "legal_entity": "BMW Group",
+     "metric": "revenue",
+     "fiscal_year": 2020,
+     "value_reported": 98990.0,
+     "unit_reported": "millions",
+     "currency": "EUR",
+     "value_base": 98990000000.0,
+     "formatted": "EUR 98,990 millions",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": true,
+     "confidence": 0.6,
+     "reconciliation_note": null,
+     "label_seen": ""
+    },
+    {
+     "fact_id": "d1e2a33556ec",
+     "legal_entity": "BMW Group",
+     "metric": "revenue",
+     "fiscal_year": 2021,
+     "value_reported": 111239.0,
+     "unit_reported": "millions",
+     "currency": "EUR",
+     "value_base": 111239000000.0,
+     "formatted": "EUR 111,239 millions",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": null,
+     "label_seen": ""
+    },
+    {
+     "fact_id": "7d70633b33a7",
+     "legal_entity": "BMW Group",
+     "metric": "net_income",
+     "fiscal_year": 2020,
+     "value_reported": 3857.0,
+     "unit_reported": "millions",
+     "currency": "EUR",
+     "value_base": 3857000000.0,
+     "formatted": "EUR 3,857 millions",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": true,
+     "confidence": 0.6,
+     "reconciliation_note": null,
+     "label_seen": ""
+    },
+    {
+     "fact_id": "ba82d9e7b3ed",
+     "legal_entity": "BMW Group",
+     "metric": "net_income",
+     "fiscal_year": 2021,
+     "value_reported": 12463.0,
+     "unit_reported": "millions",
+     "currency": "EUR",
+     "value_base": 12463000000.0,
+     "formatted": "EUR 12,463 millions",
+     "page": 10,
+     "file_name": "BMW_Annual_Report_2021.pdf",
+     "source_fiscal_year": 2021,
+     "is_comparative": false,
+     "confidence": 0.8,
+     "reconciliation_note": null,
+     "label_seen": ""
+    }
+   ],
+   "final": {
+    "resolved_question": "What were the growth trends for BMW's financial performance from 2020 to 2023?",
+    "answered": false,
+    "answer_markdown": "Based on the provided documents, I can only report BMW Group's financial performance trends from **2020 to 2021**. The documents do not contain BMW Group (consolidated) financial statements for fiscal years 2022 or 2023 — only the 2021 group annual report (which includes comparative figures back to 2017) and the 2022/2023 annual reports of **BMW Finance N.V.**, a financing subsidiary that reports in EUR thousands and is not representative of the group's overall performance.",
+    "citations": [
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "fact",
+      "ref": "d1e2a33556ec"
+     },
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "fact",
+      "ref": "88c942f5c1db"
+     },
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "fact",
+      "ref": "ba82d9e7b3ed"
+     },
+     {
+      "document_id": "a22e48d2fa107385",
+      "file_name": "BMW_Annual_Report_2021.pdf",
+      "legal_entity": "BMW Group",
+      "fiscal_year": 2021,
+      "page": 10,
+      "kind": "fact",
+      "ref": "7d70633b33a7"
+     }
+    ],
+    "caveats": [
+     "BMW Group consolidated data is only available through FY2021 in the provided documents.",
+     "BMW Finance N.V. (subsidiary) reports for FY2022 and FY2023 are in EUR thousands and cover only the financing subsidiary, not the group.",
+     "Revenue and net income figures for FY2020 are comparative figures from the FY2021 report (confidence 0.6).",
+     "Currency and unit mismatch: Group reports in EUR millions; subsidiary reports in EUR thousands.",
+     "No group-level revenue, net income, or other performance metrics for FY2022 or FY2023 are present in the provided documents."
+    ],
+    "confidence": "medium",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "BMW Group"
+    ],
+    "years_used": [
+     2020,
+     2021
+    ],
+    "metrics_used": [
+     "revenue",
+     "net_income"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 50168,
+    "completion_tokens": 2007,
+    "total_tokens": 52175,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 51296,
+   "error": null
+  }
+ },
+ {
+  "id": "q13",
+  "category": "narrative",
+  "question": "What key economic factors influenced Ford's performance in 2021?",
+  "scores": {
+   "passed": false,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": false,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": false,
+   "mention_problems": [
+    "none of ['semiconductor', 'chip', 'commodity', 'COVID', 'pandemic', 'supply chain', 'inflation']"
+   ]
+  },
+  "usage": {
+   "prompt_tokens": 60548,
+   "completion_tokens": 1568,
+   "total_tokens": 62116,
+   "cost_usd": 0.0
+  },
+  "latency_s": 26.8,
+  "trace_id": "c013f670e0ca",
+  "answer": "Based on Ford Motor Company's FY2021 annual report, the following key economic factors influenced its performance in 2021, as identified in the **'Key Trends and Economic Factors Affecting Ford and the Automotive Industry'** section (Item 7, MD&A) [Ford Motor Company FY2021 p.34]:",
+  "caveats": [
+   "The analysis is based solely on Ford's FY2021 annual report (group entity, USD millions). No other years or entities were requested.",
+   "The report identifies these factors as affecting the automotive industry broadly and Ford specifically; the company's causal-factor EBIT bridge (Volume/Mix, Net Pricing, Cost, Exchange, Other) quantifies their net impact on 2021 Automotive EBIT but is not broken out by individual economic factor."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Ford Motor Company FY2021 p.34]",
+   "[Ford Motor Company FY2021 p.35]",
+   "[Ford Motor Company FY2021 p.23]",
+   "[Ford Motor Company FY2021 p.40]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What key economic factors influenced Ford's performance in 2021?",
+   "answered": true,
+   "answer_markdown": "Based on Ford Motor Company's FY2021 annual report, the following key economic factors influenced its performance in 2021, as identified in the **'Key Trends and Economic Factors Affecting Ford and the Automotive Industry'** section (Item 7, MD&A) [Ford Motor Company FY2021 p.34]:",
+   "citations": [
+    {
+     "document_id": "f87c2cdad276d476",
+     "file_name": "Ford_Annual_Report_2021.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2021,
+     "page": 34,
+     "kind": "chunk",
+     "ref": "f87c2cdad276d476:p34:c0"
+    },
+    {
+     "document_id": "f87c2cdad276d476",
+     "file_name": "Ford_Annual_Report_2021.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2021,
+     "page": 35,
+     "kind": "chunk",
+     "ref": "f87c2cdad276d476:p35:c2"
+    },
+    {
+     "document_id": "f87c2cdad276d476",
+     "file_name": "Ford_Annual_Report_2021.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2021,
+     "page": 23,
+     "kind": "chunk",
+     "ref": "f87c2cdad276d476:p23:c1"
+    },
+    {
+     "document_id": "f87c2cdad276d476",
+     "file_name": "Ford_Annual_Report_2021.pdf",
+     "legal_entity": "Ford Motor Company",
+     "fiscal_year": 2021,
+     "page": 40,
+     "kind": "chunk",
+     "ref": "f87c2cdad276d476:p40:c0"
+    }
+   ],
+   "caveats": [
+    "The analysis is based solely on Ford's FY2021 annual report (group entity, USD millions). No other years or entities were requested.",
+    "The report identifies these factors as affecting the automotive industry broadly and Ford specifically; the company's causal-factor EBIT bridge (Volume/Mix, Net Pricing, Cost, Exchange, Other) quantifies their net impact on 2021 Automotive EBIT but is not broken out by individual economic factor."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Ford Motor Company"
+   ],
+   "years_used": [
+    2021
+   ],
+   "metrics_used": [
+    "operating_income",
+    "revenue",
+    "Wholesale Units",
+    "Market Share"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "c013f670e0ca",
+   "session_id": "a0c0916bcbd9",
+   "timestamp": "2026-10-12T00:14:44+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What key economic factors influenced Ford's performance in 2021?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "search_documents",
+     "arguments": {
+      "k": 10,
+      "doc_types": [
+       "annual_report"
+      ],
+      "issuers": [
+       "Ford"
+      ],
+      "query": "economic factors macroeconomic conditions market conditions influenced performance 2021"
+     },
+     "result_summary": "10 chunks for issuers=['Ford']",
+     "result_ref": "results/c013f670e0ca/1.json",
+     "latency_ms": 1111
+    },
+    {
+     "step": 2,
+     "tool": "search_documents",
+     "arguments": {
+      "k": 10,
+      "issuers": [
+       "Ford"
+      ],
+      "doc_types": [
+       "annual_report"
+      ],
+      "query": "2021 performance economic conditions market conditions semiconductor shortage supply chain inflation commodity prices"
+     },
+     "result_summary": "10 chunks for issuers=['Ford']",
+     "result_ref": "results/c013f670e0ca/2.json",
+     "latency_ms": 871
+    },
+    {
+     "step": 3,
+     "tool": "search_documents",
+     "arguments": {
+      "k": 10,
+      "doc_types": [
+       "annual_report"
+      ],
+      "issuers": [
+       "Ford"
+      ],
+      "query": "\"Key Trends and Economic Factors\" 2021 Ford"
+     },
+     "result_summary": "10 chunks for issuers=['Ford']",
+     "result_ref": "results/c013f670e0ca/3.json",
+     "latency_ms": 131
+    },
+    {
+     "step": 4,
+     "tool": "search_documents",
+     "arguments": {
+      "issuers": [
+       "Ford"
+      ],
+      "doc_types": [
+       "annual_report"
+      ],
+      "k": 10,
+      "query": "Key Trends and Economic Factors Affecting Ford 2021 commodity energy price exchange rate interest rate inflation"
+     },
+     "result_summary": "10 chunks for issuers=['Ford']",
+     "result_ref": "results/c013f670e0ca/4.json",
+     "latency_ms": 76
+    },
+    {
+     "step": 5,
+     "tool": "search_documents",
+     "arguments": {
+      "k": 15,
+      "query": "Key Trends and Economic Factors Affecting Ford and the Automotive Industry 2021 supplier disruptions semiconductor shortage commodity pricing exchange rates",
+      "doc_types": [
+       "annual_report"
+      ],
+      "issuers": [
+       "Ford"
+      ]
+     },
+     "result_summary": "15 chunks for issuers=['Ford']",
+     "result_ref": "results/c013f670e0ca/5.json",
+     "latency_ms": 130
+    },
+    {
+     "step": 6,
+     "tool": "search_documents",
+     "arguments": {
+      "k": 15,
+      "issuers": [
+       "Ford"
+      ],
+      "query": "Key Trends and Economic Factors Affecting Ford 2021 commodity energy price exchange rate interest rate inflation pricing pressure",
+      "doc_types": [
+       "annual_report"
+      ]
+     },
+     "result_summary": "15 chunks for issuers=['Ford']",
+     "result_ref": "results/c013f670e0ca/6.json",
+     "latency_ms": 103
+    },
+    {
+     "step": 7,
+     "tool": "final_answer",
+     "arguments": {
+      "resolved_question": "What key economic factors influenced Ford's performance in 2021?",
+      "answered": true,
+      "answer_markdown": "Based on Ford Motor Company's FY2021 annual report, the following key economic factors influenced its performance in 2021, as identified in the **'Key Trends and Economic Factors Affecting Ford and the Automotive Industry'** section (Item 7, MD&A) [Ford Motor Company FY2021 p.34]:",
+      "citations": [
+       {
+        "kind": "chunk",
+        "ref": "f87c2cdad276d476:p34:c0"
+       },
+       {
+        "kind": "chunk",
+        "ref": "f87c2cdad276d476:p35:c2"
+       },
+       {
+        "kind": "chunk",
+        "ref": "f87c2cdad276d476:p23:c1"
+       },
+       {
+        "kind": "chunk",
+        "ref": "f87c2cdad276d476:p40:c0"
+       }
+      ],
+      "caveats": [
+       "The analysis is based solely on Ford's FY2021 annual report (group entity, USD millions). No other years or entities were requested.",
+       "The report identifies these factors as affecting the automotive industry broadly and Ford specifically; the company's causal-factor EBIT bridge (Volume/Mix, Net Pricing, Cost, Exchange, Other) quantifies their net impact on 2021 Automotive EBIT but is not broken out by individual economic factor."
+      ],
+      "confidence": "high",
+      "entities_used": [
+       "Ford Motor Company"
+      ],
+      "years_used": [
+       2021
+      ],
+      "metrics_used": [
+       "EBIT",
+       "Revenue",
+       "Wholesale Units",
+       "Market Share"
+      ]
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [
+    {
+     "chunk_id": "f7db8b241a984dab:p40:c2",
+     "document_id": "f7db8b241a984dab",
+     "page": 40,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 5,
+     "lexical_rank": 4,
+     "rrf_score": 0.031,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p35:c3",
+     "document_id": "db760deb91039466",
+     "page": 35,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 6,
+     "lexical_rank": 10,
+     "rrf_score": 0.0294,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p34:c8",
+     "document_id": "f87c2cdad276d476",
+     "page": 34,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 19,
+     "lexical_rank": 1,
+     "rrf_score": 0.0291,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p23:c2",
+     "document_id": "db760deb91039466",
+     "page": 23,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 1,
+     "lexical_rank": null,
+     "rrf_score": 0.0164,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p23:c1",
+     "document_id": "f87c2cdad276d476",
+     "page": 23,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 2,
+     "lexical_rank": null,
+     "rrf_score": 0.0161,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p24:c7",
+     "document_id": "db760deb91039466",
+     "page": 24,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": null,
+     "lexical_rank": 2,
+     "rrf_score": 0.0161,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p35:c7",
+     "document_id": "f87c2cdad276d476",
+     "page": 35,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 3,
+     "lexical_rank": null,
+     "rrf_score": 0.0159,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p47:c0",
+     "document_id": "f87c2cdad276d476",
+     "page": 47,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": null,
+     "lexical_rank": 3,
+     "rrf_score": 0.0159,
+     "expanded": true
+    },
+    {
+     "chunk_id": "db760deb91039466:p23:c1",
+     "document_id": "db760deb91039466",
+     "page": 23,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 4,
+     "lexical_rank": null,
+     "rrf_score": 0.0156,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p58:c3",
+     "document_id": "db760deb91039466",
+     "page": 58,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": null,
+     "lexical_rank": 5,
+     "rrf_score": 0.0154,
+     "expanded": true
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p35:c2",
+     "document_id": "f87c2cdad276d476",
+     "page": 35,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 6,
+     "lexical_rank": 1,
+     "rrf_score": 0.0315,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p17:c2",
+     "document_id": "db760deb91039466",
+     "page": 17,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 1,
+     "lexical_rank": 7,
+     "rrf_score": 0.0313,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p40:c0",
+     "document_id": "f7db8b241a984dab",
+     "page": 40,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 9,
+     "lexical_rank": 3,
+     "rrf_score": 0.0304,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p35:c4",
+     "document_id": "db760deb91039466",
+     "page": 35,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 8,
+     "lexical_rank": 6,
+     "rrf_score": 0.0299,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p63:c0",
+     "document_id": "f87c2cdad276d476",
+     "page": 63,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 3,
+     "lexical_rank": 13,
+     "rrf_score": 0.0296,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p3:c7",
+     "document_id": "db760deb91039466",
+     "page": 3,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 14,
+     "lexical_rank": 10,
+     "rrf_score": 0.0278,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p18:c6",
+     "document_id": "f87c2cdad276d476",
+     "page": 18,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 5,
+     "lexical_rank": 23,
+     "rrf_score": 0.0274,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p34:c0",
+     "document_id": "f87c2cdad276d476",
+     "page": 34,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 19,
+     "lexical_rank": 8,
+     "rrf_score": 0.0274,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p40:c3",
+     "document_id": "f7db8b241a984dab",
+     "page": 40,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 26,
+     "lexical_rank": 4,
+     "rrf_score": 0.0273,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p18:c4",
+     "document_id": "f87c2cdad276d476",
+     "page": 18,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 13,
+     "lexical_rank": 14,
+     "rrf_score": 0.0272,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p40:c0",
+     "document_id": "f87c2cdad276d476",
+     "page": 40,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 8,
+     "lexical_rank": 16,
+     "rrf_score": 0.0279,
+     "expanded": true
+    },
+    {
+     "chunk_id": "db760deb91039466:p53:c0",
+     "document_id": "db760deb91039466",
+     "page": 53,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 9,
+     "lexical_rank": 17,
+     "rrf_score": 0.0275,
+     "expanded": true
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p46:c1",
+     "document_id": "f87c2cdad276d476",
+     "page": 46,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 11,
+     "lexical_rank": 19,
+     "rrf_score": 0.0267,
+     "expanded": true
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p37:c1",
+     "document_id": "f87c2cdad276d476",
+     "page": 37,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 19,
+     "lexical_rank": 12,
+     "rrf_score": 0.0265,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p40:c0",
+     "document_id": "db760deb91039466",
+     "page": 40,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 15,
+     "lexical_rank": 21,
+     "rrf_score": 0.0257,
+     "expanded": true
+    },
+    {
+     "chunk_id": "db760deb91039466:p53:c1",
+     "document_id": "db760deb91039466",
+     "page": 53,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 23,
+     "lexical_rank": 27,
+     "rrf_score": 0.0235,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p40:c1",
+     "document_id": "f87c2cdad276d476",
+     "page": 40,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 25,
+     "lexical_rank": 29,
+     "rrf_score": 0.023,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p25:c5",
+     "document_id": "f7db8b241a984dab",
+     "page": 25,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 1,
+     "lexical_rank": 8,
+     "rrf_score": 0.0311,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p25:c4",
+     "document_id": "f7db8b241a984dab",
+     "page": 25,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 8,
+     "lexical_rank": 5,
+     "rrf_score": 0.0301,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p41:c1",
+     "document_id": "f7db8b241a984dab",
+     "page": 41,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 2,
+     "lexical_rank": 19,
+     "rrf_score": 0.0288,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p23:c0",
+     "document_id": "db760deb91039466",
+     "page": 23,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 3,
+     "lexical_rank": 22,
+     "rrf_score": 0.0281,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p40:c1",
+     "document_id": "f7db8b241a984dab",
+     "page": 40,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 9,
+     "lexical_rank": 16,
+     "rrf_score": 0.0277,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p73:c5",
+     "document_id": "f7db8b241a984dab",
+     "page": 73,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 6,
+     "lexical_rank": 21,
+     "rrf_score": 0.0275,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p23:c0",
+     "document_id": "f87c2cdad276d476",
+     "page": 23,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 4,
+     "lexical_rank": 28,
+     "rrf_score": 0.027,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p35:c0",
+     "document_id": "db760deb91039466",
+     "page": 35,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 4,
+     "lexical_rank": 4,
+     "rrf_score": 0.0312,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p35:c1",
+     "document_id": "db760deb91039466",
+     "page": 35,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 5,
+     "lexical_rank": 17,
+     "rrf_score": 0.0284,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p4:c2",
+     "document_id": "f7db8b241a984dab",
+     "page": 4,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 25,
+     "lexical_rank": 3,
+     "rrf_score": 0.0276,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p18:c5",
+     "document_id": "f87c2cdad276d476",
+     "page": 18,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 22,
+     "lexical_rank": 8,
+     "rrf_score": 0.0269,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p34:c2",
+     "document_id": "f87c2cdad276d476",
+     "page": 34,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 8,
+     "lexical_rank": 26,
+     "rrf_score": 0.0263,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f87c2cdad276d476:p34:c1",
+     "document_id": "f87c2cdad276d476",
+     "page": 34,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2021,
+     "dense_rank": 21,
+     "lexical_rank": 22,
+     "rrf_score": 0.0245,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f7db8b241a984dab:p25:c2",
+     "document_id": "f7db8b241a984dab",
+     "page": 25,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 17,
+     "lexical_rank": 8,
+     "rrf_score": 0.0277,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p74:c5",
+     "document_id": "db760deb91039466",
+     "page": 74,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 16,
+     "lexical_rank": 14,
+     "rrf_score": 0.0267,
+     "expanded": false
+    },
+    {
+     "chunk_id": "db760deb91039466:p36:c1",
+     "document_id": "db760deb91039466",
+     "page": 36,
+     "legal_entity": "Ford Motor Company",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 9,
+     "lexical_rank": 24,
+     "rrf_score": 0.0264,
+     "expanded": false
+    }
+   ],
+   "facts_used": [],
+   "final": {
+    "resolved_question": "What key economic factors influenced Ford's performance in 2021?",
+    "answered": true,
+    "answer_markdown": "Based on Ford Motor Company's FY2021 annual report, the following key economic factors influenced its performance in 2021, as identified in the **'Key Trends and Economic Factors Affecting Ford and the Automotive Industry'** section (Item 7, MD&A) [Ford Motor Company FY2021 p.34]:",
+    "citations": [
+     {
+      "document_id": "f87c2cdad276d476",
+      "file_name": "Ford_Annual_Report_2021.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2021,
+      "page": 34,
+      "kind": "chunk",
+      "ref": "f87c2cdad276d476:p34:c0"
+     },
+     {
+      "document_id": "f87c2cdad276d476",
+      "file_name": "Ford_Annual_Report_2021.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2021,
+      "page": 35,
+      "kind": "chunk",
+      "ref": "f87c2cdad276d476:p35:c2"
+     },
+     {
+      "document_id": "f87c2cdad276d476",
+      "file_name": "Ford_Annual_Report_2021.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2021,
+      "page": 23,
+      "kind": "chunk",
+      "ref": "f87c2cdad276d476:p23:c1"
+     },
+     {
+      "document_id": "f87c2cdad276d476",
+      "file_name": "Ford_Annual_Report_2021.pdf",
+      "legal_entity": "Ford Motor Company",
+      "fiscal_year": 2021,
+      "page": 40,
+      "kind": "chunk",
+      "ref": "f87c2cdad276d476:p40:c0"
+     }
+    ],
+    "caveats": [
+     "The analysis is based solely on Ford's FY2021 annual report (group entity, USD millions). No other years or entities were requested.",
+     "The report identifies these factors as affecting the automotive industry broadly and Ford specifically; the company's causal-factor EBIT bridge (Volume/Mix, Net Pricing, Cost, Exchange, Other) quantifies their net impact on 2021 Automotive EBIT but is not broken out by individual economic factor."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Ford Motor Company"
+    ],
+    "years_used": [
+     2021
+    ],
+    "metrics_used": [
+     "operating_income",
+     "revenue",
+     "Wholesale Units",
+     "Market Share"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 60548,
+    "completion_tokens": 1568,
+    "total_tokens": 62116,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 26818,
+   "error": null
+  }
+ },
+ {
+  "id": "q14",
+  "category": "narrative",
+  "question": "Which Tesla product is currently in the development stage?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": false,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 13626,
+   "completion_tokens": 1173,
+   "total_tokens": 14799,
+   "cost_usd": 0.0
+  },
+  "latency_s": 17.5,
+  "trace_id": "569939b9340a",
+  "answer": "Based on Tesla's FY2023 Annual Report (the latest available), the following products are listed as **\"In development\"**:\n\n| Vehicle Model | Production Status |\n|---------------|-------------------|\n| Next Generation Platform | In development |\n| Tesla Roadster | In development |\n\nThe report states this is \"as of the date of this Annual Report on Form 10-K\" (FY2023). Earlier products like Cybertruck and Tesla Semi have progressed to \"Active\" and \"Pilot production\" respectively.\n\n**Source:** Tesla, Inc. FY2023 Annual Report, page 4 – \"Automotive—Production\" summary table.",
+  "caveats": [
+   "Information is as of the FY2023 annual report filing date; development status may have changed since then.",
+   "\"Next Generation Platform\" is a platform/architecture rather than a specific named vehicle model.",
+   "No FY2024 or later reports are available in the provided documents."
+  ],
+  "answered": true,
+  "confidence": "high",
+  "citations": [
+   "[Tesla, Inc. FY2023 p.4]",
+   "[Tesla, Inc. FY2023 p.4]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "Which Tesla product is currently in the development stage?",
+   "answered": true,
+   "answer_markdown": "Based on Tesla's FY2023 Annual Report (the latest available), the following products are listed as **\"In development\"**:\n\n| Vehicle Model | Production Status |\n|---------------|-------------------|\n| Next Generation Platform | In development |\n| Tesla Roadster | In development |\n\nThe report states this is \"as of the date of this Annual Report on Form 10-K\" (FY2023). Earlier products like Cybertruck and Tesla Semi have progressed to \"Active\" and \"Pilot production\" respectively.\n\n**Source:** Tesla, Inc. FY2023 Annual Report, page 4 – \"Automotive—Production\" summary table.",
+   "citations": [
+    {
+     "document_id": "589ec657c0b381f6",
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2023,
+     "page": 4,
+     "kind": "chunk",
+     "ref": "589ec657c0b381f6:p4:c0"
+    },
+    {
+     "document_id": "589ec657c0b381f6",
+     "file_name": "Tesla_Annual_Report_2023.pdf",
+     "legal_entity": "Tesla, Inc.",
+     "fiscal_year": 2023,
+     "page": 4,
+     "kind": "chunk",
+     "ref": "589ec657c0b381f6:p4:c1"
+    }
+   ],
+   "caveats": [
+    "Information is as of the FY2023 annual report filing date; development status may have changed since then.",
+    "\"Next Generation Platform\" is a platform/architecture rather than a specific named vehicle model.",
+    "No FY2024 or later reports are available in the provided documents."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "Tesla, Inc."
+   ],
+   "years_used": [
+    2023
+   ],
+   "metrics_used": [
+    "product development status"
+   ]
+  },
+  "trace_obj": {
+   "trace_id": "569939b9340a",
+   "session_id": "32c92f7f1207",
+   "timestamp": "2026-10-12T00:15:11+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "Which Tesla product is currently in the development stage?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "search_documents",
+     "arguments": {
+      "issuers": [
+       "Tesla"
+      ],
+      "query": "Tesla products in development stage current",
+      "doc_types": [
+       "annual_report"
+      ]
+     },
+     "result_summary": "8 chunks for issuers=['Tesla']",
+     "result_ref": "results/569939b9340a/1.json",
+     "latency_ms": 106
+    },
+    {
+     "step": 3,
+     "tool": "final_answer",
+     "arguments": {
+      "answered": true,
+      "metrics_used": [
+       "product development status"
+      ],
+      "resolved_question": "Which Tesla product is currently in the development stage?",
+      "model_knowledge_note": "none",
+      "years_used": [
+       2023
+      ],
+      "caveats": [
+       "Information is as of the FY2023 annual report filing date; development status may have changed since then.",
+       "\"Next Generation Platform\" is a platform/architecture rather than a specific named vehicle model.",
+       "No FY2024 or later reports are available in the provided documents."
+      ],
+      "citations": [
+       {
+        "kind": "chunk",
+        "ref": "589ec657c0b381f6:p4:c0"
+       },
+       {
+        "kind": "chunk",
+        "ref": "589ec657c0b381f6:p4:c1"
+       }
+      ],
+      "confidence": "high",
+      "entities_used": [
+       "Tesla, Inc."
+      ],
+      "answer_markdown": "Based on Tesla's FY2023 Annual Report (the latest available), the following products are listed as **\"In development\"**:\n\n| Vehicle Model | Production Status |\n|---------------|-------------------|\n| Next Generation Platform | In development |\n| Tesla Roadster | In development |\n\nThe report states this is \"as of the date of this Annual Report on Form 10-K\" (FY2023). Earlier products like Cybertruck and Tesla Semi have progressed to \"Active\" and \"Pilot production\" respectively.\n\n**Source:** Tesla, Inc. FY2023 Annual Report, page 4 – \"Automotive—Production\" summary table."
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [
+    {
+     "chunk_id": "589ec657c0b381f6:p4:c1",
+     "document_id": "589ec657c0b381f6",
+     "page": 4,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 7,
+     "lexical_rank": 5,
+     "rrf_score": 0.0303,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f585bb475b011102:p3:c5",
+     "document_id": "f585bb475b011102",
+     "page": 3,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 5,
+     "lexical_rank": 8,
+     "rrf_score": 0.0301,
+     "expanded": false
+    },
+    {
+     "chunk_id": "589ec657c0b381f6:p4:c0",
+     "document_id": "589ec657c0b381f6",
+     "page": 4,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 2,
+     "lexical_rank": 12,
+     "rrf_score": 0.03,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f585bb475b011102:p3:t0",
+     "document_id": "f585bb475b011102",
+     "page": 3,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 9,
+     "lexical_rank": 14,
+     "rrf_score": 0.028,
+     "expanded": true
+    },
+    {
+     "chunk_id": "589ec657c0b381f6:p5:c4",
+     "document_id": "589ec657c0b381f6",
+     "page": 5,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 23,
+     "lexical_rank": 3,
+     "rrf_score": 0.0279,
+     "expanded": false
+    },
+    {
+     "chunk_id": "f585bb475b011102:p52:c1",
+     "document_id": "f585bb475b011102",
+     "page": 52,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 22,
+     "lexical_rank": 16,
+     "rrf_score": 0.0254,
+     "expanded": true
+    },
+    {
+     "chunk_id": "589ec657c0b381f6:p29:c7",
+     "document_id": "589ec657c0b381f6",
+     "page": 29,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2023,
+     "dense_rank": 28,
+     "lexical_rank": 13,
+     "rrf_score": 0.0251,
+     "expanded": true
+    },
+    {
+     "chunk_id": "f585bb475b011102:p3:c1",
+     "document_id": "f585bb475b011102",
+     "page": 3,
+     "legal_entity": "Tesla, Inc.",
+     "doc_type": "annual_report",
+     "fiscal_year": 2022,
+     "dense_rank": 1,
+     "lexical_rank": null,
+     "rrf_score": 0.0164,
+     "expanded": false
+    }
+   ],
+   "facts_used": [],
+   "final": {
+    "resolved_question": "Which Tesla product is currently in the development stage?",
+    "answered": true,
+    "answer_markdown": "Based on Tesla's FY2023 Annual Report (the latest available), the following products are listed as **\"In development\"**:\n\n| Vehicle Model | Production Status |\n|---------------|-------------------|\n| Next Generation Platform | In development |\n| Tesla Roadster | In development |\n\nThe report states this is \"as of the date of this Annual Report on Form 10-K\" (FY2023). Earlier products like Cybertruck and Tesla Semi have progressed to \"Active\" and \"Pilot production\" respectively.\n\n**Source:** Tesla, Inc. FY2023 Annual Report, page 4 – \"Automotive—Production\" summary table.",
+    "citations": [
+     {
+      "document_id": "589ec657c0b381f6",
+      "file_name": "Tesla_Annual_Report_2023.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2023,
+      "page": 4,
+      "kind": "chunk",
+      "ref": "589ec657c0b381f6:p4:c0"
+     },
+     {
+      "document_id": "589ec657c0b381f6",
+      "file_name": "Tesla_Annual_Report_2023.pdf",
+      "legal_entity": "Tesla, Inc.",
+      "fiscal_year": 2023,
+      "page": 4,
+      "kind": "chunk",
+      "ref": "589ec657c0b381f6:p4:c1"
+     }
+    ],
+    "caveats": [
+     "Information is as of the FY2023 annual report filing date; development status may have changed since then.",
+     "\"Next Generation Platform\" is a platform/architecture rather than a specific named vehicle model.",
+     "No FY2024 or later reports are available in the provided documents."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "Tesla, Inc."
+    ],
+    "years_used": [
+     2023
+    ],
+    "metrics_used": [
+     "product development status"
+    ]
+   },
+   "usage": {
+    "prompt_tokens": 13626,
+    "completion_tokens": 1173,
+    "total_tokens": 14799,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 17449,
+   "error": null
+  }
+ },
+ {
+  "id": "q15",
+  "category": "out_of_scope",
+  "question": "What was Toyota's revenue in 2023?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": false,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 8184,
+   "completion_tokens": 430,
+   "total_tokens": 8614,
+   "cost_usd": 0.0
+  },
+  "latency_s": 13.6,
+  "trace_id": "c8f120f87adc",
+  "answer": "Toyota is **not covered in the provided documents**. The available issuers are:\n\n- **BMW** (BMW Group FY2021; BMW Finance N.V. subsidiary FY2022–2023)\n- **Ford** (Ford Motor Company group FY2021–2023)\n- **Tesla** (Tesla, Inc. group FY2022–2023)\n\nNo annual report or financial statements for Toyota Motor Corporation are present in the catalog, so I cannot provide Toyota's 2023 revenue from these sources.",
+  "caveats": [
+   "Toyota not in document set; only BMW, Ford, and Tesla are available."
+  ],
+  "answered": false,
+  "confidence": "high",
+  "citations": [],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What was Toyota's revenue in 2023?",
+   "answered": false,
+   "answer_markdown": "Toyota is **not covered in the provided documents**. The available issuers are:\n\n- **BMW** (BMW Group FY2021; BMW Finance N.V. subsidiary FY2022–2023)\n- **Ford** (Ford Motor Company group FY2021–2023)\n- **Tesla** (Tesla, Inc. group FY2022–2023)\n\nNo annual report or financial statements for Toyota Motor Corporation are present in the catalog, so I cannot provide Toyota's 2023 revenue from these sources.",
+   "citations": [],
+   "caveats": [
+    "Toyota not in document set; only BMW, Ford, and Tesla are available."
+   ],
+   "confidence": "high",
+   "model_knowledge_note": null,
+   "entities_used": [],
+   "years_used": [],
+   "metrics_used": []
+  },
+  "trace_obj": {
+   "trace_id": "c8f120f87adc",
+   "session_id": "51a69e801acb",
+   "timestamp": "2026-10-12T00:15:28+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What was Toyota's revenue in 2023?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "list_catalog",
+     "arguments": {},
+     "result_summary": "9 documents, issuers=['BMW', 'Ford', 'Tesla']",
+     "result_ref": "results/c8f120f87adc/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "final_answer",
+     "arguments": {
+      "metrics_used": [],
+      "caveats": [
+       "Toyota not in document set; only BMW, Ford, and Tesla are available."
+      ],
+      "answer_markdown": "Toyota is **not covered in the provided documents**. The available issuers are:\n\n- **BMW** (BMW Group FY2021; BMW Finance N.V. subsidiary FY2022–2023)\n- **Ford** (Ford Motor Company group FY2021–2023)\n- **Tesla** (Tesla, Inc. group FY2022–2023)\n\nNo annual report or financial statements for Toyota Motor Corporation are present in the catalog, so I cannot provide Toyota's 2023 revenue from these sources.",
+      "confidence": "high",
+      "entities_used": [],
+      "years_used": [],
+      "resolved_question": "What was Toyota's revenue in 2023?",
+      "model_knowledge_note": null,
+      "answered": false,
+      "citations": []
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [],
+   "facts_used": [],
+   "final": {
+    "resolved_question": "What was Toyota's revenue in 2023?",
+    "answered": false,
+    "answer_markdown": "Toyota is **not covered in the provided documents**. The available issuers are:\n\n- **BMW** (BMW Group FY2021; BMW Finance N.V. subsidiary FY2022–2023)\n- **Ford** (Ford Motor Company group FY2021–2023)\n- **Tesla** (Tesla, Inc. group FY2022–2023)\n\nNo annual report or financial statements for Toyota Motor Corporation are present in the catalog, so I cannot provide Toyota's 2023 revenue from these sources.",
+    "citations": [],
+    "caveats": [
+     "Toyota not in document set; only BMW, Ford, and Tesla are available."
+    ],
+    "confidence": "high",
+    "model_knowledge_note": null,
+    "entities_used": [],
+    "years_used": [],
+    "metrics_used": []
+   },
+   "usage": {
+    "prompt_tokens": 8184,
+    "completion_tokens": 430,
+    "total_tokens": 8614,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 13619,
+   "error": null
+  }
+ },
+ {
+  "id": "q16",
+  "category": "noise",
+  "question": "What did the central bank do about interest rates?",
+  "scores": {
+   "passed": true,
+   "behaviour": true,
+   "numeric": true,
+   "numeric_missing": [],
+   "numeric_applicable": false,
+   "retrieval": true,
+   "retrieval_missing": [],
+   "citation": true,
+   "noise_leak": false,
+   "mentions": true,
+   "mention_problems": []
+  },
+  "usage": {
+   "prompt_tokens": 14782,
+   "completion_tokens": 868,
+   "total_tokens": 15650,
+   "cost_usd": 0.0
+  },
+  "latency_s": 49.9,
+  "trace_id": "a6e8a7e694ca",
+  "answer": "According to a news article in the provided documents, **a central bank raised interest rates by 0.5%** in an effort to combat rising inflation. The article notes this was the first rate hike in over a year and that further hikes may be on the horizon if inflation continues to exceed the bank's target.\n\n**Important caveats:**\n- The news article does not specify **which central bank** (e.g., Federal Reserve, ECB, Bank of England, etc.)\n- No date or timeframe is provided for this action\n- This information comes from a general news collection, not from any of the company annual reports (BMW, Ford, Tesla)\n- The annual reports for BMW, Ford, and Tesla do not contain information about central bank monetary policy actions",
+  "caveats": [
+   "Source is a general news article, not a company annual report",
+   "Central bank not identified (could be any major central bank)",
+   "No date or context provided for the rate hike",
+   "Not related to BMW, Ford, or Tesla financial reports"
+  ],
+  "answered": true,
+  "confidence": "low",
+  "citations": [
+   "[p.1]"
+  ],
+  "error": null,
+  "answer_obj": {
+   "resolved_question": "What did the central bank do about interest rates?",
+   "answered": true,
+   "answer_markdown": "According to a news article in the provided documents, **a central bank raised interest rates by 0.5%** in an effort to combat rising inflation. The article notes this was the first rate hike in over a year and that further hikes may be on the horizon if inflation continues to exceed the bank's target.\n\n**Important caveats:**\n- The news article does not specify **which central bank** (e.g., Federal Reserve, ECB, Bank of England, etc.)\n- No date or timeframe is provided for this action\n- This information comes from a general news collection, not from any of the company annual reports (BMW, Ford, Tesla)\n- The annual reports for BMW, Ford, and Tesla do not contain information about central bank monetary policy actions",
+   "citations": [
+    {
+     "document_id": "5219bd6c8f9882d3",
+     "file_name": "news.pdf",
+     "legal_entity": null,
+     "fiscal_year": null,
+     "page": 1,
+     "kind": "chunk",
+     "ref": "5219bd6c8f9882d3:p1:c2"
+    }
+   ],
+   "caveats": [
+    "Source is a general news article, not a company annual report",
+    "Central bank not identified (could be any major central bank)",
+    "No date or context provided for the rate hike",
+    "Not related to BMW, Ford, or Tesla financial reports"
+   ],
+   "confidence": "low",
+   "model_knowledge_note": null,
+   "entities_used": [
+    "news.pdf"
+   ],
+   "years_used": [],
+   "metrics_used": []
+  },
+  "trace_obj": {
+   "trace_id": "a6e8a7e694ca",
+   "session_id": "8e60ed75be04",
+   "timestamp": "2026-10-12T00:15:42+00:00",
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "fallback_from": null,
+   "fallback_reason": null,
+   "prompt_versions": {
+    "extractor": "1",
+    "profiler": "1",
+    "system": "2"
+   },
+   "user_message": "What did the central bank do about interest rates?",
+   "history_turns": 0,
+   "tool_calls": [
+    {
+     "step": 1,
+     "tool": "list_catalog",
+     "arguments": {},
+     "result_summary": "9 documents, issuers=['BMW', 'Ford', 'Tesla']",
+     "result_ref": "results/a6e8a7e694ca/1.json",
+     "latency_ms": 0
+    },
+    {
+     "step": 2,
+     "tool": "search_documents",
+     "arguments": {
+      "query": "central bank interest rates monetary policy",
+      "doc_types": [
+       "news"
+      ]
+     },
+     "result_summary": "8 chunks",
+     "result_ref": "results/a6e8a7e694ca/2.json",
+     "latency_ms": 243
+    },
+    {
+     "step": 3,
+     "tool": "final_answer",
+     "arguments": {
+      "entities_used": [
+       "news.pdf"
+      ],
+      "citations": [
+       {
+        "kind": "chunk",
+        "ref": "5219bd6c8f9882d3:p1:c2"
+       }
+      ],
+      "years_used": [],
+      "confidence": "low",
+      "caveats": [
+       "Source is a general news article, not a company annual report",
+       "Central bank not identified (could be any major central bank)",
+       "No date or context provided for the rate hike",
+       "Not related to BMW, Ford, or Tesla financial reports"
+      ],
+      "answer_markdown": "According to a news article in the provided documents, **a central bank raised interest rates by 0.5%** in an effort to combat rising inflation. The article notes this was the first rate hike in over a year and that further hikes may be on the horizon if inflation continues to exceed the bank's target.\n\n**Important caveats:**\n- The news article does not specify **which central bank** (e.g., Federal Reserve, ECB, Bank of England, etc.)\n- No date or timeframe is provided for this action\n- This information comes from a general news collection, not from any of the company annual reports (BMW, Ford, Tesla)\n- The annual reports for BMW, Ford, and Tesla do not contain information about central bank monetary policy actions",
+      "metrics_used": [],
+      "resolved_question": "What did the central bank do about interest rates?",
+      "answered": true,
+      "model_knowledge_note": null
+     },
+     "result_summary": "final answer",
+     "result_ref": null,
+     "latency_ms": 0
+    }
+   ],
+   "retrieved": [
+    {
+     "chunk_id": "5219bd6c8f9882d3:p1:c2",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 1,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 1,
+     "lexical_rank": 1,
+     "rrf_score": 0.0328,
+     "expanded": false
+    },
+    {
+     "chunk_id": "5219bd6c8f9882d3:p1:c3",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 1,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 2,
+     "lexical_rank": 3,
+     "rrf_score": 0.032,
+     "expanded": false
+    },
+    {
+     "chunk_id": "5219bd6c8f9882d3:p5:c2",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 5,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 3,
+     "lexical_rank": 4,
+     "rrf_score": 0.0315,
+     "expanded": false
+    },
+    {
+     "chunk_id": "5219bd6c8f9882d3:p3:c0",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 3,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 7,
+     "lexical_rank": 2,
+     "rrf_score": 0.0311,
+     "expanded": false
+    },
+    {
+     "chunk_id": "5219bd6c8f9882d3:p3:c1",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 3,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 6,
+     "lexical_rank": 5,
+     "rrf_score": 0.0305,
+     "expanded": false
+    },
+    {
+     "chunk_id": "5219bd6c8f9882d3:p2:c3",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 2,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 28,
+     "lexical_rank": 6,
+     "rrf_score": 0.0265,
+     "expanded": false
+    },
+    {
+     "chunk_id": "5219bd6c8f9882d3:p6:c3",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 6,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 4,
+     "lexical_rank": null,
+     "rrf_score": 0.0156,
+     "expanded": false
+    },
+    {
+     "chunk_id": "5219bd6c8f9882d3:p6:c2",
+     "document_id": "5219bd6c8f9882d3",
+     "page": 6,
+     "legal_entity": null,
+     "doc_type": "news",
+     "fiscal_year": null,
+     "dense_rank": 5,
+     "lexical_rank": null,
+     "rrf_score": 0.0154,
+     "expanded": false
+    }
+   ],
+   "facts_used": [],
+   "final": {
+    "resolved_question": "What did the central bank do about interest rates?",
+    "answered": true,
+    "answer_markdown": "According to a news article in the provided documents, **a central bank raised interest rates by 0.5%** in an effort to combat rising inflation. The article notes this was the first rate hike in over a year and that further hikes may be on the horizon if inflation continues to exceed the bank's target.\n\n**Important caveats:**\n- The news article does not specify **which central bank** (e.g., Federal Reserve, ECB, Bank of England, etc.)\n- No date or timeframe is provided for this action\n- This information comes from a general news collection, not from any of the company annual reports (BMW, Ford, Tesla)\n- The annual reports for BMW, Ford, and Tesla do not contain information about central bank monetary policy actions",
+    "citations": [
+     {
+      "document_id": "5219bd6c8f9882d3",
+      "file_name": "news.pdf",
+      "legal_entity": null,
+      "fiscal_year": null,
+      "page": 1,
+      "kind": "chunk",
+      "ref": "5219bd6c8f9882d3:p1:c2"
+     }
+    ],
+    "caveats": [
+     "Source is a general news article, not a company annual report",
+     "Central bank not identified (could be any major central bank)",
+     "No date or context provided for the rate hike",
+     "Not related to BMW, Ford, or Tesla financial reports"
+    ],
+    "confidence": "low",
+    "model_knowledge_note": null,
+    "entities_used": [
+     "news.pdf"
+    ],
+    "years_used": [],
+    "metrics_used": []
+   },
+   "usage": {
+    "prompt_tokens": 14782,
+    "completion_tokens": 868,
+    "total_tokens": 15650,
+    "cost_usd": 0.0
+   },
+   "latency_ms": 49925,
+   "error": null
+  }
+ }
+]
